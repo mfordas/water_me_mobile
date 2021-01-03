@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 import {Provider} from 'react-redux';
 
 import LogoComponent from './frontend/Components/Logo';
-// import FooterComponent from './frontend/Components/Footer';
+import FooterComponent from './frontend/Components/Footer';
 // import Menu from './frontend/Components/Menu';
 // import PublicRoute from './frontend/Components/PublicRoute';
 // import PrivateRoute from './frontend/Components/PrivateRoute';
@@ -36,7 +36,7 @@ const App: () => React$Node = () => {
               options={{headerShown: false}}
             />
           </Stack.Navigator> */}
-          {/* <FooterComponent /> */}
+          <FooterComponent />
           <Text>Test</Text>
         </SafeAreaView>
       </NavigationContainer>
