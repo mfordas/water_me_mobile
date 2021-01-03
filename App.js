@@ -12,7 +12,7 @@ import FooterComponent from './frontend/Components/Footer';
 // import PrivateRoute from './frontend/Components/PrivateRoute';
 import {store} from './frontend/redux_store/reduxStore';
 
-// import HomePage from './frontend/Views/HomePage';
+import HomePage from './frontend/Views/HomePage';
 // import PlantsLists from './frontend/Views/PlantsLists';
 
 // import './frontend/scss/main_styling.scss';
@@ -24,20 +24,19 @@ const App: () => React$Node = () => {
         <SafeAreaView style={{flex: 1}}>
           <LogoComponent />
           {/* <Menu /> */}
-          {/* <Stack.Navigator>
+          <Stack.Navigator>
             <Stack.Screen
               name="HomePage"
               component={HomePage}
               options={{headerShown: false}}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="PlantsLists"
               component={PlantsLists}
               options={{headerShown: false}}
-            />
-          </Stack.Navigator> */}
+            /> */}
+          </Stack.Navigator>
           <FooterComponent />
-          <Text>Test</Text>
         </SafeAreaView>
       </NavigationContainer>
     </Provider>

@@ -1,7 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
-
-import mainStyling from '../../scss/main_styling';
+import {View, StyleSheet} from 'react-native';
 
 import LogoPic from '../../img/logo.svg';
 
@@ -9,10 +7,17 @@ import LogoPic from '../../img/logo.svg';
 
 const Logo = () => {
   return (
-    <View style={[{flex: 1, flexGrow: 0.5}, mainStyling.logoContainer]}>
+    <View style={[{flex: 1, flexGrow: 0.5}, style.logoContainer]}>
       <LogoPic width={350} />
     </View>
   );
 };
 
+const style = StyleSheet.create({
+  logoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+});
 export default Logo;
