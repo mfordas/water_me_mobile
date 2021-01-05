@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react';
-import {Image, Text, TouchableOpacity} from 'react-native';
+import {TouchableOpacity, Text, Image} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
 import google from '../Register/scss/google';
 import googlelogo from '../../img/g-logo.png';
-import {loginExternal} from '../../redux_actions/loginActions';
+import ConfirmGoogle from './confirmGoogle';
+import {postGoogleUser} from '../../redux_actions/registerActions';
 
-export const GoogleAuth = ({loginExternal, loginData}) => {
+const GoogleRegister = ({postGoogleUser, registerData}) => {
   useEffect(() => {
     try {
       GoogleSignin.configure();
@@ -21,7 +22,7 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      await loginExternal(userInfo);
+      await postGoogleUser(userInfo);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -35,20 +36,22 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
     }
   };
 
-  return (
+  return !registerData.confirm ? (
     <TouchableOpacity style={google.googleButton} onPress={() => makeAuth()}>
       <Image style={google.googleButtonLogo} source={googlelogo} />
-      <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
+      <Text style={google.googleButtonText}>Zarejestruj przez Google</Text>
     </TouchableOpacity>
+  ) : (
+    <ConfirmGoogle />
   );
 };
 
 const mapStateToProps = (state) => ({
-  loginData: state.loginData,
+  registerData: state.registerData,
 });
 
-GoogleAuth.propTypes = {
-  loginData: PropTypes.object,
+GoogleRegister.propTypes = {
+  registerData: PropTypes.object,
 };
 
-export default connect(mapStateToProps, {loginExternal})(GoogleAuth);
+export default connect(mapStateToProps, {postGoogleUser})(GoogleRegister);
