@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
+import {Image, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {GoogleSignin} from '@react-native-community/google-signin';
@@ -6,11 +7,8 @@ import {GoogleSignin} from '@react-native-community/google-signin';
 import google from '../Register/scss/google';
 import googlelogo from '../../img/g-logo.png';
 import {loginExternal} from '../../redux_actions/loginActions';
-import {Image, Text, TouchableOpacity} from 'react-native';
 
 export const GoogleAuth = ({loginExternal, loginData}) => {
-  const [authObject, setAuthObject] = useState(null);
-
   useEffect(() => {
     try {
       GoogleSignin.configure();
@@ -23,7 +21,7 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      setAuthObject({userInfo});
+      await loginExternal(userInfo);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow

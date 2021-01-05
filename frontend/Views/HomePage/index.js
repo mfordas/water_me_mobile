@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-// import RegisterComponent from '../../Components/Register';
+import RegisterComponent from '../../Components/Register';
 import LoginComponent from '../../Components/Login';
 
 const HomePage = () => {
@@ -14,8 +14,8 @@ const HomePage = () => {
         znać, że potrzebują wody. Jeśli zapomnisz o podlewaniu będziesz
         otrzymywał kolejne przypomnienia, które uratują Twoje rośliny.
       </Text>
-      {/* <RegisterComponent /> */}
       <LoginComponent />
+      <RegisterComponent />
     </View>
   );
 };

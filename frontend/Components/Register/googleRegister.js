@@ -1,46 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, {useEffect} from 'react';
+import {TouchableOpacity, Text, Image} from 'react-native';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {GoogleSignin} from '@react-native-community/google-signin';
 
-import "./scss/google.scss";
-import googlelogo from "../../img/g-logo.png";
-import ConfirmGoogle from "./confirmGoogle";
-import { postGoogleUser } from "../../redux_actions/registerActions";
+import google from '../Register/scss/google';
+import googlelogo from '../../img/g-logo.png';
+import ConfirmGoogle from './confirmGoogle';
+import {postGoogleUser} from '../../redux_actions/registerActions';
 
-const GoogleRegister = ({ postGoogleUser, registerData }) => {
-  const [authObject, setAuthObject] = useState(null);
-
+const GoogleRegister = ({postGoogleUser, registerData}) => {
   useEffect(() => {
     try {
-      window.gapi.load("client:auth2", () => {
-        window.gapi.client
-          .init({
-            clientId: process.env.REACT_APP_GOOGLE_AUTH_API_CLIENTID,
-            scope: "email",
-          })
-          .then(() => {
-            setAuthObject(window.gapi.auth2.getAuthInstance());
-          });
-      });
+      GoogleSignin.configure();
     } catch (err) {
-      console.log(new Error(err));
+      console.log(err);
     }
   }, []);
 
   const makeAuth = async () => {
     try {
-      await authObject.signIn();
-      await postGoogleUser(authObject);
-    } catch (err) {
-      console.log(err);
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      await postGoogleUser(userInfo);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
     }
   };
 
   return !registerData.confirm ? (
-    <div className="googleButton" onClick={() => makeAuth()}>
-      <img className="googleButtonLogo" src={googlelogo} alt="google logo" />
-      <div className="googleButtonText">Zarejestruj przez Google</div>
-    </div>
+    <TouchableOpacity style={google.googleButton} onPress={() => makeAuth()}>
+      <Image style={google.googleButtonLogo} source={googlelogo} />
+      <Text style={google.googleButtonText}>Zarejestruj przez Google</Text>
+    </TouchableOpacity>
   ) : (
     <ConfirmGoogle />
   );
@@ -54,4 +54,4 @@ GoogleRegister.propTypes = {
   registerData: PropTypes.object,
 };
 
-export default connect(mapStateToProps, { postGoogleUser })(GoogleRegister);
+export default connect(mapStateToProps, {postGoogleUser})(GoogleRegister);
