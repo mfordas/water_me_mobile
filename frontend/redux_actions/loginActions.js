@@ -1,25 +1,25 @@
-import axios from "axios";
-import jwt from "jwt-decode";
+import axios from 'axios';
+import jwt from 'jwt-decode';
 
-import { TYPES } from "../redux_actions/types";
-import generateAuthTokenForExternalUser from "../Utils/generateAuthTokenForExternalUser";
+import {TYPES} from '../redux_actions/types';
+import generateAuthTokenForExternalUser from '../Utils/generateAuthTokenForExternalUser';
+import {storeData, removeValue} from '../Utils/asyncStorage';
 
 export const loginExternal = (authObject) => async (dispatch) => {
   try {
     const res = await axios({
-      method: "post",
-      url: "/api/authexternal",
+      method: 'post',
+      url: '/api/authexternal',
       data: {
         token: await generateAuthTokenForExternalUser(authObject),
       },
     });
 
     if (res.status === 200) {
-      const token = res.headers["x-auth-token"];
-      localStorage.setItem("token", token);
-      localStorage.setItem("id", jwt(token).id);
-      localStorage.setItem("name", res.data.name);
-      window.location.reload();
+      const token = res.headers['x-auth-token'];
+      await storeData('token', token);
+      await storeData('id', jwt(token).id);
+      await storeData('name', res.data.name);
       dispatch({
         type: TYPES.loginExternal,
         loginData: {
@@ -36,7 +36,7 @@ export const loginExternal = (authObject) => async (dispatch) => {
       });
     }
   } catch (error) {
-    console.error("Error Login:", error.response.data);
+    console.error('Error Login:', error.response.data);
     dispatch({
       type: TYPES.loginExternal,
       loginData: {
@@ -47,16 +47,15 @@ export const loginExternal = (authObject) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("id");
-  localStorage.removeItem("name");
-  window.location.reload();
+  await removeValue('token');
+  await removeValue('id');
+  await removeValue('name');
 
   dispatch({
     type: TYPES.logout,
     loginData: {
-      name: "",
-      googleId: "",
+      name: '',
+      googleId: '',
       invalidData: false,
     },
     isLogged: false,
