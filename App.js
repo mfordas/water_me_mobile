@@ -7,7 +7,7 @@ import {Provider} from 'react-redux';
 
 import LogoComponent from './frontend/Components/Logo';
 import FooterComponent from './frontend/Components/Footer';
-// import Menu from './frontend/Components/Menu';
+import Menu from './frontend/Components/Menu';
 // import PublicRoute from './frontend/Components/PublicRoute';
 // import PrivateRoute from './frontend/Components/PrivateRoute';
 import {store} from './frontend/redux_store/reduxStore';
@@ -23,7 +23,7 @@ const App: () => React$Node = () => {
       <NavigationContainer>
         <SafeAreaView style={{flex: 1}}>
           <LogoComponent />
-          {/* <Menu /> */}
+          <Menu />
           <Stack.Navigator>
             <Stack.Screen
               name="HomePage"
