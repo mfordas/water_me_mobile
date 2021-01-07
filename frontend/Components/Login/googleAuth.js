@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
-import google from '../Register/scss/google';
+import google from '../Register/styling/google';
 import googlelogo from '../../img/g-logo.png';
 import {loginExternal} from '../../redux_actions/loginActions';
 
