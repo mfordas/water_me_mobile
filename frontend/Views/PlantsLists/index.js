@@ -1,14 +1,15 @@
 import React from 'react';
+import {View} from 'react-native';
 
 import PlantsListsComponent from '../../Components/PlantsLists';
-import PlantsListComponent from '../../Components/PlantsList';
+// import PlantsListComponent from '../../Components/PlantsList';
 
 const PlantsLists = () => {
   return (
-    <div className='viewContainer'>
+    <View>
       <PlantsListsComponent />
-      <PlantsListComponent />
-    </div>
+      {/* <PlantsListComponent /> */}
+    </View>
   );
 };
 

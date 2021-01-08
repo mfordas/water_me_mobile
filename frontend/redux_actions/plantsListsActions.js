@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-import { TYPES } from './types';
+import {TYPES} from './types';
 import setHeaders from '../Utils/setHeaders';
+import {getData} from '../Utils/asyncStorage';
 
 export const getPlantsLists = () => async (dispatch) => {
   try {
@@ -38,7 +39,7 @@ export const addPlantsList = (plantsListName) => async (dispatch) => {
       url: '/api/plantsLists',
       headers: setHeaders(),
       data: {
-        userId: localStorage.getItem('id'),
+        userId: await getData('id'),
         name: plantsListName,
       },
     });
@@ -58,7 +59,18 @@ export const addPlantsList = (plantsListName) => async (dispatch) => {
   }
 };
 
-export const getPlantsListsForUser = (userId) => async (dispatch) => {
+export const getPlantsListsForUser = () => async (dispatch) => {
+  const userId = await getData('id');
+
+  if (!userId) {
+    dispatch({
+      type: TYPES.getPlantsLists,
+      plantsLists: [],
+    });
+    console.error('User not logged!');
+    return;
+  }
+
   try {
     const res = await axios({
       method: 'get',

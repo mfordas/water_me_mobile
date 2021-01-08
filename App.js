@@ -13,7 +13,7 @@ import Menu from './frontend/Components/Menu';
 import {store} from './frontend/redux_store/reduxStore';
 
 import HomePage from './frontend/Views/HomePage';
-// import PlantsLists from './frontend/Views/PlantsLists';
+import PlantsLists from './frontend/Views/PlantsLists';
 
 // import './frontend/scss/main_styling.scss';
 
@@ -30,11 +30,11 @@ const App: () => React$Node = () => {
               component={HomePage}
               options={{headerShown: false}}
             />
-            {/* <Stack.Screen
+            <Stack.Screen
               name="PlantsLists"
               component={PlantsLists}
               options={{headerShown: false}}
-            /> */}
+            />
           </Stack.Navigator>
           <FooterComponent />
         </SafeAreaView>
