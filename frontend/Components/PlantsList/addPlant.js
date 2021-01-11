@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from 'react-native';
+import {connect} from 'react-redux';
+import {launchCamera} from 'react-native-image-picker';
+
 import PropTypes from 'prop-types';
 
 import {
   addPlantToList,
   uploadPlantImage,
 } from '../../redux_actions/plantsActions';
-import { showPlantsList } from '../../redux_actions/plantsListsActions';
+import {showPlantsList} from '../../redux_actions/plantsListsActions';
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import setCurrentDate from './setCurrentDate';
-import './scss/plantsList.scss';
+import plantsList from './styles/plantsList';
 
 export const AddPlant = ({
   listId,
@@ -19,7 +29,7 @@ export const AddPlant = ({
   showPlantsList,
 }) => {
   const [name, setName] = useState('');
-  const [wateringCycle, setWateringCycle] = useState(0);
+  const [wateringCycle, setWateringCycle] = useState('0');
   const [picture, setPicture] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -33,9 +43,7 @@ export const AddPlant = ({
     updatePlantsList();
   }, [plantsData, listId, showPlantsList]);
 
-  const handleUploadingFile = async (event) => {
-    event.preventDefault();
-
+  const handleUploadingFile = async () => {
     const photoData = new FormData();
 
     photoData.append('image', event.target.files[0]);
@@ -67,52 +75,51 @@ export const AddPlant = ({
 
   const validateName = () => {
     if (formSubmitted && !name) {
-      return <ErrorMessage errorText='Wpisz imię' />;
+      return <ErrorMessage errorText="Wpisz imię" />;
     } else if (formSubmitted && name.length <= 3) {
-      return <ErrorMessage errorText='Imię powinno być dłuższe niż 3 znaki' />;
+      return <ErrorMessage errorText="Imię powinno być dłuższe niż 3 znaki" />;
     }
   };
 
   const validateWateringCycle = () => {
     if (formSubmitted && wateringCycle === 0) {
-      return <ErrorMessage errorText='Wpisz częstotliwość podlewania' />;
+      return <ErrorMessage errorText="Wpisz częstotliwość podlewania" />;
     }
   };
 
   const validatePicture = () => {
     if (formSubmitted && !picture) {
-      return <ErrorMessage errorText='Dodaj zdjęcie' />;
+      return <ErrorMessage errorText="Dodaj zdjęcie" />;
     }
   };
 
   return (
-    <div className='addPlantContainer' data-test='addPlantComponent'>
-      <form encType='multipart/form-data'>
-        <label>
-          Imię
-          <input
-            type='text'
+    <ScrollView>
+      {/* <form encType='multipart/form-data'> */}
+      <View style={plantsList.addPlantContainer}>
+        <View>
+          <Text>Imię</Text>
+          <TextInput
             value={name}
-            onChange={(e) => {
-              setName(e.target.value);
+            onChangeText={(text) => {
+              setName(text);
             }}
           />
-        </label>
+        </View>
         {validateName()}
-        <label>
-          Podlewanie co:
-          <input
-            type='number'
-            min={0}
+        <View>
+          <Text>Podlewanie co:</Text>
+          <TextInput
+            keyboardType="number-pad"
             value={wateringCycle}
-            onChange={(e) => {
-              setWateringCycle(e.target.value);
+            onChange={(text) => {
+              setWateringCycle(text);
             }}
           />
-          {wateringCycle === '1' ? `dzień` : 'dni'}
-        </label>
+          <Text>{wateringCycle === '1' ? `dzień` : 'dni'}</Text>
+        </View>
         {validateWateringCycle()}
-        <label>
+        {/* <label>
           Data startu:
           <input
             type='date'
@@ -121,21 +128,29 @@ export const AddPlant = ({
               setStartDate(e.target.value);
             }}
           />
-        </label>
-        <label>
-          Zdjęcie
-          <input
-            type='file'
-            name='image'
-            onChange={async (event) => {
-              await handleUploadingFile(event);
-            }}
-          />
-        </label>
+        </label> */}
+        <View>
+          <TouchableOpacity
+            onPress={async () => {
+              // await handleUploadingFile();
+              launchCamera(
+                {
+                  madiaType: 'photo',
+                },
+                // (res) => setPicture(res.uri),
+                (res) => console.log(res.uri),
+              );
+            }}>
+            <Text>Zdjęcie</Text>
+          </TouchableOpacity>
+        </View>
         {validatePicture()}
-        <button onClick={handleAddingPlantToList}>Dodaj</button>
-      </form>
-    </div>
+        <TouchableOpacity onPress={handleAddingPlantToList}>
+          <Text>Dodaj</Text>
+        </TouchableOpacity>
+        {/* </form> */}
+      </View>
+    </ScrollView>
   );
 };
 

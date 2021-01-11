@@ -8,8 +8,7 @@ import {Provider} from 'react-redux';
 import LogoComponent from './frontend/Components/Logo';
 import FooterComponent from './frontend/Components/Footer';
 import Menu from './frontend/Components/Menu';
-// import PublicRoute from './frontend/Components/PublicRoute';
-// import PrivateRoute from './frontend/Components/PrivateRoute';
+import AddPlant from './frontend/Components/PlantsList/addPlant';
 import {store} from './frontend/redux_store/reduxStore';
 
 import HomePage from './frontend/Views/HomePage';
@@ -24,6 +23,7 @@ const App: () => React$Node = () => {
         <SafeAreaView style={{flex: 1}}>
           <LogoComponent />
           <Menu />
+          <AddPlant />
           <Stack.Navigator>
             <Stack.Screen
               name="HomePage"
