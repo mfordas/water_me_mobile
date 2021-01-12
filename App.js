@@ -10,6 +10,7 @@ import FooterComponent from './frontend/Components/Footer';
 import Menu from './frontend/Components/Menu';
 import AddPlant from './frontend/Components/PlantsList/addPlant';
 import {store} from './frontend/redux_store/reduxStore';
+import PlantsList from './frontend/Components/PlantsList/plantsList';
 
 import HomePage from './frontend/Views/HomePage';
 import PlantsLists from './frontend/Views/PlantsLists';
@@ -23,9 +24,8 @@ const App: () => React$Node = () => {
         <SafeAreaView style={{flex: 1}}>
           <LogoComponent />
           <Menu />
-          <AddPlant />
           <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
               name="HomePage"
               component={HomePage}
               options={{headerShown: false}}
@@ -33,6 +33,11 @@ const App: () => React$Node = () => {
             <Stack.Screen
               name="PlantsLists"
               component={PlantsLists}
+              options={{headerShown: false}}
+            /> */}
+            <Stack.Screen
+              name="PlantsList"
+              component={PlantsList}
               options={{headerShown: false}}
             />
           </Stack.Navigator>

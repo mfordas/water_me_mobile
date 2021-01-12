@@ -8,7 +8,8 @@ import {
   ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {launchCamera} from 'react-native-image-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DocumentPicker from 'react-native-document-picker';
 
 import PropTypes from 'prop-types';
 
@@ -32,25 +33,56 @@ export const AddPlant = ({
   const [wateringCycle, setWateringCycle] = useState('0');
   const [picture, setPicture] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
-
-  const [startDate, setStartDate] = useState(setCurrentDate());
+  const [singleFile, setSingleFile] = useState(null);
+  const [date, setDate] = useState(setCurrentDate(new Date()));
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const updatePlantsList = async () => {
-      await showPlantsList(localStorage.getItem('id'), listId);
+      await showPlantsList(listId);
     };
 
     updatePlantsList();
   }, [plantsData, listId, showPlantsList]);
 
   const handleUploadingFile = async () => {
-    const photoData = new FormData();
+    if (singleFile != null) {
+      const fileToUpload = singleFile;
+      const data = new FormData();
+      data.append('name', 'Image Upload');
+      data.append('file_attachment', fileToUpload);
+      const imageName = await uploadPlantImage(photoData);
 
-    photoData.append('image', event.target.files[0]);
+      setPicture(imageName);
+      if (imageName) {
+        alert('Upload Successful');
+      }
+    } else {
+      // If no file selected the show alert
+      alert('Please Select File first');
+    }
+  };
 
-    const imageName = await uploadPlantImage(photoData);
-
-    setPicture(imageName);
+  const selectFile = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+      });
+      console.log('res : ' + JSON.stringify(res));
+      // Setting the state to show single file attributes
+      setSingleFile(res);
+    } catch (err) {
+      setSingleFile(null);
+      // Handling any exception (If any)
+      if (DocumentPicker.isCancel(err)) {
+        // If user canceled the document selection
+        alert('Canceled');
+      } else {
+        // For Unknown Error
+        alert('Unknown Error: ' + JSON.stringify(err));
+        throw err;
+      }
+    }
   };
 
   const handleAddingPlantToList = async (event) => {
@@ -67,10 +99,21 @@ export const AddPlant = ({
         lastTimeWatered: startDate,
       };
 
+      await handleUploadingFile();
       await addPlantToList(plantData, listId);
 
       setFormSubmitted(false);
     }
+  };
+
+  const onChange = (selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
   };
 
   const validateName = () => {
@@ -97,9 +140,10 @@ export const AddPlant = ({
     <ScrollView>
       {/* <form encType='multipart/form-data'> */}
       <View style={plantsList.addPlantContainer}>
-        <View>
+        <View style={plantsList.inputContainer}>
           <Text>Imię</Text>
           <TextInput
+            style={plantsList.input}
             value={name}
             onChangeText={(text) => {
               setName(text);
@@ -107,9 +151,10 @@ export const AddPlant = ({
           />
         </View>
         {validateName()}
-        <View>
+        <View style={plantsList.inputContainer}>
           <Text>Podlewanie co:</Text>
           <TextInput
+            style={plantsList.inputContainer}
             keyboardType="number-pad"
             value={wateringCycle}
             onChange={(text) => {
@@ -119,36 +164,47 @@ export const AddPlant = ({
           <Text>{wateringCycle === '1' ? `dzień` : 'dni'}</Text>
         </View>
         {validateWateringCycle()}
-        {/* <label>
-          Data startu:
-          <input
-            type='date'
-            value={startDate}
-            onChange={(e) => {
-              setStartDate(e.target.value);
-            }}
-          />
-        </label> */}
-        <View>
-          <TouchableOpacity
+        <View style={plantsList.inputContainer}>
+          <Text style={plantsList.text}>Data startu:</Text>
+          <TouchableOpacity onPress={showDatepicker}>
+            <Text>{date}</Text>
+          </TouchableOpacity>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={'date'}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+            />
+          )}
+        </View>
+        <View style={plantsList.inputContainer}>
+          <Text>{picture}</Text>
+          {/* <TouchableOpacity
+            style={plantsList.button}
             onPress={async () => {
               // await handleUploadingFile();
               launchCamera(
                 {
                   madiaType: 'photo',
                 },
-                // (res) => setPicture(res.uri),
-                (res) => console.log(res.uri),
+                (res) => setPicture(res.uri),
               );
             }}>
-            <Text>Zdjęcie</Text>
+            <Text style={plantsList.text}>Zrób Zdjęcie</Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity style={plantsList.button} onPress={selectFile}>
+            <Text style={plantsList.text}>Dodaj zdjęcie z galerii</Text>
           </TouchableOpacity>
         </View>
         {validatePicture()}
-        <TouchableOpacity onPress={handleAddingPlantToList}>
+        <TouchableOpacity
+          style={plantsList.button}
+          onPress={handleAddingPlantToList}>
           <Text>Dodaj</Text>
         </TouchableOpacity>
-        {/* </form> */}
       </View>
     </ScrollView>
   );

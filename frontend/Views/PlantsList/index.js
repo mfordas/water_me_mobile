@@ -2,14 +2,8 @@ import React from 'react';
 
 import PlantsListComponent from '../../Components/PlantsList';
 
-
 const PlantsList = () => {
-  
-  return (
-      <div className="viewContainer">
-        <PlantsListComponent />
-      </div>
-  );
+  return <PlantsListComponent />;
 };
 
 export default PlantsList;

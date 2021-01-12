@@ -23,6 +23,23 @@ const styles = StyleSheet.create({
     width: '75%',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
+  },
+
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  input: {
+    borderBottomWidth: 2,
+    width: 150,
+  },
+
+  text: {
+    marginHorizontal: 10,
   },
 
   label: {
@@ -34,13 +51,26 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'white',
     borderRadius: 10,
+    borderWidth: 2,
+    paddingHorizontal: 20,
+    paddingVertical: 3,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
 
   addPlantButton: {
     backgroundColor: '#f5d453',
+    borderRadius: 10,
+    borderWidth: 2,
+    paddingHorizontal: 20,
+    paddingVertical: 3,
+    marginHorizontal: 10,
+    marginVertical: 10,
+    width: '50%',
+    alignSelf: 'center',
   },
 
-  deleteButton: {
+  deletePlantButton: {
     backgroundColor: '#f24949',
     color: 'white',
   },
@@ -58,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f24949',
   },
 
-  button: {
+  buttonWatering: {
     backgroundColor: 'skyblue',
   },
 });

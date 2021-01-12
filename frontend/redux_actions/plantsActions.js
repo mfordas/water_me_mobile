@@ -84,10 +84,15 @@ export const updateLastWateringDate = (
 
 export const uploadPlantImage = (fileObject) => async (dispatch) => {
   try {
+    const headers = setHeaders();
     const res = await axios({
       method: 'post',
       url: `/api/plants/image`,
-      headers: setHeaders(),
+      headers: {
+        Accept: headers.Accept,
+        'x-auth-token': headers['x-auth-token'],
+        'Content-Type': header['Content-Type'],
+      },
       data: fileObject,
     });
 

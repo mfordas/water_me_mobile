@@ -1,14 +1,14 @@
-const setCurrentDate = () => {
-    const currentDate = new Date();
+const setCurrentDate = (date) => {
+  const currentDate = date;
 
-    const year = currentDate.getUTCFullYear();
-    const month = currentDate.getUTCMonth() + 1;
-    const day =
-      currentDate.getUTCDate() < 10
-        ? `0${currentDate.getUTCDate()}`
-        : currentDate.getUTCDate();
+  const year = currentDate.getUTCFullYear();
+  const month = currentDate.getUTCMonth() + 1;
+  const day =
+    currentDate.getUTCDate() < 10
+      ? `0${currentDate.getUTCDate()}`
+      : currentDate.getUTCDate();
 
-    return `${year}-${month}-${day}`;
-  };
+  return `${year}-${month}-${day}`;
+};
 
-  export default setCurrentDate;
+export default setCurrentDate;
