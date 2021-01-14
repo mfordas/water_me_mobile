@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import {deletePlant} from '../../redux_actions/plantsActions';
 import {showPlantsList} from '../../redux_actions/plantsListsActions';
-import plantsList from './styles/plantsList';
+import styles from './styles/plantsList';
 
 const DeletePlant = ({deletePlant, showPlantsList, plantId, listId}) => {
   const handleDeletePlant = async () => {
@@ -16,7 +16,7 @@ const DeletePlant = ({deletePlant, showPlantsList, plantId, listId}) => {
   return (
     <View>
       <TouchableOpacity
-        style={plantsList.deletePlantButton}
+        style={styles.deletePlantButton}
         onPress={handleDeletePlant}>
         Usuń
       </TouchableOpacity>

@@ -20,7 +20,7 @@ import {
 import {showPlantsList} from '../../redux_actions/plantsListsActions';
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import setCurrentDate from './setCurrentDate';
-import plantsList from './styles/plantsList';
+import styles from './styles/plantsList';
 
 export const AddPlant = ({
   listId,
@@ -139,11 +139,11 @@ export const AddPlant = ({
   return (
     <ScrollView>
       {/* <form encType='multipart/form-data'> */}
-      <View style={plantsList.addPlantContainer}>
-        <View style={plantsList.inputContainer}>
+      <View style={styles.addPlantContainer}>
+        <View style={styles.inputContainer}>
           <Text>Imię</Text>
           <TextInput
-            style={plantsList.input}
+            style={styles.input}
             value={name}
             onChangeText={(text) => {
               setName(text);
@@ -151,10 +151,10 @@ export const AddPlant = ({
           />
         </View>
         {validateName()}
-        <View style={plantsList.inputContainer}>
+        <View style={styles.inputContainer}>
           <Text>Podlewanie co:</Text>
           <TextInput
-            style={plantsList.inputContainer}
+            style={styles.inputContainer}
             keyboardType="number-pad"
             value={wateringCycle}
             onChange={(text) => {
@@ -164,8 +164,8 @@ export const AddPlant = ({
           <Text>{wateringCycle === '1' ? `dzień` : 'dni'}</Text>
         </View>
         {validateWateringCycle()}
-        <View style={plantsList.inputContainer}>
-          <Text style={plantsList.text}>Data startu:</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.text}>Data startu:</Text>
           <TouchableOpacity onPress={showDatepicker}>
             <Text>{date}</Text>
           </TouchableOpacity>
@@ -180,10 +180,10 @@ export const AddPlant = ({
             />
           )}
         </View>
-        <View style={plantsList.inputContainer}>
+        <View style={styles.inputContainer}>
           <Text>{picture}</Text>
           {/* <TouchableOpacity
-            style={plantsList.button}
+            style={styles.button}
             onPress={async () => {
               // await handleUploadingFile();
               launchCamera(
@@ -193,15 +193,15 @@ export const AddPlant = ({
                 (res) => setPicture(res.uri),
               );
             }}>
-            <Text style={plantsList.text}>Zrób Zdjęcie</Text>
+            <Text style={styles.text}>Zrób Zdjęcie</Text>
           </TouchableOpacity> */}
-          <TouchableOpacity style={plantsList.button} onPress={selectFile}>
-            <Text style={plantsList.text}>Dodaj zdjęcie z galerii</Text>
+          <TouchableOpacity style={styles.button} onPress={selectFile}>
+            <Text style={styles.text}>Dodaj zdjęcie z galerii</Text>
           </TouchableOpacity>
         </View>
         {validatePicture()}
         <TouchableOpacity
-          style={plantsList.button}
+          style={styles.button}
           onPress={handleAddingPlantToList}>
           <Text>Dodaj</Text>
         </TouchableOpacity>
