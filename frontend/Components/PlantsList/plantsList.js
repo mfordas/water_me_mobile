@@ -8,7 +8,7 @@ import {
   getPlantsListsForUser,
 } from '../../redux_actions/plantsListsActions';
 import AddPlant from './addPlant';
-// import DeletePlant from './deletePlant';
+import DeletePlant from './deletePlant';
 // import Watering from './watering';
 import plantsList from './styles/plantsList';
 
