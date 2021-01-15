@@ -91,6 +91,8 @@ const styles = StyleSheet.create({
   buttonWatering: {
     backgroundColor: 'skyblue',
   },
+
+  wateringContainer: {},
 });
 
 export default styles;

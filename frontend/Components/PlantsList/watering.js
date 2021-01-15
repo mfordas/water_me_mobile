@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {updateLastWateringDate} from '../../redux_actions/plantsActions';
 import {showPlantsList} from '../../redux_actions/plantsListsActions';
 import setCurrentDate from './setCurrentDate';
-import plantsList from './styles/plantsList';
+import styles from './styles/plantsList';
 
 const Watering = ({
   updateLastWateringDate,
@@ -33,8 +33,8 @@ const Watering = ({
 
     if (countDaysSinceLastWatering < wateringCycle) {
       return (
-        <View style={plantsList.wateringStatusContainer}>
-          <Text style={plantsList.statusOk}>U mnie w porządku!</Text>
+        <View style={styles.wateringStatusContainer}>
+          <Text style={styles.statusOk}>U mnie w porządku!</Text>
           <View>
             <Text>
               Kolejne podlewanie za: {nextWateringIn}
@@ -45,8 +45,8 @@ const Watering = ({
       );
     } else {
       return (
-        <View style={plantsList.wateringStatusContainer}>
-          <Text style={plantsList.statusNok}>Potrzebuję wody!</Text>
+        <View style={styles.wateringStatusContainer}>
+          <Text style={styles.statusNok}>Potrzebuję wody!</Text>
           <TouchableOpacity onPress={handleUpdateLastWateringDate}>
             <Text>Podlej</Text>
           </TouchableOpacity>
@@ -56,7 +56,7 @@ const Watering = ({
   };
 
   return (
-    <View style={plantsList.wateringContainer}>
+    <View style={styles.wateringContainer}>
       <Text>{countWatering()}</Text>
     </View>
   );
