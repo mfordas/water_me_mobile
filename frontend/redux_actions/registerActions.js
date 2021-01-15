@@ -3,12 +3,13 @@ import axios from 'axios';
 import {TYPES} from '../redux_actions/types';
 
 import generateAuthTokenForExternalUser from '../Utils/generateAuthTokenForExternalUser';
+import apiUrl from '../Utils/apiUrl';
 
 export const postGoogleUser = (authObject) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: '/api/users/googleUser',
+      url: `${apiUrl()}/api/users/googleUser`,
       data: {token: await generateAuthTokenForExternalUser(authObject)},
     });
 

@@ -38,7 +38,7 @@ export const AddPlantsList = ({addPlantsList, getPlantsListsForUser}) => {
       <View style={styles.addPlantsListForm}>
         <TextInput
           style={styles.input}
-          onChange={(e) => setPlantsListName(e.target.value)}></TextInput>
+          onChange={(text) => setPlantsListName(text)}></TextInput>
         <TouchableOpacity
           style={styles.button}
           onPress={(e) => addNewPlantsList(e)}>

@@ -3,12 +3,13 @@ import axios from 'axios';
 import {TYPES} from './types';
 import setHeaders from '../Utils/setHeaders';
 import {getData} from '../Utils/asyncStorage';
+import apiUrl from '../Utils/apiUrl';
 
 export const getPlantsLists = () => async (dispatch) => {
   try {
     const res = await axios({
       method: 'get',
-      url: '/api/plantsLists',
+      url: `${apiUrl()}/api/plantsLists`,
       headers: setHeaders(),
     });
 
@@ -36,7 +37,7 @@ export const addPlantsList = (plantsListName) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: '/api/plantsLists',
+      url: `${apiUrl()}/api/plantsLists`,
       headers: setHeaders(),
       data: {
         userId: await getData('id'),
@@ -74,7 +75,7 @@ export const getPlantsListsForUser = () => async (dispatch) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `/api/plantsLists/${userId}`,
+      url: `${apiUrl()}/api/plantsLists/${userId}`,
       headers: setHeaders(),
     });
 
@@ -103,7 +104,7 @@ export const deletePlantsList = (plantsListId) => async (dispatch) => {
     const userId = await getData('id');
     const res = await axios({
       method: 'delete',
-      url: `/api/plantsLists/${userId}/${plantsListId}`,
+      url: `${apiUrl()}/api/plantsLists/${userId}/${plantsListId}`,
       headers: setHeaders(),
       data: {
         userId: userId,
@@ -135,7 +136,7 @@ export const showPlantsList = (plantsListId) => async (dispatch) => {
     const userId = await getData('id');
     const res = await axios({
       method: 'get',
-      url: `/api/plants/${userId}/${plantsListId}`,
+      url: `${apiUrl()}/api/plants/${userId}/${plantsListId}`,
       headers: setHeaders(),
     });
 
