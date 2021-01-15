@@ -4,12 +4,13 @@ import jwt from 'jwt-decode';
 import {TYPES} from '../redux_actions/types';
 import generateAuthTokenForExternalUser from '../Utils/generateAuthTokenForExternalUser';
 import {storeData, removeValue, getData} from '../Utils/asyncStorage';
+import apiUrl from '../Utils/apiUrl';
 
 export const loginExternal = (authObject) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: '/api/authexternal',
+      url: `${apiUrl()}/api/authexternal`,
       data: {
         token: await generateAuthTokenForExternalUser(authObject),
       },

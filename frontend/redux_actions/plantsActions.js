@@ -3,6 +3,7 @@ import axios from 'axios';
 import {TYPES} from './types';
 import setHeaders from '../Utils/setHeaders';
 import {getData} from '../Utils/asyncStorage';
+import apiUrl from '../Utils/apiUrl';
 
 export const addPlantToList = (plantDataFromUser, plantsListId) => async (
   dispatch,
@@ -10,7 +11,7 @@ export const addPlantToList = (plantDataFromUser, plantsListId) => async (
   try {
     const res = await axios({
       method: 'post',
-      url: `/api/plants/${plantsListId}`,
+      url: `${apiUrl()}/api/plants/${plantsListId}`,
       headers: setHeaders(),
       data: plantDataFromUser,
     });
@@ -35,7 +36,7 @@ export const deletePlant = (plantId) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'delete',
-      url: `/api/plants/${userId}/${plantId}`,
+      url: `${apiUrl()}/api/plants/${userId}/${plantId}`,
       headers: setHeaders(),
     });
 
@@ -61,7 +62,7 @@ export const updateLastWateringDate = (plantId, lastWateringDate) => async (
   try {
     const res = await axios({
       method: 'patch',
-      url: `/api/plants/${userId}/${plantId}`,
+      url: `${apiUrl()}/api/plants/${userId}/${plantId}`,
       headers: setHeaders(),
       data: {
         lastTimeWatered: lastWateringDate,
@@ -88,7 +89,7 @@ export const uploadPlantImage = (fileObject) => async (dispatch) => {
     const headers = setHeaders();
     const res = await axios({
       method: 'post',
-      url: `/api/plants/image`,
+      url: `${apiUrl()}/api/plants/image`,
       headers: {
         Accept: headers.Accept,
         'x-auth-token': headers['x-auth-token'],
