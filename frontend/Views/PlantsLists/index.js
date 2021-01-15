@@ -8,7 +8,6 @@ const PlantsLists = () => {
   return (
     <View>
       <PlantsListsComponent />
-      <PlantsListComponent />
     </View>
   );
 };
