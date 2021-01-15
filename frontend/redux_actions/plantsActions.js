@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import {TYPES} from './types';
 import setHeaders from '../Utils/setHeaders';
+import {getData} from '../Utils/asyncStorage';
 
 export const addPlantToList = (plantDataFromUser, plantsListId) => async (
   dispatch,
@@ -29,7 +30,8 @@ export const addPlantToList = (plantDataFromUser, plantsListId) => async (
   }
 };
 
-export const deletePlant = (userId, plantId) => async (dispatch) => {
+export const deletePlant = (plantId) => async (dispatch) => {
+  const userId = await getData('id');
   try {
     const res = await axios({
       method: 'delete',
@@ -52,11 +54,10 @@ export const deletePlant = (userId, plantId) => async (dispatch) => {
   }
 };
 
-export const updateLastWateringDate = (
-  userId,
-  plantId,
-  lastWateringDate,
-) => async (dispatch) => {
+export const updateLastWateringDate = (plantId, lastWateringDate) => async (
+  dispatch,
+) => {
+  const userId = await getData('id');
   try {
     const res = await axios({
       method: 'patch',
@@ -84,10 +85,15 @@ export const updateLastWateringDate = (
 
 export const uploadPlantImage = (fileObject) => async (dispatch) => {
   try {
+    const headers = setHeaders();
     const res = await axios({
       method: 'post',
       url: `/api/plants/image`,
-      headers: setHeaders(),
+      headers: {
+        Accept: headers.Accept,
+        'x-auth-token': headers['x-auth-token'],
+        'Content-Type': header['Content-Type'],
+      },
       data: fileObject,
     });
 

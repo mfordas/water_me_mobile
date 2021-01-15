@@ -98,8 +98,9 @@ export const getPlantsListsForUser = () => async (dispatch) => {
   }
 };
 
-export const deletePlantsList = (userId, plantsListId) => async (dispatch) => {
+export const deletePlantsList = (plantsListId) => async (dispatch) => {
   try {
+    const userId = await getData('id');
     const res = await axios({
       method: 'delete',
       url: `/api/plantsLists/${userId}/${plantsListId}`,
@@ -129,8 +130,9 @@ export const deletePlantsList = (userId, plantsListId) => async (dispatch) => {
   }
 };
 
-export const showPlantsList = (userId, plantsListId) => async (dispatch) => {
+export const showPlantsList = (plantsListId) => async (dispatch) => {
   try {
+    const userId = await getData('id');
     const res = await axios({
       method: 'get',
       url: `/api/plants/${userId}/${plantsListId}`,

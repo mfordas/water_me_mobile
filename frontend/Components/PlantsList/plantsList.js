@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
@@ -9,18 +10,17 @@ import {
 import AddPlant from './addPlant';
 import DeletePlant from './deletePlant';
 import Watering from './watering';
-import './scss/plantsList.scss';
+import styles from './styles/plantsList';
 
-const PlantsList = ({ showPlantsList, plantsListsData, listIndex }) => {
+const PlantsList = ({showPlantsList, plantsListsData, listIndex}) => {
   const [plants, setPlants] = useState([]);
   const [showAddPlantForm, setShowAddPlantForm] = useState(false);
 
   useEffect(() => {
     const getPlantsFromList = async () => {
-      await showPlantsList(
-        plantsListsData.userId,
-        plantsListsData.plantsLists[listIndex].id
-      );
+      plantsListsData.plantsLists.length > 0
+        ? await showPlantsList(plantsListsData.plantsLists[listIndex].id)
+        : null;
     };
 
     getPlantsFromList();
@@ -36,10 +36,16 @@ const PlantsList = ({ showPlantsList, plantsListsData, listIndex }) => {
     if (plantsArray) {
       const plantsList = plantsArray.map((plant, index) => {
         return (
-          <div key={index} className='plantContainer'>
-            <div>{plant.name}</div>
-            <img src={`../../images/${plant.pictureUrl}.png`} alt='Plant' />
-            <div>Podlewanie co: {plant.wateringCycle}</div>
+          <View style={styles.plantContainer}>
+            <Text>{plant.name}</Text>
+            <Image
+              style={styles.plantPicture}
+              source={{
+                uri: 'https://reactnative.dev/img/tiny_logo.png',
+              }}
+            />
+            {/* <img src={`../../images/${plant.pictureUrl}.png`} /> */}
+            <Text>Podlewanie co: {plant.wateringCycle}</Text>
             <Watering
               lastWateringDate={plant.lastTimeWatered}
               plantId={plant.id}
@@ -50,7 +56,7 @@ const PlantsList = ({ showPlantsList, plantsListsData, listIndex }) => {
               plantId={plant.id}
               listId={plantsListsData.plantsLists[listIndex].id}
             />
-          </div>
+          </View>
         );
       });
 
@@ -61,18 +67,17 @@ const PlantsList = ({ showPlantsList, plantsListsData, listIndex }) => {
   };
 
   return (
-    <>
-      <button
-        className='addPlantButton'
-        onClick={() => setShowAddPlantForm(!showAddPlantForm)}
-      >
-        Dodaj roślinę
-      </button>
+    <View style={styles.plantsContainer}>
+      <TouchableOpacity
+        style={styles.addPlantButton}
+        onPress={() => setShowAddPlantForm(!showAddPlantForm)}>
+        <Text style={{textAlign: 'center'}}>Dodaj roślinę</Text>
+      </TouchableOpacity>
       {showAddPlantForm ? (
         <AddPlant listId={plantsListsData.plantsLists[listIndex].id} />
       ) : null}
-      <div className='plantsContainer'>{generatePlantsList(plants)}</div>
-    </>
+      <View style={styles.plantsContainer}>{generatePlantsList(plants)}</View>
+    </View>
   );
 };
 

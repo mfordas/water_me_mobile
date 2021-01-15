@@ -1,46 +1,79 @@
-import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {SafeAreaView} from 'react-native';
+import {connect} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import {Provider} from 'react-redux';
+import PropTypes from 'prop-types';
 
-import LogoComponent from './frontend/Components/Logo';
 import FooterComponent from './frontend/Components/Footer';
 import Menu from './frontend/Components/Menu';
-// import PublicRoute from './frontend/Components/PublicRoute';
-// import PrivateRoute from './frontend/Components/PrivateRoute';
 import {store} from './frontend/redux_store/reduxStore';
+import PlantsList from './frontend/Components/PlantsList/plantsList';
+import LogoComponent from './frontend/Components/Logo';
+import {loginCheck} from './frontend/redux_actions/loginActions';
 
 import HomePage from './frontend/Views/HomePage';
 import PlantsLists from './frontend/Views/PlantsLists';
 
-// import './frontend/scss/main_styling.scss';
+const App: () => React$Node = ({loginData, loginCheck}) => {
+  useEffect(() => {
+    loginCheck();
+  }, []);
 
-const App: () => React$Node = () => {
+  return (
+    <NavigationContainer>
+      <SafeAreaView style={{flex: 1}}>
+        <LogoComponent />
+        <Menu />
+        <Stack.Navigator>
+          {!loginData.isLogged && (
+            <>
+              <Stack.Screen
+                name="HomePage"
+                component={HomePage}
+                options={{headerShown: false}}
+              />
+            </>
+          )}
+          {loginData.isLogged && (
+            <>
+              <Stack.Screen
+                name="PlantsLists"
+                component={PlantsLists}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="PlantsList"
+                component={PlantsList}
+                options={{headerShown: false}}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+        <FooterComponent />
+      </SafeAreaView>
+    </NavigationContainer>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  loginData: state.loginData,
+});
+
+Menu.propTypes = {
+  loginData: PropTypes.object,
+};
+
+const AppConnected = connect(mapStateToProps, {loginCheck})(App);
+
+const AppContext = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <SafeAreaView style={{flex: 1}}>
-          <LogoComponent />
-          <Menu />
-          <Stack.Navigator>
-            <Stack.Screen
-              name="HomePage"
-              component={HomePage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="PlantsLists"
-              component={PlantsLists}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
-          <FooterComponent />
-        </SafeAreaView>
-      </NavigationContainer>
+      <AppConnected />
     </Provider>
   );
 };
 
-export default App;
+export default AppContext;

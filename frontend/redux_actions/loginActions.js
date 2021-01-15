@@ -3,7 +3,7 @@ import jwt from 'jwt-decode';
 
 import {TYPES} from '../redux_actions/types';
 import generateAuthTokenForExternalUser from '../Utils/generateAuthTokenForExternalUser';
-import {storeData, removeValue} from '../Utils/asyncStorage';
+import {storeData, removeValue, getData} from '../Utils/asyncStorage';
 
 export const loginExternal = (authObject) => async (dispatch) => {
   try {
@@ -60,4 +60,16 @@ export const logout = () => async (dispatch) => {
     },
     isLogged: false,
   });
+};
+
+export const loginCheck = () => async (dispatch) => {
+  (await getData('token'))
+    ? dispatch({
+        type: TYPES.logincheck,
+        isLogged: true,
+      })
+    : dispatch({
+        type: TYPES.logincheck,
+        isLogged: false,
+      });
 };
