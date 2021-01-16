@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, TouchableOpacity, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -27,6 +27,9 @@ const App: () => React$Node = ({loginData, loginCheck}) => {
       <SafeAreaView style={{flex: 1}}>
         <LogoComponent />
         <Menu />
+        <TouchableOpacity onPress={() => console.log(loginData.isLogged)}>
+          <Text>test button</Text>
+        </TouchableOpacity>
         <Stack.Navigator>
           {!loginData.isLogged && (
             <>

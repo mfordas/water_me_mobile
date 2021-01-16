@@ -2,16 +2,21 @@ import React, {useEffect} from 'react';
 import {Image, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 
 import google from '../Register/styling/google';
 import googlelogo from '../../img/g-logo.png';
 import {loginExternal} from '../../redux_actions/loginActions';
+import {REACT_APP_GOOGLE_AUTH_API_CLIENTID} from '@env';
 
 export const GoogleAuth = ({loginExternal, loginData}) => {
   useEffect(() => {
     try {
-      GoogleSignin.configure();
+      console.log(REACT_APP_GOOGLE_AUTH_API_CLIENTID);
+      GoogleSignin.configure({
+        webClientId: REACT_APP_GOOGLE_AUTH_API_CLIENTID,
+      });
+      console.log(GoogleSignin.getCurrentUser());
     } catch (err) {
       console.log(err);
     }
@@ -20,7 +25,9 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
   const makeAuth = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
+      await GoogleSignin.signIn();
+      console.log(GoogleSignin);
+      console.log('test');
       await loginExternal(userInfo);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -36,10 +43,16 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
   };
 
   return (
-    <TouchableOpacity style={google.googleButton} onPress={() => makeAuth()}>
-      <Image style={google.googleButtonLogo} source={googlelogo} />
-      <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity style={google.googleButton} onPress={() => makeAuth()}>
+        <Image style={google.googleButtonLogo} source={googlelogo} />
+        <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={async () => console.log(await GoogleSignin.getCurrentUser())}>
+        <Text>test button</Text>
+      </TouchableOpacity>
+    </>
   );
 };
 

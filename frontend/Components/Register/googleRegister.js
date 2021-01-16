@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {TouchableOpacity, Text, Image} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 
 import google from './styling/google';
 import googlelogo from '../../img/g-logo.png';
