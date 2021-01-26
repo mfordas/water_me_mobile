@@ -12,11 +12,9 @@ import {REACT_APP_GOOGLE_AUTH_API_CLIENTID} from '@env';
 export const GoogleAuth = ({loginExternal, loginData}) => {
   useEffect(() => {
     try {
-      console.log(REACT_APP_GOOGLE_AUTH_API_CLIENTID);
       GoogleSignin.configure({
         webClientId: REACT_APP_GOOGLE_AUTH_API_CLIENTID,
       });
-      console.log(GoogleSignin.getCurrentUser());
     } catch (err) {
       console.log(err);
     }
@@ -25,10 +23,10 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
   const makeAuth = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      await GoogleSignin.signIn();
-      console.log(GoogleSignin);
-      console.log('test');
-      await loginExternal(userInfo);
+      const userInfo = await GoogleSignin.signIn();
+      const tokens = await GoogleSignin.getTokens();
+      const user = {...userInfo, ...tokens};
+      await loginExternal(user);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -50,6 +48,9 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={async () => console.log(await GoogleSignin.getCurrentUser())}>
+        <Text>test button</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={async () => console.log(loginData)}>
         <Text>test button</Text>
       </TouchableOpacity>
     </>

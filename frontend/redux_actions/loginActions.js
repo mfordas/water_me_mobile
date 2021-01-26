@@ -6,16 +6,18 @@ import generateAuthTokenForExternalUser from '../Utils/generateAuthTokenForExter
 import {storeData, removeValue, getData} from '../Utils/asyncStorage';
 import apiUrl from '../Utils/apiUrl';
 
+const getApiUrl = apiUrl();
+
 export const loginExternal = (authObject) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `${apiUrl()}/api/authexternal`,
+      url: `http://localhost:8080/api/authexternal`,
       data: {
-        token: await generateAuthTokenForExternalUser(authObject),
+        token: authObject.idToken,
       },
     });
-
+    console.log(res);
     if (res.status === 200) {
       const token = res.headers['x-auth-token'];
       await storeData('token', token);
