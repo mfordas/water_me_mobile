@@ -13,7 +13,9 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
   useEffect(() => {
     try {
       GoogleSignin.configure({
+        scopes: ['email'],
         webClientId: REACT_APP_GOOGLE_AUTH_API_CLIENTID,
+        offlineAccess: false,
       });
     } catch (err) {
       console.log(err);
@@ -24,9 +26,7 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      const tokens = await GoogleSignin.getTokens();
-      const user = {...userInfo, ...tokens};
-      await loginExternal(user);
+      await loginExternal(userInfo);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow

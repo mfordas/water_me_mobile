@@ -12,22 +12,22 @@ import Menu from './frontend/Components/Menu';
 import {store} from './frontend/redux_store/reduxStore';
 import PlantsList from './frontend/Components/PlantsList/plantsList';
 import LogoComponent from './frontend/Components/Logo';
-import {loginCheck} from './frontend/redux_actions/loginActions';
+import {loginCheck, logout} from './frontend/redux_actions/loginActions';
 
 import HomePage from './frontend/Views/HomePage';
 import PlantsLists from './frontend/Views/PlantsLists';
 
-const App: () => React$Node = ({loginData, loginCheck}) => {
+const App: () => React$Node = ({loginData, loginCheck, logout}) => {
   useEffect(() => {
     loginCheck();
-  }, []);
+  }, [loginData.isLogged]);
 
   return (
     <NavigationContainer>
       <SafeAreaView style={{flex: 1}}>
         <LogoComponent />
         <Menu />
-        <TouchableOpacity onPress={() => console.log(loginData.isLogged)}>
+        <TouchableOpacity onPress={async () => await logout()}>
           <Text>test button</Text>
         </TouchableOpacity>
         <Stack.Navigator>
@@ -69,7 +69,7 @@ Menu.propTypes = {
   loginData: PropTypes.object,
 };
 
-const AppConnected = connect(mapStateToProps, {loginCheck})(App);
+const AppConnected = connect(mapStateToProps, {loginCheck, logout})(App);
 
 const AppContext = () => {
   return (
