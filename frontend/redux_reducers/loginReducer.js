@@ -1,5 +1,4 @@
 import {TYPES} from '../redux_actions/types';
-import {getData} from '../Utils/asyncStorage';
 
 const initialState = {
   loginData: {
@@ -27,7 +26,7 @@ const loginReducer = function (state = initialState, action) {
     case TYPES.logincheck:
       return {
         ...state,
-        isLogged: action.loginData,
+        isLogged: action.isLogged,
       };
     default:
       return state;

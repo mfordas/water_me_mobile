@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {logout} from '../../redux_actions/loginActions';
+import {logout, loginCheck} from '../../redux_actions/loginActions';
 import * as RootNavigation from '../../Utils/rootNavigation';
 
 export const Menu = ({loginData, logout}) => {
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <View style={style.containerMenu}>
       {!loginData.isLogged && <></>}
@@ -17,7 +21,9 @@ export const Menu = ({loginData, logout}) => {
             onPress={() => RootNavigation.navigate('PlantsLists')}>
             <Text style={style.buttonMenuText}>Moje listy rośliny</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={style.buttonMenu} onPress={() => logout()}>
+          <TouchableOpacity
+            style={style.buttonMenu}
+            onPress={() => handleLogout()}>
             <Text style={style.buttonMenuText}>Logout</Text>
           </TouchableOpacity>
         </>
@@ -64,6 +70,7 @@ Menu.propTypes = {
     isLogged: PropTypes.bool,
   }),
   logout: PropTypes.func,
+  loginCheck: PropTypes.func,
 };
 
-export default connect(mapStateToProps, {logout})(Menu);
+export default connect(mapStateToProps, {logout, loginCheck})(Menu);

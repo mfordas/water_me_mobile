@@ -2,19 +2,24 @@ import React, {useEffect} from 'react';
 import {Image, Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 
 import google from '../Register/styling/google';
 import googlelogo from '../../img/g-logo.png';
 import {loginExternal} from '../../redux_actions/loginActions';
 
 export const GoogleAuth = ({loginExternal, loginData}) => {
-  useEffect(() => {
+  const signInSilently = async () => {
     try {
-      GoogleSignin.configure();
-    } catch (err) {
-      console.log(err);
+      const user = await GoogleSignin.signInSilently();
+      await loginExternal(user);
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  useEffect(() => {
+    signInSilently();
   }, []);
 
   const makeAuth = async () => {
@@ -36,10 +41,19 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
   };
 
   return (
-    <TouchableOpacity style={google.googleButton} onPress={() => makeAuth()}>
-      <Image style={google.googleButtonLogo} source={googlelogo} />
-      <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity style={google.googleButton} onPress={() => makeAuth()}>
+        <Image style={google.googleButtonLogo} source={googlelogo} />
+        <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={async () => console.log(await GoogleSignin.getCurrentUser())}>
+        <Text>test button</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={async () => console.log(loginData)}>
+        <Text>test button</Text>
+      </TouchableOpacity>
+    </>
   );
 };
 

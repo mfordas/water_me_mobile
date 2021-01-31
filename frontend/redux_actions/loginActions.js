@@ -1,21 +1,22 @@
 import axios from 'axios';
 import jwt from 'jwt-decode';
+import {GoogleSignin} from '@react-native-community/google-signin';
 
 import {TYPES} from '../redux_actions/types';
-import generateAuthTokenForExternalUser from '../Utils/generateAuthTokenForExternalUser';
 import {storeData, removeValue, getData} from '../Utils/asyncStorage';
 import apiUrl from '../Utils/apiUrl';
+
+const getApiUrl = apiUrl();
 
 export const loginExternal = (authObject) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `${apiUrl()}/api/authexternal`,
+      url: `http://192.168.0.45:8080/api/authexternal`,
       data: {
-        token: await generateAuthTokenForExternalUser(authObject),
+        token: authObject.idToken,
       },
     });
-
     if (res.status === 200) {
       const token = res.headers['x-auth-token'];
       await storeData('token', token);
@@ -37,7 +38,7 @@ export const loginExternal = (authObject) => async (dispatch) => {
       });
     }
   } catch (error) {
-    console.error('Error Login:', error.response.data);
+    console.error('Error Login:', error);
     dispatch({
       type: TYPES.loginExternal,
       loginData: {
@@ -48,6 +49,16 @@ export const loginExternal = (authObject) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
+  // await GoogleSignin.revokeAccess();
+  // await GoogleSignin.getTokens();
+  // await GoogleSignin.clearCachedAccessToken('idToken');
+  // await GoogleSignin.clearCachedAccessToken('accessToken');
+  // console.log('Tokens cleared');
+
+  await GoogleSignin.signOut();
+
+  console.log('signed out');
+
   await removeValue('token');
   await removeValue('id');
   await removeValue('name');
@@ -64,13 +75,12 @@ export const logout = () => async (dispatch) => {
 };
 
 export const loginCheck = () => async (dispatch) => {
-  (await getData('token'))
-    ? dispatch({
-        type: TYPES.logincheck,
-        isLogged: true,
-      })
-    : dispatch({
-        type: TYPES.logincheck,
-        isLogged: false,
-      });
+  // const user = await GoogleSignin.isSignedIn();
+  // console.log(user);
+  // const tokens = await GoogleSignin.getTokens();
+  // console.log(tokens);
+  const token = await getData('token');
+  token
+    ? dispatch({type: TYPES.logincheck, isLogged: true})
+    : dispatch({type: TYPES.logincheck, isLogged: false});
 };
