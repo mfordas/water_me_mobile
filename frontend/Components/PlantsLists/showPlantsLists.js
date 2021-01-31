@@ -11,7 +11,6 @@ export const ShowPlantsLists = ({getPlantsListsForUser, plantsListsData}) => {
     const getPlantsLists = async () => {
       await getPlantsListsForUser();
     };
-
     getPlantsLists();
   }, [getPlantsListsForUser]);
 

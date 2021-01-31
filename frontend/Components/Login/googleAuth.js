@@ -7,19 +7,19 @@ import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import google from '../Register/styling/google';
 import googlelogo from '../../img/g-logo.png';
 import {loginExternal} from '../../redux_actions/loginActions';
-import {REACT_APP_GOOGLE_AUTH_API_CLIENTID} from '@env';
 
 export const GoogleAuth = ({loginExternal, loginData}) => {
-  useEffect(() => {
+  const signInSilently = async () => {
     try {
-      GoogleSignin.configure({
-        scopes: ['email'],
-        webClientId: REACT_APP_GOOGLE_AUTH_API_CLIENTID,
-        offlineAccess: false,
-      });
-    } catch (err) {
-      console.log(err);
+      const user = await GoogleSignin.signInSilently();
+      await loginExternal(user);
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  useEffect(() => {
+    signInSilently();
   }, []);
 
   const makeAuth = async () => {

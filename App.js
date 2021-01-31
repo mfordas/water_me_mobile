@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import {Provider} from 'react-redux';
 import PropTypes from 'prop-types';
+import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 
 import FooterComponent from './frontend/Components/Footer';
 import Menu from './frontend/Components/Menu';
@@ -13,12 +14,19 @@ import {store} from './frontend/redux_store/reduxStore';
 import PlantsList from './frontend/Components/PlantsList/plantsList';
 import LogoComponent from './frontend/Components/Logo';
 import {loginCheck, logout} from './frontend/redux_actions/loginActions';
+import {REACT_APP_GOOGLE_AUTH_API_CLIENTID} from '@env';
 
 import HomePage from './frontend/Views/HomePage';
 import PlantsLists from './frontend/Views/PlantsLists';
 
 const App: () => React$Node = ({loginData, loginCheck, logout}) => {
   useEffect(() => {
+    GoogleSignin.configure({
+      scopes: ['email'],
+      webClientId: REACT_APP_GOOGLE_AUTH_API_CLIENTID,
+      offlineAccess: false,
+      forceCodeForRefreshToken: true,
+    });
     loginCheck();
   }, [loginData.isLogged]);
 
@@ -27,9 +35,6 @@ const App: () => React$Node = ({loginData, loginCheck, logout}) => {
       <SafeAreaView style={{flex: 1}}>
         <LogoComponent />
         <Menu />
-        <TouchableOpacity onPress={async () => await logout()}>
-          <Text>test button</Text>
-        </TouchableOpacity>
         <Stack.Navigator>
           {!loginData.isLogged && (
             <>
