@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -72,5 +72,7 @@ Menu.propTypes = {
   logout: PropTypes.func,
   loginCheck: PropTypes.func,
 };
+
+export {style};
 
 export default connect(mapStateToProps, {logout, loginCheck})(Menu);

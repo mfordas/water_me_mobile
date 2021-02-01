@@ -14,8 +14,8 @@ const HomePage = () => {
         znać, że potrzebują wody. Jeśli zapomnisz o podlewaniu będziesz
         otrzymywał kolejne przypomnienia, które uratują Twoje rośliny.
       </Text>
-      <LoginComponent />
       <RegisterComponent />
+      <LoginComponent />
     </View>
   );
 };

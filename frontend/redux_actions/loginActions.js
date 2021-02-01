@@ -12,7 +12,7 @@ export const loginExternal = (authObject) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `http://192.168.0.45:8080/api/authexternal`,
+      url: `${getApiUrl}/api/authexternal`,
       data: {
         token: authObject.idToken,
       },
@@ -49,12 +49,6 @@ export const loginExternal = (authObject) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  // await GoogleSignin.revokeAccess();
-  // await GoogleSignin.getTokens();
-  // await GoogleSignin.clearCachedAccessToken('idToken');
-  // await GoogleSignin.clearCachedAccessToken('accessToken');
-  // console.log('Tokens cleared');
-
   await GoogleSignin.signOut();
 
   console.log('signed out');
@@ -75,10 +69,6 @@ export const logout = () => async (dispatch) => {
 };
 
 export const loginCheck = () => async (dispatch) => {
-  // const user = await GoogleSignin.isSignedIn();
-  // console.log(user);
-  // const tokens = await GoogleSignin.getTokens();
-  // console.log(tokens);
   const token = await getData('token');
   token
     ? dispatch({type: TYPES.logincheck, isLogged: true})

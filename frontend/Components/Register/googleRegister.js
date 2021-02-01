@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {TouchableOpacity, Text, Image} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -10,14 +10,6 @@ import ConfirmGoogle from './confirmGoogle';
 import {postGoogleUser} from '../../redux_actions/registerActions';
 
 const GoogleRegister = ({postGoogleUser, registerData}) => {
-  useEffect(() => {
-    try {
-      GoogleSignin.configure();
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-
   const makeAuth = async () => {
     try {
       await GoogleSignin.hasPlayServices();
