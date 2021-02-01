@@ -51,8 +51,6 @@ export const loginExternal = (authObject) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   await GoogleSignin.signOut();
 
-  console.log('signed out');
-
   await removeValue('token');
   await removeValue('id');
   await removeValue('name');

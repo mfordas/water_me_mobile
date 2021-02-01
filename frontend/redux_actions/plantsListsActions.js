@@ -5,12 +5,14 @@ import setHeaders from '../Utils/setHeaders';
 import {getData} from '../Utils/asyncStorage';
 import apiUrl from '../Utils/apiUrl';
 
+const getApiUrl = apiUrl();
+
 export const getPlantsLists = () => async (dispatch) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `${apiUrl()}/api/plantsLists`,
-      headers: setHeaders(),
+      url: `${getApiUrl}/api/plantsLists`,
+      headers: await setHeaders(),
     });
 
     if (res.status === 200) {
@@ -37,8 +39,8 @@ export const addPlantsList = (plantsListName) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `${apiUrl()}/api/plantsLists`,
-      headers: setHeaders(),
+      url: `${getApiUrl}/api/plantsLists`,
+      headers: await setHeaders(),
       data: {
         userId: await getData('id'),
         name: plantsListName,
@@ -62,7 +64,6 @@ export const addPlantsList = (plantsListName) => async (dispatch) => {
 
 export const getPlantsListsForUser = () => async (dispatch) => {
   const userId = await getData('id');
-
   if (!userId) {
     dispatch({
       type: TYPES.getPlantsLists,
@@ -71,12 +72,11 @@ export const getPlantsListsForUser = () => async (dispatch) => {
     console.error('User not logged!');
     return;
   }
-
   try {
     const res = await axios({
       method: 'get',
-      url: `${apiUrl()}/api/plantsLists/${userId}`,
-      headers: setHeaders(),
+      url: `${getApiUrl}/api/plantsLists/${userId}`,
+      headers: await setHeaders(),
     });
 
     if (res.status === 200) {
@@ -104,8 +104,8 @@ export const deletePlantsList = (plantsListId) => async (dispatch) => {
     const userId = await getData('id');
     const res = await axios({
       method: 'delete',
-      url: `${apiUrl()}/api/plantsLists/${userId}/${plantsListId}`,
-      headers: setHeaders(),
+      url: `${getApiUrl}/api/plantsLists/${userId}/${plantsListId}`,
+      headers: await setHeaders(),
       data: {
         userId: userId,
       },
@@ -136,8 +136,8 @@ export const showPlantsList = (plantsListId) => async (dispatch) => {
     const userId = await getData('id');
     const res = await axios({
       method: 'get',
-      url: `${apiUrl()}/api/plants/${userId}/${plantsListId}`,
-      headers: setHeaders(),
+      url: `${getApiUrl}/api/plants/${userId}/${plantsListId}`,
+      headers: await setHeaders(),
     });
 
     if (res.status === 200) {

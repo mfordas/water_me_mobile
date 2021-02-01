@@ -1,10 +1,18 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {Text, View, ScrollView, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 
 import {getPlantsListsForUser} from '../../redux_actions/plantsListsActions';
 import DeletePlantsList from './deletePlantsList';
+import * as RootNavigation from '../../Utils/rootNavigation';
+import {style} from '../Menu/index';
 
 export const ShowPlantsLists = ({getPlantsListsForUser, plantsListsData}) => {
   useEffect(() => {
@@ -16,7 +24,9 @@ export const ShowPlantsLists = ({getPlantsListsForUser, plantsListsData}) => {
 
   const generatePlantsLists = (plantsListsArray) => {
     return (
-      <ScrollView style={styles.plantsListsContainer}>
+      <ScrollView
+        style={styles.plantsListsContainer}
+        contentContainerStyle={{alignItems: 'center'}}>
         {plantsListsArray.map((plantsList) => {
           return (
             <View style={styles.plantsListContainer} key={plantsList.id}>
@@ -49,6 +59,9 @@ const styles = StyleSheet.create({
     margin: 0.5,
     padding: 0.5,
     alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    width: '80%',
   },
 
   link: {
