@@ -8,7 +8,7 @@ import google from '../Register/styling/google';
 import googlelogo from '../../img/g-logo.png';
 import {loginExternal} from '../../redux_actions/loginActions';
 
-export const GoogleAuth = ({loginExternal, loginData}) => {
+export const GoogleAuth = ({loginExternal}) => {
   const signInSilently = async () => {
     try {
       const user = await GoogleSignin.signInSilently();
@@ -45,13 +45,6 @@ export const GoogleAuth = ({loginExternal, loginData}) => {
       <TouchableOpacity style={google.googleButton} onPress={() => makeAuth()}>
         <Image style={google.googleButtonLogo} source={googlelogo} />
         <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={async () => console.log(await GoogleSignin.getCurrentUser())}>
-        <Text>test button</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={async () => console.log(loginData)}>
-        <Text>test button</Text>
       </TouchableOpacity>
     </>
   );

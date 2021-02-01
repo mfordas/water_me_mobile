@@ -19,6 +19,7 @@ const google = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     width: 220,
+    marginVertical: 10,
   },
 
   googleButtonText: {
