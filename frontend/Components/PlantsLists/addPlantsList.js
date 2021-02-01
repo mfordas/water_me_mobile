@@ -21,10 +21,7 @@ export const AddPlantsList = ({addPlantsList, getPlantsListsForUser}) => {
   const verifyPlantsListName = () =>
     !plantsListName && submitPlantsList ? 'Najpierw wpisz nazwę listy!' : null;
 
-  const addNewPlantsList = async (e) => {
-    if (e) {
-      e.preventDefault();
-    }
+  const addNewPlantsList = async () => {
     setSubmitPlantsList(true);
     if (plantsListName) {
       await addPlantsList(plantsListName);
@@ -38,10 +35,11 @@ export const AddPlantsList = ({addPlantsList, getPlantsListsForUser}) => {
       <View style={styles.addPlantsListForm}>
         <TextInput
           style={styles.input}
-          onChange={(text) => setPlantsListName(text)}></TextInput>
+          onChangeText={(text) => setPlantsListName(text)}
+          value={plantsListName}></TextInput>
         <TouchableOpacity
           style={styles.button}
-          onPress={(e) => addNewPlantsList(e)}>
+          onPress={() => addNewPlantsList()}>
           <Text style={styles.text}>Dodaj listę roślin</Text>
         </TouchableOpacity>
       </View>

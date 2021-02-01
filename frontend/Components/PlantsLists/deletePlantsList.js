@@ -11,19 +11,17 @@ import {
 export const DeletePlantsList = ({
   deletePlantsList,
   getPlantsListsForUser,
-  plantsListsData,
   plantsListId,
 }) => {
-  const handlerDeletePlantsList = async (e) => {
-    e.preventDefault();
-    await deletePlantsList(plantsListsData.userId, plantsListId);
+  const handlerDeletePlantsList = async () => {
+    await deletePlantsList(plantsListId);
     await getPlantsListsForUser();
   };
 
   return (
     <TouchableOpacity
       style={styles.deleteButton}
-      onPress={(e) => handlerDeletePlantsList(e)}>
+      onPress={() => handlerDeletePlantsList()}>
       <Text style={styles.text}>Usuń</Text>
     </TouchableOpacity>
   );
