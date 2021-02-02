@@ -33,9 +33,9 @@ export const ShowPlantsLists = ({getPlantsListsForUser, plantsListsData}) => {
               <Text>{plantsList.name}</Text>
               <TouchableOpacity
                 style={style.buttonMenu}
-                onPress={() =>
-                  RootNavigation.navigate(`/plantsLists/${plantsList.name}`)
-                }>
+                onPress={() => {
+                  RootNavigation.navigate(`${plantsList.id}`);
+                }}>
                 <Text style={style.buttonMenuText}>Przejdź</Text>
               </TouchableOpacity>
               <DeletePlantsList plantsListId={plantsList.id} />

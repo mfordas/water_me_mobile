@@ -17,7 +17,8 @@ import {loginCheck, logout} from './frontend/redux_actions/loginActions';
 import {REACT_APP_GOOGLE_AUTH_API_CLIENTID} from '@env';
 
 import HomePage from './frontend/Views/HomePage';
-import PlantsLists from './frontend/Views/PlantsLists';
+// import PlantsLists from './frontend/Views/PlantsLists';
+import PlantsListsComponent from './frontend/Components/PlantsLists';
 
 const App: () => React$Node = ({loginData, loginCheck, logout}) => {
   useEffect(() => {
@@ -49,12 +50,7 @@ const App: () => React$Node = ({loginData, loginCheck, logout}) => {
             <>
               <Stack.Screen
                 name="PlantsLists"
-                component={PlantsLists}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="PlantsList"
-                component={PlantsList}
+                component={PlantsListsComponent}
                 options={{headerShown: false}}
               />
             </>

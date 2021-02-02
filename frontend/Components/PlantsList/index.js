@@ -9,10 +9,7 @@ import {getPlantsListsForUser} from '../../redux_actions/plantsListsActions';
 
 const Stack = createStackNavigator();
 
-const PlantsListComponent = ({
-  getPlantsListsForUser,
-  plantsListsData = {plantsLists: [1, 2, 3, 4, 5]},
-}) => {
+const PlantsListComponent = ({getPlantsListsForUser, plantsListsData}) => {
   useEffect(() => {
     const getPlantsLists = async () => {
       await getPlantsListsForUser();
@@ -23,9 +20,6 @@ const PlantsListComponent = ({
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name="1" options={{headerShown: false}}>
-        {(props) => <PlantsList {...props} listIndex={1} />}
-      </Stack.Screen>
       {plantsListsData.plantsLists.map((list, index) => (
         <Stack.Screen name={`${list._id}`} options={{headerShown: false}}>
           {(props) => <PlantsList {...props} listIndex={index} />}
