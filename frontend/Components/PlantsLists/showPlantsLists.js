@@ -12,6 +12,7 @@ import {
 import {getPlantsListsForUser} from '../../redux_actions/plantsListsActions';
 import DeletePlantsList from './deletePlantsList';
 import * as RootNavigation from '../../Utils/rootNavigation';
+import AddPlantsList from './addPlantsList';
 import {style} from '../Menu/index';
 
 export const ShowPlantsLists = ({getPlantsListsForUser, plantsListsData}) => {
@@ -24,25 +25,29 @@ export const ShowPlantsLists = ({getPlantsListsForUser, plantsListsData}) => {
 
   const generatePlantsLists = (plantsListsArray) => {
     return (
-      <ScrollView
-        style={styles.plantsListsContainer}
-        contentContainerStyle={{alignItems: 'center'}}>
-        {plantsListsArray.map((plantsList) => {
-          return (
-            <View style={styles.plantsListContainer} key={plantsList.id}>
-              <Text>{plantsList.name}</Text>
-              <TouchableOpacity
-                style={style.buttonMenu}
-                onPress={() => {
-                  RootNavigation.navigate(`${plantsList.id}`);
-                }}>
-                <Text style={style.buttonMenuText}>Przejdź</Text>
-              </TouchableOpacity>
-              <DeletePlantsList plantsListId={plantsList.id} />
-            </View>
-          );
-        })}
-      </ScrollView>
+      <>
+        <AddPlantsList />
+        <ScrollView
+          style={styles.plantsListsContainer}
+          contentContainerStyle={{alignItems: 'center'}}>
+          {plantsListsArray.map((plantsList) => {
+            return (
+              <View style={styles.plantsListContainer} key={plantsList.id}>
+                <Text>{plantsList.name}</Text>
+                <TouchableOpacity
+                  style={style.buttonMenu}
+                  onPress={() => {
+                    RootNavigation.navigate(`${plantsList.id}`);
+                    console.log(plantsList.id);
+                  }}>
+                  <Text style={style.buttonMenuText}>Przejdź</Text>
+                </TouchableOpacity>
+                <DeletePlantsList plantsListId={plantsList.id} />
+              </View>
+            );
+          })}
+        </ScrollView>
+      </>
     );
   };
 

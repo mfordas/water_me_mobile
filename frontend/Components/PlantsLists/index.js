@@ -4,11 +4,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-import AddPlantsList from './addPlantsList';
 import ShowPlantsLists from './showPlantsLists';
 import PlantsList from '../PlantsList/plantsList';
 import {getPlantsListsForUser} from '../../redux_actions/plantsListsActions';
-import {Text} from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -16,29 +14,29 @@ const PlantsListsComponent = ({getPlantsListsForUser, plantsListsData}) => {
   useEffect(() => {
     const getPlantsLists = async () => {
       await getPlantsListsForUser();
-      console.log(plantsListsData);
     };
 
     getPlantsLists();
   }, [getPlantsListsForUser]);
 
   return (
-    <>
-      <AddPlantsList />
-      <Stack.Navigator>
-        <Stack.Screen name="PlantsLists" options={{headerShown: false}}>
-          {() => <ShowPlantsLists />}
+    <Stack.Navigator>
+      <Stack.Screen
+        name="PlantsLists"
+        component={ShowPlantsLists}
+        options={{headerShown: false}}
+      />
+      {plantsListsData.plantsLists.map((list, index) => (
+        <Stack.Screen
+          key={list.id}
+          name={`${list.id}`}
+          options={{headerShown: false}}>
+          {(props) => (
+            <PlantsList {...props} listIndex={index} listName={list.name} />
+          )}
         </Stack.Screen>
-        {plantsListsData.plantsLists.map((list, index) => (
-          <Stack.Screen
-            key={list.id}
-            name={`${list.id}`}
-            options={{headerShown: false}}>
-            {() => <PlantsList listIndex={index} />}
-          </Stack.Screen>
-        ))}
-      </Stack.Navigator>
-    </>
+      ))}
+    </Stack.Navigator>
   );
 };
 
