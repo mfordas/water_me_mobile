@@ -85,6 +85,7 @@ export const updateLastWateringDate = (plantId, lastWateringDate) => async (
 };
 
 export const uploadPlantImage = (fileObject) => async (dispatch) => {
+  console.log(fileObject);
   try {
     const headers = setHeaders();
     const res = await axios({

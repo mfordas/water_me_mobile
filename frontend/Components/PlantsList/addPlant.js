@@ -51,7 +51,8 @@ export const AddPlant = ({
       const data = new FormData();
       data.append('name', 'Image Upload');
       data.append('file_attachment', fileToUpload);
-      const imageName = await uploadPlantImage(photoData);
+      console.log(fileToUpload);
+      const imageName = await uploadPlantImage(data);
 
       setPicture(imageName);
       if (imageName) {
@@ -85,18 +86,16 @@ export const AddPlant = ({
     }
   };
 
-  const handleAddingPlantToList = async (event) => {
-    event.preventDefault();
-
+  const handleAddingPlantToList = async () => {
     setFormSubmitted(true);
 
-    if (name && wateringCycle && picture && startDate) {
+    if (name && wateringCycle && singleFile && date) {
       const plantData = {
         name: name,
         wateringCycle: wateringCycle,
-        pictureUrl: picture,
-        wateringCycleBeginingData: startDate,
-        lastTimeWatered: startDate,
+        pictureUrl: singleFile.uri,
+        wateringCycleBeginingData: date,
+        lastTimeWatered: date,
       };
 
       await handleUploadingFile();
@@ -131,7 +130,7 @@ export const AddPlant = ({
   };
 
   const validatePicture = () => {
-    if (formSubmitted && !picture) {
+    if (formSubmitted && !singleFile) {
       return <ErrorMessage errorText="Dodaj zdjęcie" />;
     }
   };
