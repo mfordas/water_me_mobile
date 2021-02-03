@@ -1,25 +1,26 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, TouchableOpacity, Text} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-const Stack = createStackNavigator();
 import {Provider} from 'react-redux';
 import PropTypes from 'prop-types';
-import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
+import {GoogleSignin} from '@react-native-community/google-signin';
 
 import FooterComponent from './frontend/Components/Footer';
 import Menu from './frontend/Components/Menu';
 import {store} from './frontend/redux_store/reduxStore';
-import PlantsList from './frontend/Components/PlantsList/plantsList';
 import LogoComponent from './frontend/Components/Logo';
-import {loginCheck, logout} from './frontend/redux_actions/loginActions';
+import {loginCheck} from './frontend/redux_actions/loginActions';
 import {REACT_APP_GOOGLE_AUTH_API_CLIENTID} from '@env';
 
 import HomePage from './frontend/Views/HomePage';
-import PlantsLists from './frontend/Views/PlantsLists';
+import PlantsListsComponent from './frontend/Components/PlantsLists';
+import {navigationRef} from './frontend/Utils/rootNavigation';
 
-const App: () => React$Node = ({loginData, loginCheck, logout}) => {
+const Stack = createStackNavigator();
+
+const App: () => React$Node = ({loginData, loginCheck}) => {
   useEffect(() => {
     GoogleSignin.configure({
       scopes: ['email'],
@@ -31,7 +32,7 @@ const App: () => React$Node = ({loginData, loginCheck, logout}) => {
   }, [loginData.isLogged]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <SafeAreaView style={{flex: 1}}>
         <LogoComponent />
         <Menu />
@@ -48,13 +49,8 @@ const App: () => React$Node = ({loginData, loginCheck, logout}) => {
           {loginData.isLogged && (
             <>
               <Stack.Screen
-                name="PlantsLists"
-                component={PlantsLists}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
                 name="PlantsList"
-                component={PlantsList}
+                component={PlantsListsComponent}
                 options={{headerShown: false}}
               />
             </>
@@ -74,7 +70,7 @@ Menu.propTypes = {
   loginData: PropTypes.object,
 };
 
-const AppConnected = connect(mapStateToProps, {loginCheck, logout})(App);
+const AppConnected = connect(mapStateToProps, {loginCheck})(App);
 
 const AppContext = () => {
   return (

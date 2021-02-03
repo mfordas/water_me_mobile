@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import {
   showPlantsList,
@@ -12,7 +13,7 @@ import DeletePlant from './deletePlant';
 import Watering from './watering';
 import styles from './styles/plantsList';
 
-const PlantsList = ({showPlantsList, plantsListsData, listIndex}) => {
+const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
   const [plants, setPlants] = useState([]);
   const [showAddPlantForm, setShowAddPlantForm] = useState(false);
 
@@ -44,7 +45,6 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex}) => {
                 uri: 'https://reactnative.dev/img/tiny_logo.png',
               }}
             />
-            {/* <img src={`../../images/${plant.pictureUrl}.png`} /> */}
             <Text>Podlewanie co: {plant.wateringCycle}</Text>
             <Watering
               lastWateringDate={plant.lastTimeWatered}
@@ -67,7 +67,10 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex}) => {
   };
 
   return (
-    <View style={styles.plantsContainer}>
+    <ScrollView
+      style={styles.plantsContainer}
+      contentContainerStyle={{alignItems: 'center'}}>
+      <Text style={styles.listName}>{listName}</Text>
       <TouchableOpacity
         style={styles.addPlantButton}
         onPress={() => setShowAddPlantForm(!showAddPlantForm)}>
@@ -77,7 +80,7 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex}) => {
         <AddPlant listId={plantsListsData.plantsLists[listIndex].id} />
       ) : null}
       <View style={styles.plantsContainer}>{generatePlantsList(plants)}</View>
-    </View>
+    </ScrollView>
   );
 };
 
