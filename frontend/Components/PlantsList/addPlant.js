@@ -34,7 +34,7 @@ export const AddPlant = ({
   const [picture, setPicture] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [singleFile, setSingleFile] = useState(null);
-  const [date, setDate] = useState(setCurrentDate(new Date()));
+  const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export const AddPlant = ({
   const onChange = (selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
-    setDate(currentDate);
+    setDate(new Date(currentDate.nativeEvent.timestamp));
   };
 
   const showDatepicker = () => {
@@ -167,7 +167,7 @@ export const AddPlant = ({
         <View style={styles.inputContainer}>
           <Text style={styles.text}>Data startu:</Text>
           <TouchableOpacity onPress={showDatepicker}>
-            <Text>{date}</Text>
+            <Text>{setCurrentDate(date)}</Text>
           </TouchableOpacity>
           {show && (
             <DateTimePicker
