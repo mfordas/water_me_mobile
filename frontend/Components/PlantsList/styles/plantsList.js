@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 
   addPlantContainer: {
-    width: '75%',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    marginHorizontal: 10,
+    marginHorizontal: 15,
   },
 
   label: {
@@ -93,6 +93,10 @@ const styles = StyleSheet.create({
   },
 
   wateringContainer: {},
+
+  listName: {
+    fontSize: 18,
+  },
 });
 
 export default styles;

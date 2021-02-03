@@ -33,12 +33,11 @@ export const ShowPlantsLists = ({getPlantsListsForUser, plantsListsData}) => {
           {plantsListsArray.map((plantsList) => {
             return (
               <View style={styles.plantsListContainer} key={plantsList.id}>
-                <Text>{plantsList.name}</Text>
+                <Text style={styles.text}>{plantsList.name}</Text>
                 <TouchableOpacity
                   style={style.buttonMenu}
                   onPress={() => {
                     RootNavigation.navigate(`${plantsList.id}`);
-                    console.log(plantsList.id);
                   }}>
                   <Text style={style.buttonMenuText}>Przejdź</Text>
                 </TouchableOpacity>
@@ -77,6 +76,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 0.2,
     paddingHorizontal: 5,
+  },
+
+  text: {
+    fontSize: 16,
   },
 });
 

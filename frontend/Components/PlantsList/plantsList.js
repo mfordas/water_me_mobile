@@ -45,7 +45,6 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
                 uri: 'https://reactnative.dev/img/tiny_logo.png',
               }}
             />
-            {/* <img src={`../../images/${plant.pictureUrl}.png`} /> */}
             <Text>Podlewanie co: {plant.wateringCycle}</Text>
             <Watering
               lastWateringDate={plant.lastTimeWatered}
@@ -68,8 +67,10 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
   };
 
   return (
-    <ScrollView style={styles.plantsContainer}>
-      <Text>{listName}</Text>
+    <ScrollView
+      style={styles.plantsContainer}
+      contentContainerStyle={{alignItems: 'center'}}>
+      <Text style={styles.listName}>{listName}</Text>
       <TouchableOpacity
         style={styles.addPlantButton}
         onPress={() => setShowAddPlantForm(!showAddPlantForm)}>
@@ -79,7 +80,6 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
         <AddPlant listId={plantsListsData.plantsLists[listIndex].id} />
       ) : null}
       <View style={styles.plantsContainer}>{generatePlantsList(plants)}</View>
-      <Text>Test</Text>
     </ScrollView>
   );
 };

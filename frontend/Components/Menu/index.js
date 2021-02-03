@@ -52,7 +52,7 @@ const style = StyleSheet.create({
     maxWidth: 180,
   },
   buttonMenuText: {
-    fontSize: 18,
+    fontSize: 16,
   },
 });
 
