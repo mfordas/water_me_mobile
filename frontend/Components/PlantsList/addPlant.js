@@ -9,6 +9,7 @@ import {
 import {connect} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DocumentPicker from 'react-native-document-picker';
+import {launchCamera} from 'react-native-image-picker';
 
 import PropTypes from 'prop-types';
 
@@ -66,6 +67,8 @@ export const AddPlant = ({
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
+
+      console.log(res);
 
       setSingleFile(res);
     } catch (err) {
@@ -129,6 +132,18 @@ export const AddPlant = ({
     }
   };
 
+  const adapterForReactNativeImagePicker = (imageObjectFromRNIP) => {
+    const {fileName, fileSize, uri, type} = imageObjectFromRNIP;
+    const pictureObject = {
+      fileCopyUri: uri,
+      name: fileName,
+      size: fileSize,
+      type: type,
+      uri: uri,
+    };
+    setSingleFile(pictureObject);
+  };
+
   return (
     <ScrollView>
       <View style={styles.addPlantContainer}>
@@ -174,19 +189,18 @@ export const AddPlant = ({
         </View>
         <View style={styles.inputContainer}>
           <Text>{picture}</Text>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             style={styles.button}
             onPress={async () => {
-              // await handleUploadingFile();
               launchCamera(
                 {
                   madiaType: 'photo',
                 },
-                (res) => setPicture(res.uri),
+                (res) => adapterForReactNativeImagePicker(res),
               );
             }}>
             <Text style={styles.text}>Zrób Zdjęcie</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={selectFile}>
             <Text style={styles.text}>Dodaj zdjęcie z galerii</Text>
           </TouchableOpacity>
