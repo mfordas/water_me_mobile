@@ -37,7 +37,7 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
     if (plantsArray) {
       const plantsList = plantsArray.map((plant, index) => {
         return (
-          <View style={styles.plantContainer}>
+          <View key={index} style={styles.plantContainer}>
             <Text>{plant.name}</Text>
             <Image
               style={styles.plantPicture}

@@ -12,7 +12,7 @@ export const addPlantToList = (plantDataFromUser, plantsListId) => async (
     const res = await axios({
       method: 'post',
       url: `${apiUrl()}/api/plants/${plantsListId}`,
-      headers: setHeaders(),
+      headers: await setHeaders(),
       data: plantDataFromUser,
     });
 
@@ -37,7 +37,7 @@ export const deletePlant = (plantId) => async (dispatch) => {
     const res = await axios({
       method: 'delete',
       url: `${apiUrl()}/api/plants/${userId}/${plantId}`,
-      headers: setHeaders(),
+      headers: await setHeaders(),
     });
 
     if (res.status === 200) {
@@ -63,7 +63,7 @@ export const updateLastWateringDate = (plantId, lastWateringDate) => async (
     const res = await axios({
       method: 'patch',
       url: `${apiUrl()}/api/plants/${userId}/${plantId}`,
-      headers: setHeaders(),
+      headers: {...(await setHeaders()), 'Content-Type': 'multipart/form-data'},
       data: {
         lastTimeWatered: lastWateringDate,
       },
@@ -86,15 +86,10 @@ export const updateLastWateringDate = (plantId, lastWateringDate) => async (
 
 export const uploadPlantImage = (fileObject) => async (dispatch) => {
   try {
-    const headers = setHeaders();
     const res = await axios({
       method: 'post',
       url: `${apiUrl()}/api/plants/image`,
-      headers: {
-        Accept: headers.Accept,
-        'x-auth-token': headers['x-auth-token'],
-        'Content-Type': header['Content-Type'],
-      },
+      headers: await setHeaders(),
       data: fileObject,
     });
 
