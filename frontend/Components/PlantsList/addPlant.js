@@ -68,8 +68,6 @@ export const AddPlant = ({
         type: [DocumentPicker.types.images],
       });
 
-      console.log(res);
-
       setSingleFile(res);
     } catch (err) {
       setSingleFile(null);
