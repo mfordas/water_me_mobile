@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -18,7 +18,7 @@ const DeletePlant = ({deletePlant, showPlantsList, plantId, listId}) => {
       <TouchableOpacity
         style={styles.deletePlantButton}
         onPress={handleDeletePlant}>
-        Usuń
+        <Text>Usuń</Text>
       </TouchableOpacity>
     </View>
   );

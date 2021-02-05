@@ -4,7 +4,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert,
   ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -47,19 +46,17 @@ export const AddPlant = ({
 
   const handleUploadingFile = async () => {
     if (singleFile != null) {
-      const fileToUpload = singleFile;
       const data = new FormData();
-      data.append('name', 'Image Upload');
-      data.append('file_attachment', fileToUpload);
-      console.log(fileToUpload);
+      data.append('image', singleFile);
       const imageName = await uploadPlantImage(data);
 
-      setPicture(imageName);
       if (imageName) {
         alert('Upload Successful');
+        setPicture(imageName);
+        return imageName;
       }
     } else {
-      // If no file selected the show alert
+      setPicture('No picture selected');
       alert('Please Select File first');
     }
   };
@@ -69,17 +66,13 @@ export const AddPlant = ({
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
-      console.log('res : ' + JSON.stringify(res));
-      // Setting the state to show single file attributes
+
       setSingleFile(res);
     } catch (err) {
       setSingleFile(null);
-      // Handling any exception (If any)
       if (DocumentPicker.isCancel(err)) {
-        // If user canceled the document selection
         alert('Canceled');
       } else {
-        // For Unknown Error
         alert('Unknown Error: ' + JSON.stringify(err));
         throw err;
       }
@@ -90,15 +83,16 @@ export const AddPlant = ({
     setFormSubmitted(true);
 
     if (name && wateringCycle && singleFile && date) {
+      const pictureName = await handleUploadingFile();
+
       const plantData = {
         name: name,
         wateringCycle: wateringCycle,
-        pictureUrl: singleFile.uri,
+        pictureUrl: pictureName,
         wateringCycleBeginingData: date,
         lastTimeWatered: date,
       };
 
-      await handleUploadingFile();
       await addPlantToList(plantData, listId);
 
       setFormSubmitted(false);
@@ -137,7 +131,6 @@ export const AddPlant = ({
 
   return (
     <ScrollView>
-      {/* <form encType='multipart/form-data'> */}
       <View style={styles.addPlantContainer}>
         <View style={styles.inputContainer}>
           <Text>Imię</Text>
@@ -156,7 +149,7 @@ export const AddPlant = ({
             style={styles.inputContainer}
             keyboardType="number-pad"
             value={wateringCycle}
-            onChange={(text) => {
+            onChangeText={(text) => {
               setWateringCycle(text);
             }}
           />
