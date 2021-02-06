@@ -69,6 +69,8 @@ export const AddPlant = ({
       });
 
       setSingleFile(res);
+
+      console.log(singleFile);
     } catch (err) {
       setSingleFile(null);
       if (DocumentPicker.isCancel(err)) {
@@ -119,7 +121,7 @@ export const AddPlant = ({
   };
 
   const validateWateringCycle = () => {
-    if (formSubmitted && wateringCycle === 0) {
+    if (formSubmitted && wateringCycle === '0') {
       return <ErrorMessage errorText="Wpisz częstotliwość podlewania" />;
     }
   };
@@ -185,8 +187,7 @@ export const AddPlant = ({
             />
           )}
         </View>
-        <View style={styles.inputContainer}>
-          <Text>{picture}</Text>
+        <View style={styles.inputContainerPicture}>
           <TouchableOpacity
             style={styles.button}
             onPress={async () => {
@@ -203,11 +204,18 @@ export const AddPlant = ({
             <Text style={styles.text}>Dodaj zdjęcie z galerii</Text>
           </TouchableOpacity>
         </View>
+        {singleFile ? (
+          <Text style={styles.inputContainerPictureConfirmText}>
+            Zdjęcie dodane
+          </Text>
+        ) : (
+          <></>
+        )}
         {validatePicture()}
         <TouchableOpacity
-          style={styles.button}
+          style={styles.addPlantButton}
           onPress={handleAddingPlantToList}>
-          <Text>Dodaj</Text>
+          <Text style={styles.addPlantButtonText}>Dodaj</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

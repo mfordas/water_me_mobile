@@ -74,7 +74,7 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
       <TouchableOpacity
         style={styles.addPlantButton}
         onPress={() => setShowAddPlantForm(!showAddPlantForm)}>
-        <Text style={{textAlign: 'center'}}>Dodaj roślinę</Text>
+        <Text style={styles.addPlantButtonText}>Dodaj roślinę</Text>
       </TouchableOpacity>
       {showAddPlantForm ? (
         <AddPlant listId={plantsListsData.plantsLists[listIndex].id} />
