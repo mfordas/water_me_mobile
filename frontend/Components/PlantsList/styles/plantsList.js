@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  inputContainerPicture: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   input: {
     borderBottomWidth: 2,
     width: 150,
@@ -70,6 +75,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
+  addPlantButtonText: {
+    textAlign: 'center',
+  },
+
   deletePlantButton: {
     backgroundColor: '#f24949',
     color: 'white',
@@ -96,6 +105,11 @@ const styles = StyleSheet.create({
 
   listName: {
     fontSize: 18,
+  },
+
+  inputContainerPictureConfirmText: {
+    color: 'green',
+    fontSize: 16,
   },
 });
 
