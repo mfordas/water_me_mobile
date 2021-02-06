@@ -38,14 +38,16 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
       const plantsList = plantsArray.map((plant, index) => {
         return (
           <View key={index} style={styles.plantContainer}>
-            <Text>{plant.name}</Text>
+            <Text style={styles.plantText}>{plant.name}</Text>
             <Image
               style={styles.plantPicture}
               source={{
                 uri: 'https://reactnative.dev/img/tiny_logo.png',
               }}
             />
-            <Text>Podlewanie co: {plant.wateringCycle}</Text>
+            <Text style={styles.plantText}>
+              Podlewanie co: {plant.wateringCycle}
+            </Text>
             <Watering
               lastWateringDate={plant.lastTimeWatered}
               plantId={plant.id}
@@ -72,7 +74,7 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
       contentContainerStyle={{alignItems: 'center'}}>
       <Text style={styles.listName}>{listName}</Text>
       <TouchableOpacity
-        style={styles.addPlantButton}
+        style={[styles.button, styles.addPlantButton]}
         onPress={() => setShowAddPlantForm(!showAddPlantForm)}>
         <Text style={styles.addPlantButtonText}>Dodaj roślinę</Text>
       </TouchableOpacity>

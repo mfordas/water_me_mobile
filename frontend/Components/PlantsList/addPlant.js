@@ -161,7 +161,6 @@ export const AddPlant = ({
         <View style={styles.inputContainer}>
           <Text>Podlewanie co:</Text>
           <TextInput
-            style={styles.inputContainer}
             keyboardType="number-pad"
             value={wateringCycle}
             onChangeText={(text) => {
@@ -189,7 +188,7 @@ export const AddPlant = ({
         </View>
         <View style={styles.inputContainerPicture}>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, styles.addPictureButton]}
             onPress={async () => {
               launchCamera(
                 {
@@ -200,7 +199,9 @@ export const AddPlant = ({
             }}>
             <Text style={styles.text}>Zrób Zdjęcie</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={selectFile}>
+          <TouchableOpacity
+            style={[styles.button, styles.addPictureButton]}
+            onPress={selectFile}>
             <Text style={styles.text}>Dodaj zdjęcie z galerii</Text>
           </TouchableOpacity>
         </View>
@@ -213,7 +214,7 @@ export const AddPlant = ({
         )}
         {validatePicture()}
         <TouchableOpacity
-          style={styles.addPlantButton}
+          style={[styles.button, styles.addPlantButton]}
           onPress={handleAddingPlantToList}>
           <Text style={styles.addPlantButtonText}>Dodaj</Text>
         </TouchableOpacity>
