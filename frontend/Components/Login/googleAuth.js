@@ -8,7 +8,7 @@ import google from '../Register/styling/google';
 import googlelogo from '../../img/g-logo.png';
 import {loginExternal} from '../../redux_actions/loginActions';
 
-export const GoogleAuth = ({loginExternal}) => {
+export const GoogleAuth = ({loginExternal, setError}) => {
   const signInSilently = async () => {
     try {
       const user = await GoogleSignin.signInSilently();
@@ -29,13 +29,13 @@ export const GoogleAuth = ({loginExternal}) => {
       await loginExternal(userInfo);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
+        setError('Logowanie przerwane');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
+        setError('Jesteś już w trakcie operacji logowania');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
+        setError('Brak połączenia z Google Play');
       } else {
-        // some other error happened
+        setError('Coś się zepsuło :(');
       }
     }
   };
@@ -50,8 +50,9 @@ export const GoogleAuth = ({loginExternal}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   loginData: state.loginData,
+  setError: ownProps.setError,
 });
 
 GoogleAuth.propTypes = {

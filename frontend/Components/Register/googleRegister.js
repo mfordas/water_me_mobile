@@ -9,7 +9,7 @@ import googlelogo from '../../img/g-logo.png';
 import ConfirmGoogle from './confirmGoogle';
 import {postGoogleUser} from '../../redux_actions/registerActions';
 
-const GoogleRegister = ({postGoogleUser, registerData}) => {
+const GoogleRegister = ({postGoogleUser, registerData, setError}) => {
   const makeAuth = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -17,13 +17,13 @@ const GoogleRegister = ({postGoogleUser, registerData}) => {
       await postGoogleUser(userInfo);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
+        setError('Rejestracja przerwana');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
+        setError('Jesteś już w trakcie operacji rejestracji');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
+        setError('Brak połączenia z Google Play');
       } else {
-        // some other error happened
+        setError('Coś się zepsuło :(');
       }
     }
   };
@@ -38,12 +38,14 @@ const GoogleRegister = ({postGoogleUser, registerData}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   registerData: state.registerData,
+  setError: ownProps.setError,
 });
 
 GoogleRegister.propTypes = {
   registerData: PropTypes.object,
+  setError: PropTypes.func,
 };
 
 export default connect(mapStateToProps, {postGoogleUser})(GoogleRegister);
