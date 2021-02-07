@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
 import {connect} from 'react-redux';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Provider} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -20,6 +20,14 @@ import {navigationRef} from './frontend/Utils/rootNavigation';
 
 const Stack = createStackNavigator();
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white',
+  },
+};
+
 const App: () => React$Node = ({loginData, loginCheck}) => {
   useEffect(() => {
     GoogleSignin.configure({
@@ -32,7 +40,7 @@ const App: () => React$Node = ({loginData, loginCheck}) => {
   }, [loginData.isLogged]);
 
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer ref={navigationRef} theme={MyTheme}>
       <SafeAreaView style={{flex: 1}}>
         <LogoComponent />
         <Menu />
