@@ -36,6 +36,7 @@ const style = StyleSheet.create({
   containerMenu: {
     flexDirection: 'row',
     justifyContent: 'center',
+    backgroundColor: 'white',
   },
   buttonMenu: {
     alignItems: 'center',

@@ -34,19 +34,21 @@ const Watering = ({
     if (countDaysSinceLastWatering < wateringCycle) {
       return (
         <View style={styles.wateringStatusContainer}>
-          <Text style={styles.statusOk}>U mnie w porządku!</Text>
-          <View>
-            <Text>
-              Kolejne podlewanie za: {nextWateringIn}
-              {nextWateringIn === 1 ? ' dzień' : ' dni'}
-            </Text>
-          </View>
+          <Text style={[styles.wateringStatus, styles.statusOk]}>
+            U mnie w porządku!
+          </Text>
+          <Text style={styles.wateringStatus}>
+            Kolejne podlewanie za: {nextWateringIn}
+            {nextWateringIn === 1 ? ' dzień' : ' dni'}
+          </Text>
         </View>
       );
     } else {
       return (
-        <View style={styles.wateringStatusContainer}>
-          <Text style={styles.statusNok}>Potrzebuję wody!</Text>
+        <View style={[styles.wateringStatusContainer]}>
+          <Text style={[styles.wateringStatus, styles.statusNok]}>
+            Potrzebuję wody!
+          </Text>
           <TouchableOpacity onPress={handleUpdateLastWateringDate}>
             <Text>Podlej</Text>
           </TouchableOpacity>

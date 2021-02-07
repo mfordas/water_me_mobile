@@ -19,9 +19,12 @@ const styles = StyleSheet.create({
     margin: 0.5,
     fontSize: 10,
     padding: 6,
+    width: '100%',
+    justifyContent: 'center',
     color: 'black',
     alignSelf: 'center',
     flexDirection: 'row',
+    backgroundColor: 'white',
   },
 });
 

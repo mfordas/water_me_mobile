@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   },
 
   plantContainer: {
-    flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -31,6 +30,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    // width: '90%',
+    // borderColor: 'black',
+    // borderWidth: 1,
   },
 
   inputContainerPicture: {
@@ -61,18 +63,12 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     marginHorizontal: 10,
     marginVertical: 10,
+    width: '50%',
+    alignSelf: 'center',
   },
 
   addPlantButton: {
     backgroundColor: '#f5d453',
-    borderRadius: 10,
-    borderWidth: 2,
-    paddingHorizontal: 20,
-    paddingVertical: 3,
-    marginHorizontal: 10,
-    marginVertical: 10,
-    width: '50%',
-    alignSelf: 'center',
   },
 
   addPlantButtonText: {
@@ -81,16 +77,35 @@ const styles = StyleSheet.create({
 
   deletePlantButton: {
     backgroundColor: '#f24949',
+  },
+
+  deletePlantButtonText: {
     color: 'white',
   },
 
   wateringStatusContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
+  addPictureButton: {
+    width: '100%',
+  },
+
+  wateringStatus: {
+    padding: 5,
+    margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 10,
+    width: 200,
   },
 
   statusOk: {
     backgroundColor: '#4CAF50',
+    textAlign: 'center',
   },
 
   statusNok: {
@@ -110,6 +125,17 @@ const styles = StyleSheet.create({
   inputContainerPictureConfirmText: {
     color: 'green',
     fontSize: 16,
+  },
+
+  plantPicture: {
+    width: '55%',
+    height: 200,
+  },
+
+  plantText: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
 });
 

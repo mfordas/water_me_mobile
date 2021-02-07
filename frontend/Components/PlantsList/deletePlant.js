@@ -16,9 +16,9 @@ const DeletePlant = ({deletePlant, showPlantsList, plantId, listId}) => {
   return (
     <View>
       <TouchableOpacity
-        style={styles.deletePlantButton}
+        style={[styles.button, styles.deletePlantButton]}
         onPress={handleDeletePlant}>
-        <Text>Usuń</Text>
+        <Text style={styles.deletePlantButtonText}>Usuń</Text>
       </TouchableOpacity>
     </View>
   );
