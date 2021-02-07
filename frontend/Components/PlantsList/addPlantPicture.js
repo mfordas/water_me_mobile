@@ -15,8 +15,6 @@ export const AddPlantPicture = ({formSubmitted, singleFile, setSingleFile}) => {
       });
 
       setSingleFile(res);
-
-      console.log(singleFile);
     } catch (err) {
       setSingleFile(null);
       if (DocumentPicker.isCancel(err)) {

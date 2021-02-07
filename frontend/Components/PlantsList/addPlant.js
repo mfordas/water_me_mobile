@@ -18,6 +18,7 @@ import ErrorMessage from '../ErrorMessage/errorMessage';
 import {DatePicker} from './datePicker';
 import {WateringCycle} from './wateringCycle';
 import {AddPlantPicture} from './addPlantPicture';
+import setCurrentDate from './setCurrentDate';
 import styles from './styles/plantsList';
 
 export const AddPlant = ({
@@ -33,7 +34,7 @@ export const AddPlant = ({
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [singleFile, setSingleFile] = useState(null);
   const [picture, setPicture] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
 
   useEffect(() => {
     const updatePlantsList = async () => {
@@ -41,6 +42,7 @@ export const AddPlant = ({
     };
 
     updatePlantsList();
+    setStartDate(setCurrentDate(new Date()));
   }, [plantsData, listId, showPlantsList]);
 
   const handleUploadingFile = async () => {
@@ -61,15 +63,15 @@ export const AddPlant = ({
   const handleAddingPlantToList = async () => {
     setFormSubmitted(true);
 
-    if (name && wateringCycle && singleFile && date) {
+    if (name && wateringCycle && singleFile && startDate) {
       const pictureName = await handleUploadingFile();
 
       const plantData = {
         name: name,
         wateringCycle: wateringCycle,
         pictureUrl: pictureName,
-        wateringCycleBeginingData: date,
-        lastTimeWatered: date,
+        wateringCycleBeginingData: startDate,
+        lastTimeWatered: startDate,
       };
 
       await addPlantToList(plantData, listId);
@@ -106,7 +108,7 @@ export const AddPlant = ({
           setWateringCycle={setWateringCycle}
           formSubmitted={formSubmitted}
         />
-        <DatePicker date={date} setDate={setDate} />
+        <DatePicker setStartDate={setStartDate} />
         <AddPlantPicture
           singleFile={singleFile}
           setSingleFile={setSingleFile}

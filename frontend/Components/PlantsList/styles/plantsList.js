@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
     borderRadius: 10,
-    width: 200,
+    textAlign: 'center',
   },
 
   statusOk: {
