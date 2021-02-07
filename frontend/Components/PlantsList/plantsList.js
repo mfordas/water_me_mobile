@@ -79,7 +79,10 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
         <Text style={styles.addPlantButtonText}>Dodaj roślinę</Text>
       </TouchableOpacity>
       {showAddPlantForm ? (
-        <AddPlant listId={plantsListsData.plantsLists[listIndex].id} />
+        <AddPlant
+          listId={plantsListsData.plantsLists[listIndex].id}
+          setShowAddPlantForm={setShowAddPlantForm}
+        />
       ) : null}
       <View style={styles.plantsContainer}>{generatePlantsList(plants)}</View>
     </ScrollView>
