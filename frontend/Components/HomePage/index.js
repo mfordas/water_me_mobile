@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import RegisterComponent from '../../Components/Register';
-import LoginComponent from '../../Components/Login';
+import GoogleRegister from '../Register/googleRegister';
+import GoogleAuth from '../Login/googleAuth';
+import ErrorMessage from '../ErrorMessage/errorMessage';
 
 const HomePage = () => {
+  const [error, setError] = useState('');
   return (
     <View style={styles.wrapper}>
       <Text style={styles.text}>
@@ -14,8 +16,9 @@ const HomePage = () => {
         znać, że potrzebują wody. Jeśli zapomnisz o podlewaniu będziesz
         otrzymywał kolejne przypomnienia, które uratują Twoje rośliny.
       </Text>
-      <RegisterComponent />
-      <LoginComponent />
+      <GoogleRegister setError={setError} />
+      <GoogleAuth setError={setError} />
+      {error ? <ErrorMessage errorText={error} /> : <></>}
     </View>
   );
 };

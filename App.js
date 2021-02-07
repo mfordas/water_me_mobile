@@ -7,15 +7,15 @@ import {Provider} from 'react-redux';
 import PropTypes from 'prop-types';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
-import FooterComponent from './frontend/Components/Footer';
-import Menu from './frontend/Components/Menu';
-import {store} from './frontend/redux_store/reduxStore';
+import HomePage from './frontend/Components/HomePage';
 import LogoComponent from './frontend/Components/Logo';
+import Menu from './frontend/Components/Menu';
+import PlantsListsComponent from './frontend/Components/PlantsLists';
+import FooterComponent from './frontend/Components/Footer';
+
+import {store} from './frontend/redux_store/reduxStore';
 import {loginCheck} from './frontend/redux_actions/loginActions';
 import {REACT_APP_GOOGLE_AUTH_API_CLIENTID} from '@env';
-
-import HomePage from './frontend/Views/HomePage';
-import PlantsListsComponent from './frontend/Components/PlantsLists';
 import {navigationRef} from './frontend/Utils/rootNavigation';
 
 const Stack = createStackNavigator();

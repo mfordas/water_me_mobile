@@ -7,10 +7,6 @@ import {
   ScrollView,
 } from 'react-native';
 import {connect} from 'react-redux';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import DocumentPicker from 'react-native-document-picker';
-import {launchCamera} from 'react-native-image-picker';
-
 import PropTypes from 'prop-types';
 
 import {
@@ -19,7 +15,9 @@ import {
 } from '../../redux_actions/plantsActions';
 import {showPlantsList} from '../../redux_actions/plantsListsActions';
 import ErrorMessage from '../ErrorMessage/errorMessage';
-import setCurrentDate from './setCurrentDate';
+import {DatePicker} from './datePicker';
+import {WateringCycle} from './wateringCycle';
+import {AddPlantPicture} from './addPlantPicture';
 import styles from './styles/plantsList';
 
 export const AddPlant = ({
@@ -28,14 +26,14 @@ export const AddPlant = ({
   uploadPlantImage,
   plantsData,
   showPlantsList,
+  setShowAddPlantForm,
 }) => {
   const [name, setName] = useState('');
   const [wateringCycle, setWateringCycle] = useState('0');
-  const [picture, setPicture] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [singleFile, setSingleFile] = useState(null);
+  const [picture, setPicture] = useState('');
   const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const updatePlantsList = async () => {
@@ -52,33 +50,11 @@ export const AddPlant = ({
       const imageName = await uploadPlantImage(data);
 
       if (imageName) {
-        alert('Upload Successful');
         setPicture(imageName);
         return imageName;
       }
     } else {
       setPicture('No picture selected');
-      alert('Please Select File first');
-    }
-  };
-
-  const selectFile = async () => {
-    try {
-      const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.images],
-      });
-
-      setSingleFile(res);
-
-      console.log(singleFile);
-    } catch (err) {
-      setSingleFile(null);
-      if (DocumentPicker.isCancel(err)) {
-        alert('Canceled');
-      } else {
-        alert('Unknown Error: ' + JSON.stringify(err));
-        throw err;
-      }
     }
   };
 
@@ -99,17 +75,8 @@ export const AddPlant = ({
       await addPlantToList(plantData, listId);
 
       setFormSubmitted(false);
+      setShowAddPlantForm(false);
     }
-  };
-
-  const onChange = (selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(new Date(currentDate.nativeEvent.timestamp));
-  };
-
-  const showDatepicker = () => {
-    setShow(true);
   };
 
   const validateName = () => {
@@ -118,30 +85,6 @@ export const AddPlant = ({
     } else if (formSubmitted && name.length <= 3) {
       return <ErrorMessage errorText="Imię powinno być dłuższe niż 3 znaki" />;
     }
-  };
-
-  const validateWateringCycle = () => {
-    if (formSubmitted && wateringCycle === '0') {
-      return <ErrorMessage errorText="Wpisz częstotliwość podlewania" />;
-    }
-  };
-
-  const validatePicture = () => {
-    if (formSubmitted && !singleFile) {
-      return <ErrorMessage errorText="Dodaj zdjęcie" />;
-    }
-  };
-
-  const adapterForReactNativeImagePicker = (imageObjectFromRNIP) => {
-    const {fileName, fileSize, uri, type} = imageObjectFromRNIP;
-    const pictureObject = {
-      fileCopyUri: uri,
-      name: fileName,
-      size: fileSize,
-      type: type,
-      uri: uri,
-    };
-    setSingleFile(pictureObject);
   };
 
   return (
@@ -158,61 +101,17 @@ export const AddPlant = ({
           />
         </View>
         {validateName()}
-        <View style={styles.inputContainer}>
-          <Text>Podlewanie co:</Text>
-          <TextInput
-            keyboardType="number-pad"
-            value={wateringCycle}
-            onChangeText={(text) => {
-              setWateringCycle(text);
-            }}
-          />
-          <Text>{wateringCycle === '1' ? `dzień` : 'dni'}</Text>
-        </View>
-        {validateWateringCycle()}
-        <View style={styles.inputContainer}>
-          <Text style={styles.text}>Data startu:</Text>
-          <TouchableOpacity onPress={showDatepicker}>
-            <Text>{setCurrentDate(date)}</Text>
-          </TouchableOpacity>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={'date'}
-              is24Hour={true}
-              display="default"
-              onChange={onChange}
-            />
-          )}
-        </View>
-        <View style={styles.inputContainerPicture}>
-          <TouchableOpacity
-            style={[styles.button, styles.addPictureButton]}
-            onPress={async () => {
-              launchCamera(
-                {
-                  madiaType: 'photo',
-                },
-                (res) => adapterForReactNativeImagePicker(res),
-              );
-            }}>
-            <Text style={styles.text}>Zrób Zdjęcie</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, styles.addPictureButton]}
-            onPress={selectFile}>
-            <Text style={styles.text}>Dodaj zdjęcie z galerii</Text>
-          </TouchableOpacity>
-        </View>
-        {singleFile ? (
-          <Text style={styles.inputContainerPictureConfirmText}>
-            Zdjęcie dodane
-          </Text>
-        ) : (
-          <></>
-        )}
-        {validatePicture()}
+        <WateringCycle
+          wateringCycle={wateringCycle}
+          setWateringCycle={setWateringCycle}
+          formSubmitted={formSubmitted}
+        />
+        <DatePicker date={date} setDate={setDate} />
+        <AddPlantPicture
+          singleFile={singleFile}
+          setSingleFile={setSingleFile}
+          formSubmitted={formSubmitted}
+        />
         <TouchableOpacity
           style={[styles.button, styles.addPlantButton]}
           onPress={handleAddingPlantToList}>
