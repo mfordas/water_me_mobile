@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -9,8 +9,7 @@ import {
   getPlantsListsForUser,
 } from '../../redux_actions/plantsListsActions';
 import AddPlant from './addPlant';
-import DeletePlant from './deletePlant';
-import Watering from './watering';
+import PlantsListGenerator from './plantsListGenerator';
 import styles from './styles/plantsList';
 
 const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
@@ -33,41 +32,6 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
     setPlants(plantsListsData.plants);
   }, [plantsListsData.plants]);
 
-  const generatePlantsList = (plantsArray) => {
-    if (plantsArray) {
-      const plantsList = plantsArray.map((plant, index) => {
-        return (
-          <View key={index} style={styles.plantContainer}>
-            <Text style={styles.plantText}>{plant.name}</Text>
-            <Image
-              style={styles.plantPicture}
-              source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
-              }}
-            />
-            <Text style={styles.plantText}>
-              Podlewanie co: {plant.wateringCycle}
-            </Text>
-            <Watering
-              lastWateringDate={plant.lastTimeWatered}
-              plantId={plant.id}
-              wateringCycle={plant.wateringCycle}
-              listId={plantsListsData.plantsLists[listIndex].id}
-            />
-            <DeletePlant
-              plantId={plant.id}
-              listId={plantsListsData.plantsLists[listIndex].id}
-            />
-          </View>
-        );
-      });
-
-      return plantsList;
-    } else {
-      return <></>;
-    }
-  };
-
   return (
     <ScrollView
       style={styles.plantsContainer}
@@ -78,13 +42,13 @@ const PlantsList = ({showPlantsList, plantsListsData, listIndex, listName}) => {
         onPress={() => setShowAddPlantForm(!showAddPlantForm)}>
         <Text style={styles.addPlantButtonText}>Dodaj roślinę</Text>
       </TouchableOpacity>
-      {showAddPlantForm ? (
+      {showAddPlantForm && (
         <AddPlant
           listId={plantsListsData.plantsLists[listIndex].id}
           setShowAddPlantForm={setShowAddPlantForm}
         />
-      ) : null}
-      <View style={styles.plantsContainer}>{generatePlantsList(plants)}</View>
+      )}
+      <PlantsListGenerator plants={plants} listIndex={listIndex} />
     </ScrollView>
   );
 };
