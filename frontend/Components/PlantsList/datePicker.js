@@ -6,13 +6,15 @@ import PropTypes from 'prop-types';
 import setCurrentDate from './setCurrentDate';
 import styles from './styles/plantsList';
 
-export const DatePicker = ({date, setDate}) => {
+export const DatePicker = ({setStartDate}) => {
   const [show, setShow] = useState(false);
+  const [date, setDate] = useState(new Date());
 
   const onChange = (selectedDate) => {
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(new Date(currentDate.nativeEvent.timestamp));
+    setShow(false);
+    setDate(new Date(selectedDate.nativeEvent.timestamp));
+    setStartDate(setCurrentDate(new Date(currentDate.nativeEvent.timestamp)));
   };
 
   const showDatepicker = () => {
@@ -42,6 +44,5 @@ export const DatePicker = ({date, setDate}) => {
 };
 
 DatePicker.propTypes = {
-  date: PropTypes.object,
-  setDate: PropTypes.func,
+  setStartDate: PropTypes.func,
 };
