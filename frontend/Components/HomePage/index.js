@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-import RegisterComponent from '../../Components/Register';
-import LoginComponent from '../../Components/Login';
+import RegisterComponent from '../Register';
+import LoginComponent from '../Login';
 
 const HomePage = () => {
   return (
