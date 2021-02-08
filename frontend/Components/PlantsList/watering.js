@@ -50,7 +50,9 @@ const Watering = ({
             Potrzebuję wody!
           </Text>
           <TouchableOpacity onPress={handleUpdateLastWateringDate}>
-            <Text>Podlej</Text>
+            <Text style={[styles.wateringStatus, styles.buttonWatering]}>
+              Podlej
+            </Text>
           </TouchableOpacity>
         </View>
       );
