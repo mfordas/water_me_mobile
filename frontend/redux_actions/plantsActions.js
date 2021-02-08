@@ -63,7 +63,7 @@ export const updateLastWateringDate = (plantId, lastWateringDate) => async (
     const res = await axios({
       method: 'patch',
       url: `${apiUrl()}/api/plants/${userId}/${plantId}`,
-      headers: {...(await setHeaders()), 'Content-Type': 'multipart/form-data'},
+      headers: await setHeaders(),
       data: {
         lastTimeWatered: lastWateringDate,
       },

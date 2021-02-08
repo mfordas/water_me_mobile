@@ -101,15 +101,18 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     textAlign: 'center',
+    color: 'black',
   },
 
   statusOk: {
     backgroundColor: '#4CAF50',
     textAlign: 'center',
+    color: 'white',
   },
 
   statusNok: {
     backgroundColor: '#f24949',
+    color: 'white',
   },
 
   buttonWatering: {
