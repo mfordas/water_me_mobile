@@ -17,7 +17,7 @@ export const PlantsListGenerator = ({plants, listIndex, plantsListsData}) => {
             <Image
               style={styles.plantPicture}
               source={{
-                uri: 'https://reactnative.dev/img/tiny_logo.png',
+                uri: `http://192.168.0.45:8080/images/${plant.pictureUrl}.png`,
               }}
             />
             <Text style={styles.plantText}>

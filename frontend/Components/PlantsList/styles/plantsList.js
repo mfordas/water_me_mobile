@@ -128,8 +128,10 @@ const styles = StyleSheet.create({
   },
 
   plantPicture: {
-    width: '55%',
-    height: 200,
+    flex: 1,
+    width: '75%',
+    height: 300,
+    resizeMode: 'contain',
   },
 
   plantText: {
