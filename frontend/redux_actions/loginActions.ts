@@ -1,16 +1,15 @@
 import axios from 'axios';
 import jwt from 'jwt-decode';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import {GoogleSignin, User} from '@react-native-community/google-signin';
 
 import {loginExternalType, logoutType, logincheckType} from './loginTypes';
-import {AuthObject} from './registerTypes';
 import {AppThunk} from '../redux_store/reduxStore';
 import {storeData, removeValue, getData} from '../Utils/asyncStorage';
 import apiUrl from '../Utils/apiUrl';
 
 const getApiUrl = apiUrl();
 
-export const loginExternal = (authObject: AuthObject): AppThunk => async (
+export const loginExternal = (authObject: User): AppThunk => async (
   dispatch,
 ) => {
   try {
