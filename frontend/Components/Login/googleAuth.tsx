@@ -1,48 +1,22 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Image, Text, TouchableOpacity} from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
-import PropTypes from 'prop-types';
-import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 
 import google from '../Register/styling/google';
 import googlelogo from '../../img/g-logo.png';
 import {loginExternal} from '../../redux_actions/loginActions';
+import {RootState} from '../../redux_reducers/';
+import {makeAuth} from './helpers';
+import {useSignInSilently} from './hooks';
 
-export const GoogleAuth = ({loginExternal, setError}) => {
-  const signInSilently = async () => {
-    try {
-      const user = await GoogleSignin.signInSilently();
-      await loginExternal(user);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    signInSilently();
-  }, []);
-
-  const makeAuth = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      await loginExternal(userInfo);
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        setError('Logowanie przerwane');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        setError('Jesteś już w trakcie operacji logowania');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        setError('Brak połączenia z Google Play');
-      } else {
-        setError('Coś się zepsuło :(');
-      }
-    }
-  };
+export const GoogleAuth = ({loginExternal, setError}: PropsFromRedux) => {
+  useSignInSilently(loginExternal);
 
   return (
     <>
-      <TouchableOpacity style={google.googleButton} onPress={() => makeAuth()}>
+      <TouchableOpacity
+        style={google.googleButton}
+        onPress={() => makeAuth(loginExternal, setError)}>
         <Image style={google.googleButtonLogo} source={googlelogo} />
         <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
       </TouchableOpacity>
@@ -50,13 +24,22 @@ export const GoogleAuth = ({loginExternal, setError}) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (
+  state: RootState,
+  ownProps: {
+    setError: (error: string) => React.Dispatch<React.SetStateAction<string>>;
+  },
+) => ({
   loginData: state.loginData,
   setError: ownProps.setError,
 });
 
-GoogleAuth.propTypes = {
-  loginData: PropTypes.object,
+const mapDispatch = {
+  loginExternal: loginExternal,
 };
 
-export default connect(mapStateToProps, {loginExternal})(GoogleAuth);
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(GoogleAuth);

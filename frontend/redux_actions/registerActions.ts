@@ -1,13 +1,14 @@
 import axios from 'axios';
+import {User} from '@react-native-community/google-signin';
 
-import {registerExternal, resetRegState, AuthObject} from './registerTypes';
+import {registerExternal, resetRegState} from './registerTypes';
 import {AppThunk} from '../redux_store/reduxStore';
 
 import apiUrl from '../Utils/apiUrl';
 
 const getApiUrl = apiUrl();
 
-export const postGoogleUser = (authObject: AuthObject): AppThunk => async (
+export const postGoogleUser = (authObject: User): AppThunk => async (
   dispatch,
 ) => {
   try {

@@ -1,14 +1,19 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 import {View, Text, Image} from 'react-native';
-import PropTypes from 'prop-types';
 
 import DeletePlant from './deletePlant';
 import Watering from './watering';
 import styles from './styles/plantsList';
+import {Plant} from '../../redux_actions/plantsTypes';
+import {RootState} from '../../redux_reducers/';
 
-export const PlantsListGenerator = ({plants, listIndex, plantsListsData}) => {
-  const generatePlantsList = (plantsArray) => {
+export const PlantsListGenerator = ({
+  plants,
+  listIndex,
+  plantsListsData,
+}: PropsFromRedux) => {
+  const generatePlantsList = (plantsArray: Plant[]) => {
     if (plantsArray) {
       const plantsList = plantsArray.map((plant, index) => {
         return (
@@ -48,12 +53,19 @@ export const PlantsListGenerator = ({plants, listIndex, plantsListsData}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (
+  state: RootState,
+  ownProps: {plants: Plant[]; listIndex: number},
+) => ({
   plantsListsData: state.plantsListsData,
+  listIndex: ownProps.listIndex,
+  plants: ownProps.plants,
 });
 
-PlantsListGenerator.propTypes = {
-  plantsListsData: PropTypes.object,
-};
+const mapDispatch = {};
 
-export default connect(mapStateToProps, {})(PlantsListGenerator);
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(PlantsListGenerator);

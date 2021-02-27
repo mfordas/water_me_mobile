@@ -6,11 +6,15 @@ import PropTypes from 'prop-types';
 import setCurrentDate from './setCurrentDate';
 import styles from './styles/plantsList';
 
-export const DatePicker = ({setStartDate}) => {
+type Input = {
+  setStartDate: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export const DatePicker = ({setStartDate}: Input) => {
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date());
 
-  const onChange = (selectedDate) => {
+  const onChange = (selectedDate: any) => {
     const currentDate = selectedDate || date;
     setShow(false);
     setDate(new Date(selectedDate.nativeEvent.timestamp));

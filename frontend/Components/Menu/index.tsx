@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {connect, ConnectedProps} from 'react-redux';
 
-import {logout, loginCheck} from '../../redux_actions/loginActions';
+import {logout} from '../../redux_actions/loginActions';
 import * as RootNavigation from '../../Utils/rootNavigation';
+import {RootState} from '../../redux_reducers/';
 
-export const Menu = ({loginData, logout}) => {
+export const Menu = ({loginData, logout}: PropsFromRedux) => {
   const handleLogout = async () => {
     await logout();
   };
@@ -57,23 +57,18 @@ const style = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
   loginData: state.loginData,
 });
 
-Menu.propTypes = {
-  loginData: PropTypes.shape({
-    loginData: PropTypes.shape({
-      name: PropTypes.string,
-      googleId: PropTypes.string,
-      invalidData: PropTypes.bool,
-    }),
-    isLogged: PropTypes.bool,
-  }),
-  logout: PropTypes.func,
-  loginCheck: PropTypes.func,
+const mapDispatch = {
+  logout: logout,
 };
+
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export {style};
 
-export default connect(mapStateToProps, {logout, loginCheck})(Menu);
+export default connector(Menu);

@@ -5,11 +5,17 @@ import PropTypes from 'prop-types';
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import styles from './styles/plantsList';
 
+type Input = {
+  formSubmitted: boolean;
+  wateringCycle: string;
+  setWateringCycle: React.Dispatch<React.SetStateAction<string>>;
+};
+
 export const WateringCycle = ({
   wateringCycle,
   setWateringCycle,
   formSubmitted,
-}) => {
+}: Input) => {
   const validateWateringCycle = () => {
     if (formSubmitted && wateringCycle === '0') {
       return <ErrorMessage errorText="Wpisz częstotliwość podlewania" />;
@@ -33,8 +39,4 @@ export const WateringCycle = ({
   );
 };
 
-WateringCycle.propTypes = {
-  wateringCycle: PropTypes.string,
-  setWateringCycle: PropTypes.func,
-  formSubmitted: PropTypes.bool,
-};
+export default WateringCycle;
