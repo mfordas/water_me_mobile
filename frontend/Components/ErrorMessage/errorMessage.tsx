@@ -1,7 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 
-const ErrorMessage = ({errorText}) => {
+type PropsType = {
+  errorText: string;
+};
+
+const ErrorMessage = ({errorText}: PropsType): JSX.Element | null => {
   return errorText ? (
     <Text style={styles.errorMessageContainer}>{errorText}</Text>
   ) : null;
