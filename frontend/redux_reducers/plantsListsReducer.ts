@@ -1,31 +1,41 @@
-import {TYPES} from '../redux_actions/types';
+import {
+  addPlantsListType,
+  getPlantsListsType,
+  deletePlantsListType,
+  showPlantsListType,
+  PlantsListsState,
+  PlantsListsActionType,
+} from '../redux_actions/plantsListsTypes';
 
-const initialState = {
+const initialState: PlantsListsState = {
   plantsListName: '',
   plantsLists: [],
-  userId: 1,
+  userId: '',
   plantsListDeleted: false,
   plants: [],
 };
 
-const plantsListReducer = function (state = initialState, action) {
+const plantsListReducer = function (
+  state = initialState,
+  action: PlantsListsActionType,
+): PlantsListsState {
   switch (action.type) {
-    case TYPES.addPlantsList:
+    case addPlantsListType:
       return {
         ...state,
         plantsListName: action.plantsListName,
       };
-    case TYPES.getPlantsLists:
+    case getPlantsListsType:
       return {
         ...state,
         plantsLists: action.plantsLists,
       };
-    case TYPES.deletePlantsList:
+    case deletePlantsListType:
       return {
         ...state,
         plantsListDeleted: action.plantsListDeleted,
       };
-    case TYPES.showPlantsList:
+    case showPlantsListType:
       return {
         ...state,
         plants: action.plants,
