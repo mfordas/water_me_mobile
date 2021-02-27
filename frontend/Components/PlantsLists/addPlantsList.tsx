@@ -6,15 +6,18 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {
   addPlantsList,
   getPlantsListsForUser,
 } from '../../redux_actions/plantsListsActions';
+import {RootState} from '../../redux_reducers';
 
-export const AddPlantsList = ({addPlantsList, getPlantsListsForUser}) => {
+export const AddPlantsList = ({
+  addPlantsList,
+  getPlantsListsForUser,
+}: PropsFromRedux) => {
   const [plantsListName, setPlantsListName] = useState('');
   const [submitPlantsList, setSubmitPlantsList] = useState(false);
 
@@ -84,14 +87,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
   plantsListsData: state.plantsListsData,
 });
 
-AddPlantsList.propTypes = {
-  plantsListsData: PropTypes.object,
+const mapDispatch = {
+  getPlantsListsForUser: getPlantsListsForUser,
+  addPlantsList: addPlantsList,
 };
 
-export default connect(mapStateToProps, {addPlantsList, getPlantsListsForUser})(
-  AddPlantsList,
-);
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(AddPlantsList);

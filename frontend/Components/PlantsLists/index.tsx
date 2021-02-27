@@ -1,16 +1,19 @@
 import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {connect, ConnectedProps} from 'react-redux';
 
 import ShowPlantsLists from './showPlantsLists';
 import PlantsList from '../PlantsList/plantsList';
 import {getPlantsListsForUser} from '../../redux_actions/plantsListsActions';
+import {RootState} from '../../redux_reducers/';
 
 const Stack = createStackNavigator();
 
-const PlantsListsComponent = ({getPlantsListsForUser, plantsListsData}) => {
+const PlantsListsComponent = ({
+  getPlantsListsForUser,
+  plantsListsData,
+}: PropsFromRedux) => {
   useEffect(() => {
     const getPlantsLists = async () => {
       await getPlantsListsForUser();
@@ -40,14 +43,16 @@ const PlantsListsComponent = ({getPlantsListsForUser, plantsListsData}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
   plantsListsData: state.plantsListsData,
 });
 
-PlantsListsComponent.propTypes = {
-  plantsListsData: PropTypes.object,
+const mapDispatch = {
+  getPlantsListsForUser: getPlantsListsForUser,
 };
 
-export default connect(mapStateToProps, {getPlantsListsForUser})(
-  PlantsListsComponent,
-);
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(PlantsListsComponent);
