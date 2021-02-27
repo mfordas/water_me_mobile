@@ -1,13 +1,13 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {resetRegisterState} from '../../redux_actions/registerActions';
 import {style} from '../Menu/index';
 import * as RootNavigation from '../../Utils/rootNavigation';
+import {RootState} from '../../redux_reducers/';
 
-const ConfirmGoogle = ({resetRegisterState}) => {
+const ConfirmGoogle = ({resetRegisterState}: PropsFromRedux) => {
   return (
     <>
       <Text>Konto założone!</Text>
@@ -24,12 +24,16 @@ const ConfirmGoogle = ({resetRegisterState}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
   registerData: state.registerData,
 });
 
-ConfirmGoogle.propTypes = {
-  registerData: PropTypes.object,
+const mapDispatch = {
+  resetRegisterState: resetRegisterState,
 };
 
-export default connect(mapStateToProps, {resetRegisterState})(ConfirmGoogle);
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(ConfirmGoogle);

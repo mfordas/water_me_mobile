@@ -7,10 +7,10 @@ import {
   PlantsListsActionType,
 } from '../redux_actions/plantsListsTypes';
 
-const initialState: PlantsListsState = {
+export const initialState: PlantsListsState = {
   plantsListName: '',
   plantsLists: [],
-  userId: '',
+  userId: null,
   plantsListDeleted: false,
   plants: [],
 };
