@@ -1,13 +1,19 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {deletePlant} from '../../redux_actions/plantsActions';
 import {showPlantsList} from '../../redux_actions/plantsListsActions';
 import styles from './styles/plantsList';
+import {RootState} from '../../redux_reducers/';
+import {DeletePlantProps} from './plantsList';
 
-const DeletePlant = ({deletePlant, showPlantsList, plantId, listId}) => {
+const DeletePlant = ({
+  deletePlant,
+  showPlantsList,
+  plantId,
+  listId,
+}: PropsFromRedux) => {
   const handleDeletePlant = async () => {
     await deletePlant(plantId);
     await showPlantsList(listId);
@@ -24,14 +30,19 @@ const DeletePlant = ({deletePlant, showPlantsList, plantId, listId}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState, ownProps: DeletePlantProps) => ({
   plantsData: state.plantsData,
+  plantId: ownProps.plantId,
+  listId: ownProps.listId,
 });
 
-DeletePlant.propTypes = {
-  plantsData: PropTypes.object,
+const mapDispatch = {
+  deletePlant: deletePlant,
+  showPlantsList: showPlantsList,
 };
 
-export default connect(mapStateToProps, {deletePlant, showPlantsList})(
-  DeletePlant,
-);
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(DeletePlant);

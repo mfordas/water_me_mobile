@@ -1,12 +1,13 @@
 import React from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {updateLastWateringDate} from '../../redux_actions/plantsActions';
 import {showPlantsList} from '../../redux_actions/plantsListsActions';
-import setCurrentDate from './setCurrentDate';
 import styles from './styles/plantsList';
+import {useCountWatering} from './hooks';
+import {WateringProps} from './plantsList';
+import {RootState} from '../../redux_reducers/';
 
 const Watering = ({
   updateLastWateringDate,
@@ -15,23 +16,27 @@ const Watering = ({
   plantId,
   wateringCycle,
   listId,
-}) => {
-  const currentDate = setCurrentDate(new Date());
-  const oneDayInMiliseconds = 86400000;
+}: PropsFromRedux) => {
+  const {nextWateringIn, currentDate} = useCountWatering(
+    lastWateringDate,
+    wateringCycle,
+  );
+  // const currentDate = setCurrentDate(new Date());
+  // const oneDayInMiliseconds = 86400000;
 
   const handleUpdateLastWateringDate = async () => {
     await updateLastWateringDate(plantId, currentDate);
     await showPlantsList(listId);
   };
 
-  const countWatering = () => {
-    const countDaysSinceLastWatering =
-      (new Date(currentDate).getTime() - new Date(lastWateringDate).getTime()) /
-      oneDayInMiliseconds;
+  const renderWateringStatus = () => {
+    // const countDaysSinceLastWatering =
+    //   (new Date(currentDate).getTime() - new Date(lastWateringDate).getTime()) /
+    //   oneDayInMiliseconds;
 
-    const nextWateringIn = wateringCycle - countDaysSinceLastWatering;
+    // const nextWateringIn = wateringCycle - countDaysSinceLastWatering;
 
-    if (countDaysSinceLastWatering < wateringCycle) {
+    if (nextWateringIn > 0) {
       return (
         <View style={styles.wateringStatusContainer}>
           <Text style={[styles.wateringStatus, styles.statusOk]}>
@@ -61,22 +66,25 @@ const Watering = ({
 
   return (
     <View style={styles.wateringContainer}>
-      <Text>{countWatering()}</Text>
+      <Text>{renderWateringStatus()}</Text>
     </View>
   );
 };
 
-const mapStateToProps = (state) => ({
-  plantsListsData: state.plantsListsData,
-  plantsData: state.plantsData,
+const mapStateToProps = (state: RootState, ownProps: WateringProps) => ({
+  lastWateringDate: ownProps.lastWateringDate,
+  plantId: ownProps.plantId,
+  wateringCycle: ownProps.wateringCycle,
+  listId: ownProps.listId,
 });
 
-Watering.propTypes = {
-  plantsListsData: PropTypes.object,
-  plantsData: PropTypes.object,
+const mapDispatch = {
+  updateLastWateringDate: updateLastWateringDate,
+  showPlantsList: showPlantsList,
 };
 
-export default connect(mapStateToProps, {
-  updateLastWateringDate,
-  showPlantsList,
-})(Watering);
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Watering);

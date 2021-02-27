@@ -1,25 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {
   addPlantToList,
   uploadPlantImage,
 } from '../../redux_actions/plantsActions';
 import {showPlantsList} from '../../redux_actions/plantsListsActions';
-import ErrorMessage from '../ErrorMessage/errorMessage';
 import {DatePicker} from './datePicker';
 import {WateringCycle} from './wateringCycle';
 import {AddPlantPicture} from './addPlantPicture';
+import NameInput from './nameInput';
 import setCurrentDate from './setCurrentDate';
+import {handleUploadingFile} from './helpers';
 import styles from './styles/plantsList';
+import {RootState} from '../../redux_reducers/';
 
 export const AddPlant = ({
   listId,
@@ -28,13 +23,13 @@ export const AddPlant = ({
   plantsData,
   showPlantsList,
   setShowAddPlantForm,
-}) => {
+}: PropsFromRedux) => {
   const [name, setName] = useState('');
   const [wateringCycle, setWateringCycle] = useState('0');
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [singleFile, setSingleFile] = useState(null);
   const [picture, setPicture] = useState('');
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState(setCurrentDate(new Date()));
 
   useEffect(() => {
     const updatePlantsList = async () => {
@@ -45,64 +40,39 @@ export const AddPlant = ({
     setStartDate(setCurrentDate(new Date()));
   }, [plantsData, listId, showPlantsList]);
 
-  const handleUploadingFile = async () => {
-    if (singleFile != null) {
-      const data = new FormData();
-      data.append('image', singleFile);
-      const imageName = await uploadPlantImage(data);
-
-      if (imageName) {
-        setPicture(imageName);
-        return imageName;
-      }
-    } else {
-      setPicture('No picture selected');
-    }
-  };
-
   const handleAddingPlantToList = async () => {
     setFormSubmitted(true);
 
     if (name && wateringCycle && singleFile && startDate) {
-      const pictureName = await handleUploadingFile();
+      const pictureName = await handleUploadingFile(
+        singleFile,
+        uploadPlantImage,
+        setPicture,
+      );
 
-      const plantData = {
-        name: name,
-        wateringCycle: wateringCycle,
-        pictureUrl: pictureName,
-        wateringCycleBeginingData: startDate,
-        lastTimeWatered: startDate,
-      };
-
-      await addPlantToList(plantData, listId);
-
-      setFormSubmitted(false);
-      setShowAddPlantForm(false);
-    }
-  };
-
-  const validateName = () => {
-    if (formSubmitted && !name) {
-      return <ErrorMessage errorText="Wpisz imię" />;
-    } else if (formSubmitted && name.length <= 3) {
-      return <ErrorMessage errorText="Imię powinno być dłuższe niż 3 znaki" />;
+      if (pictureName) {
+        const plantData = {
+          name: name,
+          wateringCycle: parseInt(wateringCycle),
+          pictureUrl: pictureName,
+          wateringCycleBeginingData: startDate,
+          lastTimeWatered: startDate,
+        };
+        await addPlantToList(plantData, listId);
+        setFormSubmitted(false);
+        setShowAddPlantForm(false);
+      }
     }
   };
 
   return (
     <ScrollView>
       <View style={styles.addPlantContainer}>
-        <View style={styles.inputContainer}>
-          <Text>Imię</Text>
-          <TextInput
-            style={styles.input}
-            value={name}
-            onChangeText={(text) => {
-              setName(text);
-            }}
-          />
-        </View>
-        {validateName()}
+        <NameInput
+          formSubmitted={formSubmitted}
+          name={name}
+          setName={setName}
+        />
         <WateringCycle
           wateringCycle={wateringCycle}
           setWateringCycle={setWateringCycle}
@@ -124,18 +94,26 @@ export const AddPlant = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  plantsListsData: state.plantsListsData,
+const mapStateToProps = (
+  state: RootState,
+  ownProps: {
+    listId: number;
+    setShowAddPlantForm: React.Dispatch<React.SetStateAction<boolean>>;
+  },
+) => ({
   plantsData: state.plantsData,
+  listId: ownProps.listId,
+  setShowAddPlantForm: ownProps.setShowAddPlantForm,
 });
 
-AddPlant.propTypes = {
-  plantsListsData: PropTypes.object,
-  plantsData: PropTypes.object,
+const mapDispatch = {
+  showPlantsList: showPlantsList,
+  addPlantToList: addPlantToList,
+  uploadPlantImage: uploadPlantImage,
 };
 
-export default connect(mapStateToProps, {
-  addPlantToList,
-  showPlantsList,
-  uploadPlantImage,
-})(AddPlant);
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(AddPlant);

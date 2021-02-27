@@ -7,10 +7,29 @@ import PropTypes from 'prop-types';
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import styles from './styles/plantsList';
 
-export const AddPlantPicture = ({formSubmitted, singleFile, setSingleFile}) => {
+type AddPlantPicutre = {
+  formSubmitted: boolean;
+  singleFile: any;
+  setSingleFile: React.Dispatch<
+    React.SetStateAction<typeof DocumentPicker.types.images | null>
+  >;
+};
+
+type RNIPResponse = {
+  fileName: string;
+  fileSize: number;
+  uri: string;
+  type: string;
+};
+
+export const AddPlantPicture = ({
+  formSubmitted,
+  singleFile,
+  setSingleFile,
+}: AddPlantPicutre) => {
   const selectFile = async () => {
     try {
-      const res = await DocumentPicker.pick({
+      const res: any = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
 
@@ -32,9 +51,9 @@ export const AddPlantPicture = ({formSubmitted, singleFile, setSingleFile}) => {
     }
   };
 
-  const adapterForReactNativeImagePicker = (imageObjectFromRNIP) => {
+  const adapterForReactNativeImagePicker = (imageObjectFromRNIP: any) => {
     const {fileName, fileSize, uri, type} = imageObjectFromRNIP;
-    const pictureObject = {
+    const pictureObject: any = {
       fileCopyUri: uri,
       name: fileName,
       size: fileSize,
@@ -52,7 +71,7 @@ export const AddPlantPicture = ({formSubmitted, singleFile, setSingleFile}) => {
           onPress={async () => {
             launchCamera(
               {
-                madiaType: 'photo',
+                mediaType: 'photo',
               },
               (res) => adapterForReactNativeImagePicker(res),
             );
