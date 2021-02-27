@@ -2,13 +2,17 @@ import axios from 'axios';
 import jwt from 'jwt-decode';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
-import {TYPES} from '../redux_actions/types';
+import {loginExternalType, logoutType, logincheckType} from './loginTypes';
+import {AuthObject} from './registerTypes';
+import {AppThunk} from '../redux_store/reduxStore';
 import {storeData, removeValue, getData} from '../Utils/asyncStorage';
 import apiUrl from '../Utils/apiUrl';
 
 const getApiUrl = apiUrl();
 
-export const loginExternal = (authObject) => async (dispatch) => {
+export const loginExternal = (authObject: AuthObject): AppThunk => async (
+  dispatch,
+) => {
   try {
     const res = await axios({
       method: 'post',
@@ -20,10 +24,10 @@ export const loginExternal = (authObject) => async (dispatch) => {
     if (res.status === 200) {
       const token = res.headers['x-auth-token'];
       await storeData('token', token);
-      await storeData('id', jwt(token).id);
+      await storeData('id', jwt<{id: string}>(token).id);
       await storeData('name', res.data.name);
       dispatch({
-        type: TYPES.loginExternal,
+        type: loginExternalType,
         loginData: {
           name: res.data.name,
           googleId: res.data.googleId,
@@ -33,14 +37,14 @@ export const loginExternal = (authObject) => async (dispatch) => {
       });
     } else if (res.status === 202) {
       dispatch({
-        type: TYPES.loginExternal,
+        type: loginExternalType,
         isLogged: false,
       });
     }
   } catch (error) {
     console.error('Error Login:', error);
     dispatch({
-      type: TYPES.loginExternal,
+      type: loginExternalType,
       loginData: {
         invalidData: true,
       },
@@ -48,7 +52,7 @@ export const loginExternal = (authObject) => async (dispatch) => {
   }
 };
 
-export const logout = () => async (dispatch) => {
+export const logout = (): AppThunk => async (dispatch) => {
   await GoogleSignin.signOut();
 
   await removeValue('token');
@@ -56,7 +60,7 @@ export const logout = () => async (dispatch) => {
   await removeValue('name');
 
   dispatch({
-    type: TYPES.logout,
+    type: logoutType,
     loginData: {
       name: '',
       googleId: '',
@@ -66,9 +70,9 @@ export const logout = () => async (dispatch) => {
   });
 };
 
-export const loginCheck = () => async (dispatch) => {
+export const loginCheck = (): AppThunk => async (dispatch) => {
   const token = await getData('token');
   token
-    ? dispatch({type: TYPES.logincheck, isLogged: true})
-    : dispatch({type: TYPES.logincheck, isLogged: false});
+    ? dispatch({type: logincheckType, isLogged: true})
+    : dispatch({type: logincheckType, isLogged: false});
 };
