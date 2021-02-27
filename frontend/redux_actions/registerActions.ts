@@ -1,12 +1,15 @@
 import axios from 'axios';
 
-import {TYPES} from '../redux_actions/types';
+import {registerExternal, resetRegState, AuthObject} from './registerTypes';
+import {AppThunk} from '../redux_store/reduxStore';
 
 import apiUrl from '../Utils/apiUrl';
 
 const getApiUrl = apiUrl();
 
-export const postGoogleUser = (authObject) => async (dispatch) => {
+export const postGoogleUser = (authObject: AuthObject): AppThunk => async (
+  dispatch,
+) => {
   try {
     const res = await axios({
       method: 'post',
@@ -16,14 +19,14 @@ export const postGoogleUser = (authObject) => async (dispatch) => {
 
     if (res.status === 200) {
       dispatch({
-        type: TYPES.registerExternal,
+        type: registerExternal,
         invalidData: false,
         confirm: true,
         googleUser: true,
       });
     } else {
       dispatch({
-        type: TYPES.registerExternal,
+        type: registerExternal,
         invalidData: true,
         confirm: false,
         googleUser: true,
@@ -31,7 +34,7 @@ export const postGoogleUser = (authObject) => async (dispatch) => {
     }
   } catch (error) {
     dispatch({
-      type: TYPES.registerExternal,
+      type: registerExternal,
       invalidData: true,
       confirm: false,
       googleUser: true,
@@ -40,9 +43,9 @@ export const postGoogleUser = (authObject) => async (dispatch) => {
   }
 };
 
-export const resetRegisterState = () => async (dispatch) => {
-  return dispatch({
-    type: TYPES.resetRegisterState,
+export const resetRegisterState = (): AppThunk => async (dispatch) => {
+  dispatch({
+    type: resetRegState,
     invalidData: false,
     confirm: false,
     googleUser: false,

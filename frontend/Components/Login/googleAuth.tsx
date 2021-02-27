@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Image, Text, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
+import {connect, ConnectedProps} from 'react-redux';
 import PropTypes from 'prop-types';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 
