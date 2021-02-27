@@ -1,30 +1,40 @@
-import { TYPES } from '../redux_actions/types';
+import {
+  addPlantType,
+  deletePlantType,
+  updateLastWateringDateType,
+  uploadImageType,
+  PlantsState,
+  PlantsActionsType,
+} from '../redux_actions/plantsTypes';
 
-const initialState = {
+const initialState: PlantsState = {
   plantData: {},
   plantDeleted: false,
   wateringDateUpdated: false,
   imageName: '',
 };
 
-const plantsReducer = function (state = initialState, action) {
+const plantsReducer = function (
+  state = initialState,
+  action: PlantsActionsType,
+): PlantsState {
   switch (action.type) {
-    case TYPES.addPlant:
+    case addPlantType:
       return {
         ...state,
         plantData: action.plantData,
       };
-    case TYPES.deletePlant:
+    case deletePlantType:
       return {
         ...state,
         plantDeleted: action.plantDeleted,
       };
-    case TYPES.updateLastWateringDate:
+    case updateLastWateringDateType:
       return {
         ...state,
         wateringDateUpdated: action.wateringDateUpdated,
       };
-    case TYPES.uploadImage:
+    case uploadImageType:
       return {
         ...state,
         imageName: action.imageName,

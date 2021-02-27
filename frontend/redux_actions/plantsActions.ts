@@ -1,13 +1,28 @@
 import axios from 'axios';
 
-import {TYPES} from './types';
+import {
+  addPlantType,
+  deletePlantType,
+  updateLastWateringDateType,
+  uploadImageType,
+} from '../redux_actions/plantsTypes';
+import {AppThunk, AppThunkWithReturn} from '../redux_store/reduxStore';
 import setHeaders from '../Utils/setHeaders';
 import {getData} from '../Utils/asyncStorage';
 import apiUrl from '../Utils/apiUrl';
 
-export const addPlantToList = (plantDataFromUser, plantsListId) => async (
-  dispatch,
-) => {
+export type PlantData = {
+  name: string;
+  wateringCycle: number;
+  pictureUrl: string;
+  wateringCycleBeginingData: string;
+  lastTimeWatered: string;
+};
+
+export const addPlantToList = (
+  plantDataFromUser: PlantData,
+  plantsListId: number,
+): AppThunk => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
@@ -18,20 +33,20 @@ export const addPlantToList = (plantDataFromUser, plantsListId) => async (
 
     if (res.status === 200) {
       dispatch({
-        type: TYPES.addPlant,
+        type: addPlantType,
         plantData: res.data,
       });
     }
   } catch (error) {
     console.error('Error:', error.response.data);
     dispatch({
-      type: TYPES.addPlant,
+      type: addPlantType,
       plantData: {},
     });
   }
 };
 
-export const deletePlant = (plantId) => async (dispatch) => {
+export const deletePlant = (plantId: number): AppThunk => async (dispatch) => {
   const userId = await getData('id');
   try {
     const res = await axios({
@@ -42,22 +57,23 @@ export const deletePlant = (plantId) => async (dispatch) => {
 
     if (res.status === 200) {
       dispatch({
-        type: TYPES.deletePlant,
+        type: deletePlantType,
         plantDeleted: true,
       });
     }
   } catch (error) {
     console.error('Error:', error.response.data);
     dispatch({
-      type: TYPES.deletePlant,
+      type: deletePlantType,
       plantDeleted: false,
     });
   }
 };
 
-export const updateLastWateringDate = (plantId, lastWateringDate) => async (
-  dispatch,
-) => {
+export const updateLastWateringDate = (
+  plantId: number,
+  lastWateringDate: string,
+): AppThunk => async (dispatch) => {
   const userId = await getData('id');
   try {
     const res = await axios({
@@ -71,20 +87,22 @@ export const updateLastWateringDate = (plantId, lastWateringDate) => async (
 
     if (res.status === 200) {
       dispatch({
-        type: TYPES.updateLastWateringDate,
+        type: updateLastWateringDateType,
         wateringDateUpdated: true,
       });
     }
   } catch (error) {
     console.error('Error:', error.response.data);
     dispatch({
-      type: TYPES.updateLastWateringDate,
+      type: updateLastWateringDateType,
       wateringDateUpdated: false,
     });
   }
 };
 
-export const uploadPlantImage = (fileObject) => async (dispatch) => {
+export const uploadPlantImage = (
+  fileObject: FormData,
+): AppThunkWithReturn => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
@@ -95,7 +113,7 @@ export const uploadPlantImage = (fileObject) => async (dispatch) => {
 
     if (res.status === 200) {
       dispatch({
-        type: TYPES.uploadImage,
+        type: uploadImageType,
         imageName: res.data,
       });
 
@@ -104,7 +122,7 @@ export const uploadPlantImage = (fileObject) => async (dispatch) => {
   } catch (error) {
     console.error('Error:', error.response.data);
     dispatch({
-      type: TYPES.uploadImage,
+      type: uploadImageType,
       imageName: '',
     });
   }
