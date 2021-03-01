@@ -6,7 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --watchAll",
+    "test-coverage": "set CI=true && npm run test",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -62,15 +63,26 @@
       "tsx",
       "js"
     ],
+    "collectCoverageFrom": [
+      "<rootDir>/frontend/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/frontend/Utils/generateAuthTokenForExternalUser.js"
+    ],
+    "coverageReporters": [
+      "json",
+      "html",
+      "text"
+    ],
     "transform": {
       "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
-      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      "\\.(ts|tsx)$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",
       "<rootDir>/node_modules/"
     ],
-    "cacheDirectory": ".jest/cache"
+    "cacheDirectory": ".jest/cache",
+    "collectCoverage": true
   }
 }
