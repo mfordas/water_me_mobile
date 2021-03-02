@@ -1,5 +1,9 @@
-import { loginExternalType, logoutType } from '../../redux_actions/loginTypes';
-import loginReducer, { initialState } from '../loginReducer';
+import {
+  loginExternalType,
+  logoutType,
+  logincheckType,
+} from '../../redux_actions/loginTypes';
+import loginReducer, {initialState} from '../loginReducer';
 
 describe('Login Reducer', () => {
   it('Should return default state', () => {
@@ -49,6 +53,25 @@ describe('Login Reducer', () => {
 
     const newState = loginReducer(undefined, {
       type: logoutType,
+      loginData: newLoginData.loginData,
+      isLogged: newLoginData.isLogged,
+    });
+
+    expect(newLoginData).toEqual(newState);
+  });
+
+  it('Should return new state if receiving type logincheck', () => {
+    const newLoginData = {
+      loginData: {
+        name: '',
+        googleId: '',
+        invalidData: false,
+      },
+      isLogged: false,
+    };
+
+    const newState = loginReducer(undefined, {
+      type: logincheckType,
       loginData: newLoginData.loginData,
       isLogged: newLoginData.isLogged,
     });
