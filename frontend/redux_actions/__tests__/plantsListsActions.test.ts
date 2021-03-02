@@ -1,6 +1,6 @@
 import nock from 'nock';
 import configureStore from 'redux-mock-store';
-import thunk, { ThunkDispatch } from 'redux-thunk';
+import thunk, {ThunkDispatch} from 'redux-thunk';
 import {
   addPlantsList,
   deletePlantsList,
@@ -15,7 +15,9 @@ import {
   PlantsListsState,
   PlantsList,
 } from '../plantsListsTypes';
-import { Plant } from '../plantsTypes';
+import {Plant} from '../plantsTypes';
+import apiUrl from '../../Utils/apiUrl';
+import {getData} from '../../Utils/asyncStorage';
 
 const middlewares = [thunk];
 const mockStore = configureStore<
@@ -24,25 +26,38 @@ const mockStore = configureStore<
 >(middlewares);
 
 jest.mock('jwt-decode', () => () => ({}));
+jest.mock('../../Utils/apiUrl', () => () => 'http://localhost');
+jest.mock('../../Utils/asyncStorage', () => {
+  const asyncStorage = jest.requireActual('../../Utils/asyncStorage');
+  return {
+    ...asyncStorage,
+    removeValue: jest.fn(),
+    storeData: jest.fn(),
+    getData: jest.fn(),
+  };
+});
+
+const getApiUrl = apiUrl();
 
 const store = mockStore({
   plantsListName: '',
   plantsLists: [],
-  userId: localStorage.getItem('id'),
+  userId: '1',
   plantsListDeleted: false,
   plants: [],
 });
 
 const testUserId = '1';
 const testPlantsListId = 1;
-localStorage.setItem('token', 'testToken');
-localStorage.setItem('id', testUserId);
 
 describe('Get plants lists action', () => {
   afterEach(() => {
     store.clearActions();
   });
   it('Action is sended with correct payload', async () => {
+    (getData as jest.Mock).mockImplementation(() =>
+      Promise.resolve(testUserId),
+    );
     const expectedPayload = [
       {
         id: 1,
@@ -55,7 +70,7 @@ describe('Get plants lists action', () => {
         userId: 2,
       },
     ];
-    nock(`http://localhost/api`)
+    nock(`${getApiUrl}/api`)
       .get(`/plantsLists/${testUserId}`)
       .reply(200, expectedPayload);
 
@@ -66,9 +81,23 @@ describe('Get plants lists action', () => {
   });
 
   it('Action is sended with correct payload when there is an error', async () => {
+    (getData as jest.Mock).mockImplementation(() =>
+      Promise.resolve(testUserId),
+    );
     const expectedPayload: PlantsList[] = [];
 
-    nock(`http://localhost/api`).get(`/plantsLists/${testUserId}`).reply(404);
+    nock(`${getApiUrl}/api`).get(`/plantsLists/${testUserId}`).reply(404);
+
+    await store.dispatch(getPlantsListsForUser());
+
+    expect(store.getActions()[0].type).toBe(getPlantsListsType);
+    expect(store.getActions()[0].plantsLists).toEqual(expectedPayload);
+  });
+
+  it('Action is sended with correct payload when there is no user id', async () => {
+    (getData as jest.Mock).mockImplementation(() => Promise.resolve(undefined));
+
+    const expectedPayload: PlantsList[] = [];
 
     await store.dispatch(getPlantsListsForUser());
 
@@ -83,9 +112,12 @@ describe('Add plants lists action', () => {
   });
   it('Action is sended with correct payload', async () => {
     const testPlantListName = 'TestName';
-    nock(`http://localhost/api`)
+    (getData as jest.Mock).mockImplementation(() =>
+      Promise.resolve(testUserId),
+    );
+    nock(`${getApiUrl}/api`)
       .post(`/plantsLists`)
-      .reply(200, { name: testPlantListName });
+      .reply(200, {name: testPlantListName});
 
     await store.dispatch(addPlantsList(testPlantListName));
 
@@ -96,7 +128,10 @@ describe('Add plants lists action', () => {
   it('Action is sended with correct payload when there is an error', async () => {
     const testPlantListName = 'TestName';
     const expectedPayload = '';
-    nock(`http://localhost/api`).post(`/plantsLists`).reply(404);
+    (getData as jest.Mock).mockImplementation(() =>
+      Promise.resolve(testUserId),
+    );
+    nock(`${getApiUrl}/api`).post(`/plantsLists`).reply(404);
 
     await store.dispatch(addPlantsList(testPlantListName));
 
@@ -111,7 +146,10 @@ describe('Delete plants lists action', () => {
   });
   it('Action is sended with correct payload', async () => {
     const expectedPayload = true;
-    nock(`http://localhost/api`)
+    (getData as jest.Mock).mockImplementation(() =>
+      Promise.resolve(testUserId),
+    );
+    nock(`${getApiUrl}/api`)
       .delete(`/plantsLists/${testUserId}/${testPlantsListId}`)
       .reply(200);
 
@@ -123,7 +161,10 @@ describe('Delete plants lists action', () => {
 
   it('Action is sended with correct payload when there is an error', async () => {
     const expectedPayload = false;
-    nock(`http://localhost/api`)
+    (getData as jest.Mock).mockImplementation(() =>
+      Promise.resolve(testUserId),
+    );
+    nock(`${getApiUrl}/api`)
       .delete(`/plantsLists/${testUserId}/${testPlantsListId}`)
       .reply(400);
 
@@ -139,6 +180,9 @@ describe('Show plants list action', () => {
     store.clearActions();
   });
   it('Action is sended with correct payload', async () => {
+    (getData as jest.Mock).mockImplementation(() =>
+      Promise.resolve(testUserId),
+    );
     const expectedPayload = [
       {
         id: 1,
@@ -151,7 +195,7 @@ describe('Show plants list action', () => {
       },
     ];
 
-    nock(`http://localhost/api`)
+    nock(`${getApiUrl}/api`)
       .get(`/plants/${testUserId}/${testPlantsListId}`)
       .reply(200, expectedPayload);
 
@@ -162,9 +206,12 @@ describe('Show plants list action', () => {
   });
 
   it('Action is sended with correct payload when there is an error', async () => {
+    (getData as jest.Mock).mockImplementation(() =>
+      Promise.resolve(testUserId),
+    );
     const expectedPayload: Plant[] = [];
 
-    nock(`http://localhost/api`)
+    nock(`${getApiUrl}/api`)
       .get(`/plants/${testUserId}/${testPlantsListId}`)
       .reply(404);
 

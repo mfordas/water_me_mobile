@@ -13,29 +13,6 @@ import apiUrl from '../Utils/apiUrl';
 
 const getApiUrl = apiUrl();
 
-export const getPlantsLists = (): AppThunk => async (dispatch) => {
-  try {
-    const res = await axios({
-      method: 'get',
-      url: `${getApiUrl}/api/plantsLists`,
-      headers: await setHeaders(),
-    });
-
-    if (res.status === 200) {
-      dispatch({
-        type: getPlantsListsType,
-        plantsLists: res.data,
-      });
-    }
-  } catch (error) {
-    console.error('Error:', error.response.data);
-    dispatch({
-      type: getPlantsListsType,
-      plantsLists: [],
-    });
-  }
-};
-
 export const addPlantsList = (plantsListName: string): AppThunk => async (
   dispatch,
 ) => {

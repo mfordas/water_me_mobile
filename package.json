@@ -68,8 +68,7 @@
     ],
     "collectCoverageFrom": [
       "<rootDir>/frontend/**/*.{js,jsx,ts,tsx}",
-      "!<rootDir>/node_modules/",
-      "!<rootDir>/frontend/Utils/generateAuthTokenForExternalUser.js"
+      "!<rootDir>/node_modules/"
     ],
     "coverageReporters": [
       "json",

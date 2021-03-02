@@ -1,16 +1,13 @@
 import nock from 'nock';
 import configureStore from 'redux-mock-store';
-import thunk, { ThunkDispatch } from 'redux-thunk';
+import thunk, {ThunkDispatch} from 'redux-thunk';
 import {
   resetRegisterState,
   postGoogleUser,
 } from '../../redux_actions/registerActions';
-import {
-  registerExternal,
-  resetRegState,
-  RegisterState,
-} from '../registerTypes';
-import { AuthObject } from '../../Utils/generateAuthTokenForExternalUser';
+import {registerExternal, resetRegState, RegisterState} from '../registerTypes';
+import {User} from '@react-native-community/google-signin';
+import apiUrl from '../../Utils/apiUrl';
 
 const middlewares = [thunk];
 const mockStore = configureStore<
@@ -19,6 +16,9 @@ const mockStore = configureStore<
 >(middlewares);
 
 jest.mock('jwt-decode', () => () => ({}));
+jest.mock('../../Utils/apiUrl', () => () => 'http://localhost');
+
+const getApiUrl = apiUrl();
 
 describe('Reset register state action', () => {
   const store = mockStore({
@@ -40,11 +40,11 @@ describe('Reset register state action', () => {
     store.dispatch(resetRegisterState());
     expect(store.getActions()[0].type).toBe(resetRegState);
     expect(store.getActions()[0].invalidData).toEqual(
-      expectedPayload.invalidData
+      expectedPayload.invalidData,
     );
     expect(store.getActions()[0].confirm).toEqual(expectedPayload.confirm);
     expect(store.getActions()[0].googleUser).toEqual(
-      expectedPayload.googleUser
+      expectedPayload.googleUser,
     );
   });
 });
@@ -63,28 +63,29 @@ describe('Register actions', () => {
       googleUser: true,
     };
 
-    nock(`http://localhost/api`).post(`/users/googleUser`).reply(200);
+    nock(`${getApiUrl}/api`).post(`/users/googleUser`).reply(200);
 
-    const authTestObject: AuthObject = {
-      currentUser: {
-        get: () => {
-          return {
-            getAuthResponse: () => {
-              return { id_token: '12345' };
-            },
-          };
-        },
+    const authTestObject: User = {
+      idToken: '12345',
+      user: {
+        id: '1',
+        name: 'testname',
+        email: 'mail@mail.com',
+        photo: 'testphoto',
+        familyName: 'familyName',
+        givenName: 'givenName',
       },
+      serverAuthCode: '12345',
     };
     await store.dispatch(postGoogleUser(authTestObject));
 
     expect(store.getActions()[0].type).toBe(registerExternal);
     expect(store.getActions()[0].invalidData).toEqual(
-      expectedPayload.invalidData
+      expectedPayload.invalidData,
     );
     expect(store.getActions()[0].confirm).toEqual(expectedPayload.confirm);
     expect(store.getActions()[0].googleUser).toEqual(
-      expectedPayload.googleUser
+      expectedPayload.googleUser,
     );
   });
 
@@ -101,28 +102,29 @@ describe('Register actions', () => {
       googleUser: true,
     };
 
-    nock(`http://localhost/api`).post(`/users/googleUser`).reply(202);
+    nock(`${getApiUrl}/api`).post(`/users/googleUser`).reply(202);
 
-    const authTestObject: AuthObject = {
-      currentUser: {
-        get: () => {
-          return {
-            getAuthResponse: () => {
-              return { id_token: '12345' };
-            },
-          };
-        },
+    const authTestObject: User = {
+      idToken: '12345',
+      user: {
+        id: '1',
+        name: 'testname',
+        email: 'mail@mail.com',
+        photo: 'testphoto',
+        familyName: 'familyName',
+        givenName: 'givenName',
       },
+      serverAuthCode: '12345',
     };
     await store.dispatch(postGoogleUser(authTestObject));
 
     expect(store.getActions()[0].type).toBe(registerExternal);
     expect(store.getActions()[0].invalidData).toEqual(
-      expectedPayload.invalidData
+      expectedPayload.invalidData,
     );
     expect(store.getActions()[0].confirm).toEqual(expectedPayload.confirm);
     expect(store.getActions()[0].googleUser).toEqual(
-      expectedPayload.googleUser
+      expectedPayload.googleUser,
     );
   });
 
@@ -139,28 +141,29 @@ describe('Register actions', () => {
       googleUser: true,
     };
 
-    nock(`http://localhost/api`).post(`/users/googleUser`).reply(400);
+    nock(`${getApiUrl}/api`).post(`/users/googleUser`).reply(400);
 
-    const authTestObject: AuthObject = {
-      currentUser: {
-        get: () => {
-          return {
-            getAuthResponse: () => {
-              return { id_token: '12345' };
-            },
-          };
-        },
+    const authTestObject: User = {
+      idToken: '12345',
+      user: {
+        id: '1',
+        name: 'testname',
+        email: 'mail@mail.com',
+        photo: 'testphoto',
+        familyName: 'familyName',
+        givenName: 'givenName',
       },
+      serverAuthCode: '12345',
     };
     await store.dispatch(postGoogleUser(authTestObject));
 
     expect(store.getActions()[0].type).toBe(registerExternal);
     expect(store.getActions()[0].invalidData).toEqual(
-      expectedPayload.invalidData
+      expectedPayload.invalidData,
     );
     expect(store.getActions()[0].confirm).toEqual(expectedPayload.confirm);
     expect(store.getActions()[0].googleUser).toEqual(
-      expectedPayload.googleUser
+      expectedPayload.googleUser,
     );
   });
 });
