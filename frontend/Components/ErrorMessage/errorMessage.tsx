@@ -7,7 +7,11 @@ type PropsType = {
 
 const ErrorMessage = ({errorText}: PropsType): JSX.Element | null => {
   return errorText ? (
-    <Text style={styles.errorMessageContainer}>{errorText}</Text>
+    <Text
+      style={styles.errorMessageContainer}
+      data-test="errorMessageComponent">
+      {errorText}
+    </Text>
   ) : null;
 };
 

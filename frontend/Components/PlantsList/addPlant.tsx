@@ -27,7 +27,10 @@ export const AddPlant = ({
   const [name, setName] = useState('');
   const [wateringCycle, setWateringCycle] = useState('0');
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [singleFile, setSingleFile] = useState(null);
+  const [singleFile, setSingleFile]: [
+    any | null,
+    React.Dispatch<React.SetStateAction<any | null>>,
+  ] = useState(null);
   const [picture, setPicture] = useState('');
   const [startDate, setStartDate] = useState(setCurrentDate(new Date()));
 

@@ -11,7 +11,7 @@ export const storeData = async (key: string, value: string): Promise<void> => {
 export const getData = async (key: string): Promise<string | void> => {
   try {
     const value = await AsyncStorage.getItem(`${key}`);
-    if (value !== null) {
+    if (value) {
       return value;
     }
   } catch (e) {

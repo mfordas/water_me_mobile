@@ -27,7 +27,7 @@ export const GoogleAuth = ({loginExternal, setError}: PropsFromRedux) => {
 const mapStateToProps = (
   state: RootState,
   ownProps: {
-    setError: (error: string) => React.Dispatch<React.SetStateAction<string>>;
+    setError: React.Dispatch<React.SetStateAction<string>>;
   },
 ) => ({
   loginData: state.loginData,

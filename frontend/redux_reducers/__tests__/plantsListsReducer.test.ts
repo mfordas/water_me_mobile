@@ -4,7 +4,7 @@ import {
   getPlantsListsType,
   showPlantsListType,
 } from '../../redux_actions/plantsListsTypes';
-import plantsListsReducer, { initialState } from '../plantsListsReducer';
+import plantsListsReducer, {initialState} from '../plantsListsReducer';
 
 describe('Register Reducer', () => {
   it('Should return default state', () => {
@@ -16,7 +16,7 @@ describe('Register Reducer', () => {
     expect(newState).toEqual({
       plantsListName: '',
       plantsLists: [],
-      userId: localStorage.getItem('id'),
+      userId: null,
       plantsListDeleted: false,
       plants: [],
     });
@@ -26,7 +26,7 @@ describe('Register Reducer', () => {
     const newPlantData = {
       plantsListName: 'XYZ',
       plantsLists: [],
-      userId: localStorage.getItem('id'),
+      userId: null,
       plantsListDeleted: false,
       plants: [],
     };
@@ -54,7 +54,7 @@ describe('Register Reducer', () => {
           userId: 2,
         },
       ],
-      userId: localStorage.getItem('id'),
+      userId: null,
       plantsListDeleted: false,
       plants: [],
     };
@@ -71,7 +71,7 @@ describe('Register Reducer', () => {
     const newPlantData = {
       plantsListName: '',
       plantsLists: [],
-      userId: localStorage.getItem('id'),
+      userId: null,
       plantsListDeleted: true,
       plants: [],
     };
@@ -88,7 +88,7 @@ describe('Register Reducer', () => {
     const newPlantData = {
       plantsListName: '',
       plantsLists: [],
-      userId: localStorage.getItem('id'),
+      userId: null,
       plantsListDeleted: false,
       plants: [
         {

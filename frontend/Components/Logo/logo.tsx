@@ -7,8 +7,10 @@ import LogoPic from '../../img/logo.svg';
 
 const Logo = () => {
   return (
-    <View style={[{flex: 1, flexGrow: 0.5}, style.logoContainer]}>
-      <LogoPic width={350} />
+    <View
+      style={[{flex: 1, flexGrow: 0.5}, style.logoContainer]}
+      data-test="logoComponent">
+      <LogoPic width={350} data-test="logoSVG" />
     </View>
   );
 };
