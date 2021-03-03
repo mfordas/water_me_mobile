@@ -8,10 +8,10 @@ import PropTypes from 'prop-types';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
 import HomePage from './frontend/Components/HomePage';
-import LogoComponent from './frontend/Components/Logo';
+import Logo from './frontend/Components/Logo/logo';
 import Menu from './frontend/Components/Menu';
 import PlantsListsComponent from './frontend/Components/PlantsLists';
-import FooterComponent from './frontend/Components/Footer';
+import Footer from './frontend/Components/Footer/footer';
 
 import {store} from './frontend/redux_store/reduxStore';
 import {loginCheck} from './frontend/redux_actions/loginActions';
@@ -42,7 +42,7 @@ const App: () => React$Node = ({loginData, loginCheck}) => {
   return (
     <NavigationContainer ref={navigationRef} theme={MyTheme}>
       <SafeAreaView style={{flex: 1}}>
-        <LogoComponent />
+        <Logo />
         <Menu />
         <Stack.Navigator>
           {!loginData.isLogged && (
@@ -64,7 +64,7 @@ const App: () => React$Node = ({loginData, loginCheck}) => {
             </>
           )}
         </Stack.Navigator>
-        <FooterComponent />
+        <Footer />
       </SafeAreaView>
     </NavigationContainer>
   );

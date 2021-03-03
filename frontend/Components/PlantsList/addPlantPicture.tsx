@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import {launchCamera} from 'react-native-image-picker';
-import PropTypes from 'prop-types';
 
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import styles from './styles/plantsList';
@@ -94,10 +93,4 @@ export const AddPlantPicture = ({
       {validatePicture()}
     </>
   );
-};
-
-AddPlantPicture.propTypes = {
-  formSubmitted: PropTypes.bool,
-  singleFile: PropTypes.object,
-  setSingleFile: PropTypes.func,
 };

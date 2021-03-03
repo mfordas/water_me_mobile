@@ -6,7 +6,7 @@ import {
 
 export const makeAuth = async (
   loginExternal: (user: User) => Promise<void>,
-  setError: (error: string) => React.Dispatch<React.SetStateAction<string>>,
+  setError: React.Dispatch<React.SetStateAction<string>>,
 ) => {
   try {
     await GoogleSignin.hasPlayServices();

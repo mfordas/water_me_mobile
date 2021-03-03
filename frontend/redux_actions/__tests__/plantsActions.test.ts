@@ -17,6 +17,9 @@ import {
 import apiUrl from '../../Utils/apiUrl';
 import {getData} from '../../Utils/asyncStorage';
 
+const append = jest.fn();
+global.FormData = () => ({append});
+
 const middlewares = [thunk];
 const mockStore = configureStore<
   PlantsState,
@@ -207,10 +210,7 @@ describe('Update watering action', () => {
 });
 
 describe('Upload image action', () => {
-  const testUserId = '1';
   const testImageName = 'TestImage';
-  localStorage.setItem('token', 'testToken');
-  localStorage.setItem('id', testUserId);
 
   const photoData = new FormData();
   photoData.append('image', testImageName);
