@@ -8,7 +8,7 @@ import ErrorMessage from '../ErrorMessage/errorMessage';
 const HomePage = () => {
   const [error, setError] = useState('');
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.wrapper} data-test="homePage">
       <Text style={styles.text}>
         Cześć! Witamy w programie WaterMe! Dzięki niemu już nigdy nie zapomnisz
         o podlewaniu swoich roślin. Twórz listy roślin z domu, ogrodu, pracy i
