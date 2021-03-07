@@ -7,11 +7,11 @@ import {style} from '../Menu/index';
 import * as RootNavigation from '../../Utils/rootNavigation';
 import {RootState} from '../../redux_reducers/';
 
-const ConfirmGoogle = ({resetRegisterState}: PropsFromRedux) => {
+export const ConfirmGoogle = ({resetRegisterState}: PropsFromRedux) => {
   return (
     <>
       <Text>Konto założone!</Text>
-      <Text> Możesz teraz się zalogować.</Text>
+      <Text>Możesz teraz się zalogować.</Text>
       <TouchableOpacity
         style={style.buttonMenu}
         onPress={() => {
