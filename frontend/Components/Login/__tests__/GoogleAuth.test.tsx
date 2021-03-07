@@ -1,12 +1,10 @@
 import React from 'react';
-import { shallow, mount, ShallowWrapper } from 'enzyme';
-import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
-import { GoogleAuth } from '../googleAuth';
-import { initialState } from '../../../redux_reducers/loginReducer';
-import { LoginState } from '../../../redux_actions/loginTypes';
-import { BrowserRouter, Redirect } from 'react-router-dom';
-import { act } from 'react-dom/test-utils';
-import { makeAuth } from '../helpers';
+import {shallow, mount, ShallowWrapper} from 'enzyme';
+import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
+import {GoogleAuth} from '../googleAuth';
+import {initialState} from '../../../redux_reducers/loginReducer';
+import {LoginState} from '../../../redux_actions/loginTypes';
+import {makeAuth} from '../helpers';
 
 jest.mock('../helpers', () => {
   const helpers = jest.requireActual('../helpers');
@@ -28,18 +26,16 @@ jest.mock('../hooks', () => {
 
 const mockFunc = jest.fn();
 
+jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('../../../Utils/apiUrl', () => jest.fn());
+
 const setUp = (startState: LoginState = initialState) => {
   const wrapper = shallow(
-    <GoogleAuth loginData={startState} loginExternal={mockFunc} />
-  );
-  return wrapper;
-};
-
-const setUpMount = (startState: LoginState = initialState) => {
-  const wrapper = mount(
-    <BrowserRouter>
-      <GoogleAuth loginData={startState} loginExternal={mockFunc} />
-    </BrowserRouter>
+    <GoogleAuth
+      loginData={startState}
+      loginExternal={mockFunc}
+      setError={mockFunc}
+    />,
   );
   return wrapper;
 };
@@ -62,39 +58,20 @@ describe('Google auth component', () => {
 
   it('Should render without error', () => {
     const component = findByDataTestAtrr(wrapper, 'googleAuthComponent');
+
     expect(component.length).toBe(1);
   });
 });
 
 describe('Should handle submit Google login button', () => {
-  const component = setUpMount(initialState);
+  const component = setUp(initialState);
 
   it('Should emit callback on click event', async () => {
     (makeAuth as jest.Mock).mockImplementation(() =>
-      console.log('Making auth')
+      console.log('Making auth'),
     );
-    await act(async () => {
-      component.simulate('click');
-    });
+    component.props().children.props.onPress();
 
     expect(makeAuth).toHaveBeenCalled();
-  });
-});
-
-describe('When logged in', () => {
-  it('Should redirect to plants lists', () => {
-    const initialState = {
-      loginData: {
-        name: '',
-        googleId: '',
-        invalidData: false,
-      },
-      isLogged: true,
-    };
-
-    const wrapper = setUp(initialState);
-
-    expect(wrapper.find(Redirect).length).toBe(1);
-    expect(wrapper.debug()).toContain('/plants');
   });
 });
