@@ -18,12 +18,14 @@ export const Menu = ({loginData, logout}: PropsFromRedux) => {
         <>
           <TouchableOpacity
             style={style.buttonMenu}
-            onPress={() => RootNavigation.navigate('PlantsLists')}>
+            onPress={() => RootNavigation.navigate('PlantsLists')}
+            data-test="myPlantsButton">
             <Text style={style.buttonMenuText}>Moje listy rośliny</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={style.buttonMenu}
-            onPress={() => handleLogout()}>
+            onPress={() => handleLogout()}
+            data-test="logoutButton">
             <Text style={style.buttonMenuText}>Logout</Text>
           </TouchableOpacity>
         </>

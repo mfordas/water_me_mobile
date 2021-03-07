@@ -13,14 +13,14 @@ export const makeAuth = async (
     const userInfo = await GoogleSignin.signIn();
     await loginExternal(userInfo);
   } catch (error) {
-    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      setError('Logowanie przerwane');
+    if (error === undefined) {
+      setError('Coś się zepsuło :(');
     } else if (error.code === statusCodes.IN_PROGRESS) {
       setError('Jesteś już w trakcie operacji logowania');
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
       setError('Brak połączenia z Google Play');
-    } else {
-      setError('Coś się zepsuło :(');
+    } else if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      setError('Logowanie przerwane');
     }
   }
 };

@@ -17,7 +17,8 @@ export const GoogleRegister = ({
   return !registerData.confirm ? (
     <TouchableOpacity
       style={google.googleButton}
-      onPress={() => makeAuth(postGoogleUser, setError)}>
+      onPress={() => makeAuth(postGoogleUser, setError)}
+      data-test="registerComponent">
       <Image style={google.googleButtonLogo} source={googlelogo} />
       <Text style={google.googleButtonText}>Zarejestruj przez Google</Text>
     </TouchableOpacity>

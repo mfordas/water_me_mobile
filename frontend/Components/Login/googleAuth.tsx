@@ -16,7 +16,8 @@ export const GoogleAuth = ({loginExternal, setError}: PropsFromRedux) => {
     <>
       <TouchableOpacity
         style={google.googleButton}
-        onPress={() => makeAuth(loginExternal, setError)}>
+        onPress={() => makeAuth(loginExternal, setError)}
+        data-test="googleAuthComponent">
         <Image style={google.googleButtonLogo} source={googlelogo} />
         <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
       </TouchableOpacity>
