@@ -33,10 +33,14 @@ export const ShowPlantsLists = ({
         <AddPlantsList />
         <ScrollView
           style={styles.plantsListsContainer}
-          contentContainerStyle={{alignItems: 'center'}}>
+          contentContainerStyle={{alignItems: 'center'}}
+          data-test="showPlantsListsComponent">
           {plantsListsArray.map((plantsList) => {
             return (
-              <View style={styles.plantsListContainer} key={plantsList.id}>
+              <View
+                style={styles.plantsListContainer}
+                key={plantsList.id}
+                data-test="plantsListContainer">
                 <Text style={styles.text}>{plantsList.name}</Text>
                 <TouchableOpacity
                   style={style.buttonMenu}

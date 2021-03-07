@@ -21,7 +21,8 @@ export const DeletePlantsList = ({
   return (
     <TouchableOpacity
       style={styles.deleteButton}
-      onPress={() => handlerDeletePlantsList()}>
+      onPress={() => handlerDeletePlantsList()}
+      data-test="deletePlantListComponent">
       <Text style={styles.text}>Usuń</Text>
     </TouchableOpacity>
   );

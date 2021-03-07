@@ -34,15 +34,19 @@ export const AddPlantsList = ({
   };
 
   return (
-    <View style={styles.addPlantsListContainer}>
+    <View
+      style={styles.addPlantsListContainer}
+      data-test="addPlantListComponent">
       <View style={styles.addPlantsListForm}>
         <TextInput
           style={styles.input}
           onChangeText={(text) => setPlantsListName(text)}
-          value={plantsListName}></TextInput>
+          value={plantsListName}
+          data-test="inputAddPlantsList"></TextInput>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => addNewPlantsList()}>
+          onPress={() => addNewPlantsList()}
+          data-test="addPlantsListButton">
           <Text style={styles.text}>Dodaj listę roślin</Text>
         </TouchableOpacity>
       </View>
