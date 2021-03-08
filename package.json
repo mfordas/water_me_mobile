@@ -75,7 +75,7 @@
       "<rootDir>/node_modules/"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|my-project|react-native-button|@react-native-async-storage/async-storage)/)"
+      "node_modules/(?!(react-native|my-project|react-native-button|@react-native-async-storage/async-storage|@react-native-community/datetimepicker|react-native-document-picker|react-native-image-picker)/)"
     ],
     "collectCoverageFrom": [
       "<rootDir>/frontend/**/*.{js,jsx,ts,tsx}",

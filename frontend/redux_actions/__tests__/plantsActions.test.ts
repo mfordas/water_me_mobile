@@ -209,9 +209,6 @@ describe('Update watering action', () => {
 describe('Upload image action', () => {
   const testImageName = 'TestImage';
 
-  // const photoData = new FormData();
-  // photoData.append('image', testImageName);
-
   const photoData: FormData = {
     append: jest.fn(),
     get: jest.fn(),

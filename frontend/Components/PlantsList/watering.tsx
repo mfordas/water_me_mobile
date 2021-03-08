@@ -21,8 +21,6 @@ const Watering = ({
     lastWateringDate,
     wateringCycle,
   );
-  // const currentDate = setCurrentDate(new Date());
-  // const oneDayInMiliseconds = 86400000;
 
   const handleUpdateLastWateringDate = async () => {
     await updateLastWateringDate(plantId, currentDate);
@@ -30,12 +28,6 @@ const Watering = ({
   };
 
   const renderWateringStatus = () => {
-    // const countDaysSinceLastWatering =
-    //   (new Date(currentDate).getTime() - new Date(lastWateringDate).getTime()) /
-    //   oneDayInMiliseconds;
-
-    // const nextWateringIn = wateringCycle - countDaysSinceLastWatering;
-
     if (nextWateringIn > 0) {
       return (
         <View style={styles.wateringStatusContainer}>
