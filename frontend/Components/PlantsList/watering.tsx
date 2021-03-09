@@ -9,7 +9,7 @@ import {useCountWatering} from './hooks';
 import {WateringProps} from './plantsList';
 import {RootState} from '../../redux_reducers/';
 
-const Watering = ({
+export const Watering = ({
   updateLastWateringDate,
   showPlantsList,
   lastWateringDate,
@@ -31,10 +31,12 @@ const Watering = ({
     if (nextWateringIn > 0) {
       return (
         <View style={styles.wateringStatusContainer}>
-          <Text style={[styles.wateringStatus, styles.statusOk]}>
+          <Text
+            style={[styles.wateringStatus, styles.statusOk]}
+            data-test="statusOk">
             U mnie w porządku!
           </Text>
-          <Text style={styles.wateringStatus}>
+          <Text style={styles.wateringStatus} data-test="nextWateringContainer">
             Kolejne podlewanie za: {nextWateringIn}
             {nextWateringIn === 1 ? ' dzień' : ' dni'}
           </Text>
@@ -43,7 +45,9 @@ const Watering = ({
     } else {
       return (
         <View style={[styles.wateringStatusContainer]}>
-          <Text style={[styles.wateringStatus, styles.statusNok]}>
+          <Text
+            style={[styles.wateringStatus, styles.statusNok]}
+            data-test="statusNok">
             Potrzebuję wody!
           </Text>
           <TouchableOpacity onPress={handleUpdateLastWateringDate}>
@@ -57,8 +61,8 @@ const Watering = ({
   };
 
   return (
-    <View style={styles.wateringContainer}>
-      <Text>{renderWateringStatus()}</Text>
+    <View style={styles.wateringContainer} data-test="WateringComponent">
+      {renderWateringStatus()}
     </View>
   );
 };

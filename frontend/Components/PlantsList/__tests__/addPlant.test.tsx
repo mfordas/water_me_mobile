@@ -21,7 +21,9 @@ jest.mock('../helpers', () => {
   };
 });
 
-const mockShowPlantsList = jest.fn();
+const mockShowPlantsList = jest.fn(() =>
+  Promise.resolve(console.log('Showing plants list')),
+);
 const mockShowAddPlantForm = jest.fn();
 const mockAddPlantToList = jest.fn();
 const mockUploadingFile = jest.fn();
@@ -42,9 +44,10 @@ const setUp = (initialState: PlantsState) => {
 
 describe('Add plants list component', () => {
   let wrapper: ShallowWrapper;
+  let initialState;
 
   beforeEach(async () => {
-    const initialState = {
+    initialState = {
       plantData: {
         id: 1,
         name: 'abc',
@@ -94,6 +97,7 @@ describe('Add plants list component', () => {
     if (addPlantButtonFunction) {
       await addPlantButtonFunction({} as any);
     }
+
     await wrapper.update();
 
     expect(mockAddPlantToList).toBeCalledTimes(1);

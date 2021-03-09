@@ -22,7 +22,7 @@ export const WateringCycle = ({
   };
   return (
     <>
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} data-test="WateringInput">
         <Text>Podlewanie co:</Text>
         <TextInput
           keyboardType="number-pad"
