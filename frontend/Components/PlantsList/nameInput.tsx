@@ -21,7 +21,7 @@ export const NameInput = ({formSubmitted, name, setName}: Input) => {
 
   return (
     <>
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} data-test="nameInput">
         <Text>Imię</Text>
         <TextInput
           style={styles.input}

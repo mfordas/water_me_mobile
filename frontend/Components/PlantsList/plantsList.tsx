@@ -22,7 +22,7 @@ export type WateringProps = {
   listId: number;
 };
 
-const PlantsList = ({
+export const PlantsList = ({
   showPlantsList,
   plantsListsData,
   listIndex,
