@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 import {connect, ConnectedProps} from 'react-redux';
-import PropTypes from 'prop-types';
 
 import PlantsList from './plantsList';
 import {getPlantsListsForUser} from '../../redux_actions/plantsListsActions';
@@ -10,7 +9,7 @@ import {RootState} from '../../redux_reducers/';
 
 const Stack = createStackNavigator();
 
-const PlantsListComponent = ({
+export const PlantsListComponent = ({
   getPlantsListsForUser,
   plantsListsData,
 }: PropsFromRedux) => {

@@ -33,7 +33,6 @@ export const useCreatePlantsList = (
   const [plants, setPlants] = useState<Plant[]>([]);
 
   useEffect(() => {
-    console.log('works');
     const getPlantsFromList = async () => {
       if (plantsListsData.plantsLists.length > 0) {
         await showPlantsList(plantsListsData.plantsLists[listIndex].id);

@@ -10,7 +10,7 @@ import {RootState} from '../../redux_reducers/';
 
 const Stack = createStackNavigator();
 
-const PlantsListsComponent = ({
+export const PlantsListsComponent = ({
   getPlantsListsForUser,
   plantsListsData,
 }: PropsFromRedux) => {

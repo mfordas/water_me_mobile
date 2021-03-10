@@ -45,7 +45,6 @@ export const AddPlant = ({
 
   const handleAddingPlantToList = async () => {
     setFormSubmitted(true);
-
     if (name && wateringCycle && singleFile && startDate) {
       const pictureName = await handleUploadingFile(
         singleFile,
@@ -70,7 +69,7 @@ export const AddPlant = ({
 
   return (
     <ScrollView>
-      <View style={styles.addPlantContainer}>
+      <View style={styles.addPlantContainer} data-test="addPlantComponent">
         <NameInput
           formSubmitted={formSubmitted}
           name={name}

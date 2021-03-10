@@ -8,7 +8,7 @@ import styles from './styles/plantsList';
 import {RootState} from '../../redux_reducers/';
 import {DeletePlantProps} from './plantsList';
 
-const DeletePlant = ({
+export const DeletePlant = ({
   deletePlant,
   showPlantsList,
   plantId,
@@ -23,7 +23,8 @@ const DeletePlant = ({
     <View>
       <TouchableOpacity
         style={[styles.button, styles.deletePlantButton]}
-        onPress={handleDeletePlant}>
+        onPress={handleDeletePlant}
+        data-test="deletePlantButton">
         <Text style={styles.deletePlantButtonText}>Usuń</Text>
       </TouchableOpacity>
     </View>

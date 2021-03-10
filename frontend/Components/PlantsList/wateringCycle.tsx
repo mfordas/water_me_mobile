@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, TextInput} from 'react-native';
-import PropTypes from 'prop-types';
 
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import styles from './styles/plantsList';
@@ -23,7 +22,7 @@ export const WateringCycle = ({
   };
   return (
     <>
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} data-test="WateringInput">
         <Text>Podlewanie co:</Text>
         <TextInput
           keyboardType="number-pad"

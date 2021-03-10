@@ -41,6 +41,7 @@
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
     "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react-hooks": "^5.1.0",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",
     "@types/react": "^17.0.2",
@@ -75,7 +76,7 @@
       "<rootDir>/node_modules/"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|my-project|react-native-button|@react-native-async-storage/async-storage)/)"
+      "node_modules/(?!(react-native|my-project|react-native-button|@react-native-async-storage/async-storage|@react-native-community/datetimepicker|react-native-document-picker|react-native-image-picker|@react-navigation/stack|react-native-gesture-handler|react-native-iphone-x-helper)/)"
     ],
     "collectCoverageFrom": [
       "<rootDir>/frontend/**/*.{js,jsx,ts,tsx}",
@@ -89,6 +90,9 @@
     "transform": {
       "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
       "\\.(ts|tsx)$": "ts-jest"
-    }
+    },
+    "setupFiles": [
+      "<rootDir>/jest/setup.js"
+    ]
   }
 }
