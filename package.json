@@ -6,8 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "test": "jest",
-    "test-coverage": "npm run test && --collectCoverage",
+    "test": "jest --watch --silent",
+    "test-coverage": "jest --coverage --silent",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -70,7 +70,6 @@
       "<rootDir>setupTests.ts"
     ],
     "cacheDirectory": ".jest/cache",
-    "collectCoverage": true,
     "testPathIgnorePatterns": [
       "\\.snap$",
       "<rootDir>/node_modules/"
@@ -80,7 +79,8 @@
     ],
     "collectCoverageFrom": [
       "<rootDir>/frontend/**/*.{js,jsx,ts,tsx}",
-      "!<rootDir>/node_modules/"
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/frontend/styling/*"
     ],
     "coverageReporters": [
       "json",

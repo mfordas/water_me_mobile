@@ -14,13 +14,6 @@ type AddPlantPicutre = {
   >;
 };
 
-type RNIPResponse = {
-  fileName: string;
-  fileSize: number;
-  uri: string;
-  type: string;
-};
-
 export const AddPlantPicture = ({
   formSubmitted,
   singleFile,
@@ -64,7 +57,7 @@ export const AddPlantPicture = ({
 
   return (
     <>
-      <View style={styles.inputContainerPicture}>
+      <View style={styles.inputContainerPicture} data-test="ImageInput">
         <TouchableOpacity
           style={[styles.button, styles.addPictureButton]}
           onPress={async () => {

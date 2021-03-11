@@ -27,7 +27,7 @@ export const DatePicker = ({setStartDate}: Input) => {
 
   return (
     <>
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} data-test="DatePicker">
         <Text style={styles.text}>Data startu:</Text>
         <TouchableOpacity onPress={showDatepicker}>
           <Text>{setCurrentDate(date)}</Text>
