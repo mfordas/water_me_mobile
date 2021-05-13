@@ -6,7 +6,7 @@ import {
     postGoogleUser,
 } from '../../redux_actions/registerActions';
 import {registerExternal, resetRegState, RegisterState} from '../registerTypes';
-import {User} from '@react-native-community/google-signin';
+import {User} from '@react-native-google-signin/google-signin';
 import apiUrl from '../../Utils/apiUrl';
 
 const middlewares = [thunk];

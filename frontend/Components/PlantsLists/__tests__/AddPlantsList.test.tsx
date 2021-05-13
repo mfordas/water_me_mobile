@@ -5,7 +5,7 @@ import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
 import {AddPlantsList} from '../addPlantsList';
 import {PlantsListsState} from '../../../redux_actions/plantsListsTypes';
 
-jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 const addPlantsListMockFunc = jest.fn(() =>

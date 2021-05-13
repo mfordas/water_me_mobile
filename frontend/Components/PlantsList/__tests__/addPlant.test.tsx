@@ -9,7 +9,7 @@ import {DatePicker} from '../datePicker';
 import {AddPlantPicture} from '../addPlantPicture';
 import {WateringCycle} from '../wateringCycle';
 
-jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 jest.mock('../helpers', () => {

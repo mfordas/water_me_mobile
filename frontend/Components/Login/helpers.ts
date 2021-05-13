@@ -2,7 +2,7 @@ import {
     GoogleSignin,
     statusCodes,
     User,
-} from '@react-native-community/google-signin';
+} from '@react-native-google-signin/google-signin';
 
 export const makeAuth = async (
     loginExternal: (user: User) => Promise<void>,

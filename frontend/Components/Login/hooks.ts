@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {GoogleSignin, User} from '@react-native-community/google-signin';
+import {GoogleSignin, User} from '@react-native-google-signin/google-signin';
 
 export const useSignInSilently = (
     loginExternal: (user: User) => Promise<void>,

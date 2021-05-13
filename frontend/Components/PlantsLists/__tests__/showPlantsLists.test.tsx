@@ -6,7 +6,7 @@ import {PlantsListsState} from '../../../redux_actions/plantsListsTypes';
 import AddPlantsList from '../addPlantsList';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
-jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 
 const mockFunc = jest.fn(() =>
     Promise.resolve(console.log('GetPlantListTest')),

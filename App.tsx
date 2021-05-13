@@ -5,7 +5,7 @@ import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import PropTypes from 'prop-types';
-import {GoogleSignin} from '@react-native-community/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import HomePage from './frontend/Components/HomePage';
 import Logo from './frontend/Components/Logo/logo';
@@ -29,6 +29,7 @@ const MyTheme = {
 };
 
 const App: () => React$Node = ({loginData, loginCheck}) => {
+    console.log(REACT_APP_GOOGLE_AUTH_API_CLIENTID);
     useEffect(() => {
         GoogleSignin.configure({
             scopes: ['email'],

@@ -4,7 +4,7 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import {loginExternal, logout} from '../../redux_actions/loginActions';
 import {logoutType, loginExternalType,LoginState} from '../loginTypes';
 
-import {GoogleSignin, User} from '@react-native-community/google-signin';
+import {GoogleSignin, User} from '@react-native-google-signin/google-signin';
 import apiUrl from '../../Utils/apiUrl';
 
 const middlewares = [thunk];
@@ -14,7 +14,7 @@ const mockStore = configureStore<
 >(middlewares);
 
 jest.mock('jwt-decode', () => () => ({}));
-jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 jest.mock('../../Utils/apiUrl', () => () => 'http://localhost');
 jest.mock('../../Utils/asyncStorage', () => {
     const asyncStorage = jest.requireActual('../../Utils/asyncStorage');
@@ -26,7 +26,7 @@ jest.mock('../../Utils/asyncStorage', () => {
     };
 });
 
-jest.mock('@react-native-community/google-signin', () => {
+jest.mock('@react-native-google-signin/google-signin', () => {
     return {
         GoogleSignin: {signOut: jest.fn()},
     };

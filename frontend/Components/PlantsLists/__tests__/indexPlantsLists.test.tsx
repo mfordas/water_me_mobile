@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {PlantsListsComponent} from '../index';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
-jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 
 const mockGetPlantsListForUser = jest.fn(() =>
     Promise.resolve(console.log('Downloading plants lists...')),

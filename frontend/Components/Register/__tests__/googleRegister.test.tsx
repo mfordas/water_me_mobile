@@ -28,7 +28,7 @@ jest.mock('../../Login/hooks', () => {
 
 const mockFunc = jest.fn();
 
-jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 const setUp = (startState: RegisterState = initialState) => {

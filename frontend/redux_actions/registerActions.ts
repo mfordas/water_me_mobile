@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {User} from '@react-native-community/google-signin';
+import {User} from '@react-native-google-signin/google-signin';
 
 import {registerExternal, resetRegState} from './registerTypes';
 import {AppThunk} from '../redux_store/reduxStore';

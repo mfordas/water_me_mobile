@@ -4,7 +4,7 @@ import React from 'react';
 import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
 import {Menu} from '../index';
 
-jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 describe('Menu Component', () => {

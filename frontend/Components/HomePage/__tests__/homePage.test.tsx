@@ -9,7 +9,7 @@ import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
 import ErrorMessage from '../../ErrorMessage/errorMessage';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
-jest.mock('@react-native-community/google-signin', () => () => ({}));
+jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 
 const setUp = () => {
     const component = shallow(<HomePage />);

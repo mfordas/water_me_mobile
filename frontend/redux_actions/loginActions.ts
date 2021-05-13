@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from 'jwt-decode';
-import {GoogleSignin, User} from '@react-native-community/google-signin';
+import {GoogleSignin, User} from '@react-native-google-signin/google-signin';
 
 import {loginExternalType, logoutType, logincheckType} from './loginTypes';
 import {AppThunk} from '../redux_store/reduxStore';
@@ -12,7 +12,6 @@ const getApiUrl = apiUrl();
 export const loginExternal = (authObject: User): AppThunk => async (
     dispatch,
 ) => {
-    console.log(`${getApiUrl}/api/authexternal`);
     try {
         const res = await axios({
             method: 'post',
