@@ -6,21 +6,21 @@ type PropsType = {
 };
 
 const ErrorMessage = ({errorText}: PropsType): JSX.Element | null => {
-  return errorText ? (
-    <Text
-      style={styles.errorMessageContainer}
-      data-test="errorMessageComponent">
-      {errorText}
-    </Text>
-  ) : null;
+    return errorText ? (
+        <Text
+            style={styles.errorMessageContainer}
+            data-test='errorMessageComponent'>
+            {errorText}
+        </Text>
+    ) : null;
 };
 
 const styles = StyleSheet.create({
-  errorMessageContainer: {
-    color: 'red',
-    fontSize: 12,
-    textAlign: 'center',
-  },
+    errorMessageContainer: {
+        color: 'red',
+        fontSize: 12,
+        textAlign: 'center',
+    },
 });
 
 export default ErrorMessage;

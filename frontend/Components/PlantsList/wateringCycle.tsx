@@ -11,31 +11,31 @@ type Input = {
 };
 
 export const WateringCycle = ({
-  wateringCycle,
-  setWateringCycle,
-  formSubmitted,
+    wateringCycle,
+    setWateringCycle,
+    formSubmitted,
 }: Input) => {
-  const validateWateringCycle = () => {
-    if (formSubmitted && wateringCycle === '0') {
-      return <ErrorMessage errorText="Wpisz częstotliwość podlewania" />;
-    }
-  };
-  return (
-    <>
-      <View style={styles.inputContainer} data-test="WateringInput">
-        <Text>Podlewanie co:</Text>
-        <TextInput
-          keyboardType="number-pad"
-          value={wateringCycle}
-          onChangeText={(text) => {
-            setWateringCycle(text);
-          }}
-        />
-        <Text>{wateringCycle === '1' ? `dzień` : 'dni'}</Text>
-      </View>
-      {validateWateringCycle()}
-    </>
-  );
+    const validateWateringCycle = () => {
+        if (formSubmitted && wateringCycle === '0') {
+            return <ErrorMessage errorText='Wpisz częstotliwość podlewania' />;
+        }
+    };
+    return (
+        <>
+            <View style={styles.inputContainer} data-test='WateringInput'>
+                <Text>Podlewanie co:</Text>
+                <TextInput
+                    keyboardType='number-pad'
+                    value={wateringCycle}
+                    onChangeText={(text) => {
+                        setWateringCycle(text);
+                    }}
+                />
+                <Text>{wateringCycle === '1' ? 'dzień' : 'dni'}</Text>
+            </View>
+            {validateWateringCycle()}
+        </>
+    );
 };
 
 export default WateringCycle;

@@ -9,37 +9,37 @@ import {RootState} from '../../redux_reducers/';
 import {DeletePlantProps} from './plantsList';
 
 export const DeletePlant = ({
-  deletePlant,
-  showPlantsList,
-  plantId,
-  listId,
+    deletePlant,
+    showPlantsList,
+    plantId,
+    listId,
 }: PropsFromRedux) => {
-  const handleDeletePlant = async () => {
-    await deletePlant(plantId);
-    await showPlantsList(listId);
-  };
+    const handleDeletePlant = async () => {
+        await deletePlant(plantId);
+        await showPlantsList(listId);
+    };
 
-  return (
-    <View>
-      <TouchableOpacity
-        style={[styles.button, styles.deletePlantButton]}
-        onPress={handleDeletePlant}
-        data-test="deletePlantButton">
-        <Text style={styles.deletePlantButtonText}>Usuń</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    return (
+        <View>
+            <TouchableOpacity
+                style={[styles.button, styles.deletePlantButton]}
+                onPress={handleDeletePlant}
+                data-test='deletePlantButton'>
+                <Text style={styles.deletePlantButtonText}>Usuń</Text>
+            </TouchableOpacity>
+        </View>
+    );
 };
 
 const mapStateToProps = (state: RootState, ownProps: DeletePlantProps) => ({
-  plantsData: state.plantsData,
-  plantId: ownProps.plantId,
-  listId: ownProps.listId,
+    plantsData: state.plantsData,
+    plantId: ownProps.plantId,
+    listId: ownProps.listId,
 });
 
 const mapDispatch = {
-  deletePlant: deletePlant,
-  showPlantsList: showPlantsList,
+    deletePlant: deletePlant,
+    showPlantsList: showPlantsList,
 };
 
 const connector = connect(mapStateToProps, mapDispatch);

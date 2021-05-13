@@ -7,9 +7,9 @@ export type Headers = {
 };
 
 const setHeaders = async (): Promise<Headers> => ({
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-  'x-auth-token': await getData('token'),
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    'x-auth-token': await getData('token'),
 });
 
 export default setHeaders;

@@ -10,35 +10,35 @@ import {makeAuth} from '../Login/helpers';
 import {RootState} from '../../redux_reducers/';
 
 export const GoogleRegister = ({
-  postGoogleUser,
-  registerData,
-  setError,
+    postGoogleUser,
+    registerData,
+    setError,
 }: PropsFromRedux) => {
-  return !registerData.confirm ? (
-    <TouchableOpacity
-      style={google.googleButton}
-      onPress={() => makeAuth(postGoogleUser, setError)}
-      data-test="registerComponent">
-      <Image style={google.googleButtonLogo} source={googlelogo} />
-      <Text style={google.googleButtonText}>Zarejestruj przez Google</Text>
-    </TouchableOpacity>
-  ) : (
-    <ConfirmGoogle />
-  );
+    return !registerData.confirm ? (
+        <TouchableOpacity
+            style={google.googleButton}
+            onPress={() => makeAuth(postGoogleUser, setError)}
+            data-test='registerComponent'>
+            <Image style={google.googleButtonLogo} source={googlelogo} />
+            <Text style={google.googleButtonText}>Zarejestruj przez Google</Text>
+        </TouchableOpacity>
+    ) : (
+        <ConfirmGoogle />
+    );
 };
 
 const mapStateToProps = (
-  state: RootState,
-  ownProps: {
+    state: RootState,
+    ownProps: {
     setError: React.Dispatch<React.SetStateAction<string>>;
   },
 ) => ({
-  registerData: state.registerData,
-  setError: ownProps.setError,
+    registerData: state.registerData,
+    setError: ownProps.setError,
 });
 
 const mapDispatch = {
-  postGoogleUser: postGoogleUser,
+    postGoogleUser: postGoogleUser,
 };
 
 const connector = connect(mapStateToProps, mapDispatch);

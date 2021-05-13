@@ -2,18 +2,18 @@ import {useEffect} from 'react';
 import {GoogleSignin, User} from '@react-native-community/google-signin';
 
 export const useSignInSilently = (
-  loginExternal: (user: User) => Promise<void>,
+    loginExternal: (user: User) => Promise<void>,
 ): void => {
-  const signInSilently = async () => {
-    try {
-      const user = await GoogleSignin.signInSilently();
-      await loginExternal(user);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    const signInSilently = async () => {
+        try {
+            const user = await GoogleSignin.signInSilently();
+            await loginExternal(user);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-  useEffect(() => {
-    signInSilently();
-  }, []);
+    useEffect(() => {
+        signInSilently();
+    }, []);
 };

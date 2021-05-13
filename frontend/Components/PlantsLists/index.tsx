@@ -11,44 +11,44 @@ import {RootState} from '../../redux_reducers/';
 const Stack = createStackNavigator();
 
 export const PlantsListsComponent = ({
-  getPlantsListsForUser,
-  plantsListsData,
+    getPlantsListsForUser,
+    plantsListsData,
 }: PropsFromRedux) => {
-  useEffect(() => {
-    const getPlantsLists = async () => {
-      await getPlantsListsForUser();
-    };
+    useEffect(() => {
+        const getPlantsLists = async () => {
+            await getPlantsListsForUser();
+        };
 
-    getPlantsLists();
-  }, [getPlantsListsForUser]);
+        getPlantsLists();
+    }, [getPlantsListsForUser]);
 
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="PlantsLists"
-        component={ShowPlantsLists}
-        options={{headerShown: false}}
-      />
-      {plantsListsData.plantsLists.map((list, index) => (
-        <Stack.Screen
-          key={list.id}
-          name={`${list.id}`}
-          options={{headerShown: false}}>
-          {(props) => (
-            <PlantsList {...props} listIndex={index} listName={list.name} />
-          )}
-        </Stack.Screen>
-      ))}
-    </Stack.Navigator>
-  );
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name='PlantsLists'
+                component={ShowPlantsLists}
+                options={{headerShown: false}}
+            />
+            {plantsListsData.plantsLists.map((list, index) => (
+                <Stack.Screen
+                    key={list.id}
+                    name={`${list.id}`}
+                    options={{headerShown: false}}>
+                    {(props) => (
+                        <PlantsList {...props} listIndex={index} listName={list.name} />
+                    )}
+                </Stack.Screen>
+            ))}
+        </Stack.Navigator>
+    );
 };
 
 const mapStateToProps = (state: RootState) => ({
-  plantsListsData: state.plantsListsData,
+    plantsListsData: state.plantsListsData,
 });
 
 const mapDispatch = {
-  getPlantsListsForUser: getPlantsListsForUser,
+    getPlantsListsForUser: getPlantsListsForUser,
 };
 
 const connector = connect(mapStateToProps, mapDispatch);

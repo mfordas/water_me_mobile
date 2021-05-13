@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity} from 'react-native';
+import { Image, Text, TouchableOpacity } from 'react-native';
 import {connect, ConnectedProps} from 'react-redux';
 
 import google from '../Register/styling/google';
@@ -10,33 +10,33 @@ import {makeAuth} from './helpers';
 import {useSignInSilently} from './hooks';
 
 export const GoogleAuth = ({loginExternal, setError}: PropsFromRedux) => {
-  useSignInSilently(loginExternal);
+    useSignInSilently(loginExternal);
 
-  return (
-    <>
-      <TouchableOpacity
-        style={google.googleButton}
-        onPress={() => makeAuth(loginExternal, setError)}
-        data-test="googleAuthComponent">
-        <Image style={google.googleButtonLogo} source={googlelogo} />
-        <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
-      </TouchableOpacity>
-    </>
-  );
+    return (
+        <>
+            <TouchableOpacity
+                style={google.googleButton}
+                onPress={() => makeAuth(loginExternal, setError)}
+                data-test='googleAuthComponent'>
+                <Image style={google.googleButtonLogo} source={googlelogo} />
+                <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
+            </TouchableOpacity>
+        </>
+    );
 };
 
 const mapStateToProps = (
-  state: RootState,
-  ownProps: {
+    state: RootState,
+    ownProps: {
     setError: React.Dispatch<React.SetStateAction<string>>;
   },
 ) => ({
-  loginData: state.loginData,
-  setError: ownProps.setError,
+    loginData: state.loginData,
+    setError: ownProps.setError,
 });
 
 const mapDispatch = {
-  loginExternal: loginExternal,
+    loginExternal: loginExternal,
 };
 
 const connector = connect(mapStateToProps, mapDispatch);

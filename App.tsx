@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
-import {connect} from 'react-redux';
+import {connect,Provider} from 'react-redux';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Provider} from 'react-redux';
+
 import PropTypes from 'prop-types';
 import {GoogleSignin} from '@react-native-community/google-signin';
 
@@ -21,71 +21,71 @@ import {navigationRef} from './frontend/Utils/rootNavigation';
 const Stack = createStackNavigator();
 
 const MyTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: 'white',
-  },
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        background: 'white',
+    },
 };
 
 const App: () => React$Node = ({loginData, loginCheck}) => {
-  useEffect(() => {
-    GoogleSignin.configure({
-      scopes: ['email'],
-      webClientId: REACT_APP_GOOGLE_AUTH_API_CLIENTID,
-      offlineAccess: false,
-      forceCodeForRefreshToken: true,
-    });
-    loginCheck();
-  }, [loginData.isLogged]);
+    useEffect(() => {
+        GoogleSignin.configure({
+            scopes: ['email'],
+            webClientId: REACT_APP_GOOGLE_AUTH_API_CLIENTID,
+            offlineAccess: false,
+            forceCodeForRefreshToken: true,
+        });
+        loginCheck();
+    }, [loginData.isLogged]);
 
-  return (
-    <NavigationContainer ref={navigationRef} theme={MyTheme}>
-      <SafeAreaView style={{flex: 1}}>
-        <Logo />
-        <Menu />
-        <Stack.Navigator>
-          {!loginData.isLogged && (
-            <>
-              <Stack.Screen
-                name="HomePage"
-                component={HomePage}
-                options={{headerShown: false}}
-              />
-            </>
-          )}
-          {loginData.isLogged && (
-            <>
-              <Stack.Screen
-                name="PlantsList"
-                component={PlantsListsComponent}
-                options={{headerShown: false}}
-              />
-            </>
-          )}
-        </Stack.Navigator>
-        <Footer />
-      </SafeAreaView>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer ref={navigationRef} theme={MyTheme}>
+            <SafeAreaView style={{flex: 1}}>
+                <Logo />
+                <Menu />
+                <Stack.Navigator>
+                    {!loginData.isLogged && (
+                        <>
+                            <Stack.Screen
+                                name='HomePage'
+                                component={HomePage}
+                                options={{headerShown: false}}
+                            />
+                        </>
+                    )}
+                    {loginData.isLogged && (
+                        <>
+                            <Stack.Screen
+                                name='PlantsList'
+                                component={PlantsListsComponent}
+                                options={{headerShown: false}}
+                            />
+                        </>
+                    )}
+                </Stack.Navigator>
+                <Footer />
+            </SafeAreaView>
+        </NavigationContainer>
+    );
 };
 
 const mapStateToProps = (state) => ({
-  loginData: state.loginData,
+    loginData: state.loginData,
 });
 
 Menu.propTypes = {
-  loginData: PropTypes.object,
+    loginData: PropTypes.object,
 };
 
 const AppConnected = connect(mapStateToProps, {loginCheck})(App);
 
 const AppContext = () => {
-  return (
-    <Provider store={store}>
-      <AppConnected />
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <AppConnected />
+        </Provider>
+    );
 };
 
 export default AppContext;

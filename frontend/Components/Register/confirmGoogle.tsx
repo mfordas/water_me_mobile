@@ -8,28 +8,28 @@ import * as RootNavigation from '../../Utils/rootNavigation';
 import {RootState} from '../../redux_reducers/';
 
 export const ConfirmGoogle = ({resetRegisterState}: PropsFromRedux) => {
-  return (
-    <>
-      <Text>Konto założone!</Text>
-      <Text>Możesz teraz się zalogować.</Text>
-      <TouchableOpacity
-        style={style.buttonMenu}
-        onPress={() => {
-          resetRegisterState();
-          RootNavigation.navigate('Login');
-        }}>
-        <Text> Ekran główny </Text>
-      </TouchableOpacity>
-    </>
-  );
+    return (
+        <>
+            <Text>Konto założone!</Text>
+            <Text>Możesz teraz się zalogować.</Text>
+            <TouchableOpacity
+                style={style.buttonMenu}
+                onPress={() => {
+                    resetRegisterState();
+                    RootNavigation.navigate('Login');
+                }}>
+                <Text> Ekran główny </Text>
+            </TouchableOpacity>
+        </>
+    );
 };
 
 const mapStateToProps = (state: RootState) => ({
-  registerData: state.registerData,
+    registerData: state.registerData,
 });
 
 const mapDispatch = {
-  resetRegisterState: resetRegisterState,
+    resetRegisterState: resetRegisterState,
 };
 
 const connector = connect(mapStateToProps, mapDispatch);

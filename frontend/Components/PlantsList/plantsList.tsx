@@ -23,50 +23,50 @@ export type WateringProps = {
 };
 
 export const PlantsList = ({
-  showPlantsList,
-  plantsListsData,
-  listIndex,
-  listName,
-}: PropsFromRedux) => {
-  const [showAddPlantForm, setShowAddPlantForm] = useState(false);
-  const plants = useCreatePlantsList(
-    plantsListsData,
     showPlantsList,
+    plantsListsData,
     listIndex,
-  );
+    listName,
+}: PropsFromRedux) => {
+    const [showAddPlantForm, setShowAddPlantForm] = useState(false);
+    const plants = useCreatePlantsList(
+        plantsListsData,
+        showPlantsList,
+        listIndex,
+    );
 
-  return (
-    <ScrollView
-      style={styles.plantsContainer}
-      contentContainerStyle={{alignItems: 'center'}}>
-      <Text style={styles.listName}>{listName}</Text>
-      <TouchableOpacity
-        style={[styles.button, styles.addPlantButton]}
-        onPress={() => setShowAddPlantForm(!showAddPlantForm)}>
-        <Text style={styles.addPlantButtonText}>Dodaj roślinę</Text>
-      </TouchableOpacity>
-      {showAddPlantForm && (
-        <AddPlant
-          listId={plantsListsData.plantsLists[listIndex].id}
-          setShowAddPlantForm={setShowAddPlantForm}
-        />
-      )}
-      <PlantsListGenerator plants={plants} listIndex={listIndex} />
-    </ScrollView>
-  );
+    return (
+        <ScrollView
+            style={styles.plantsContainer}
+            contentContainerStyle={{alignItems: 'center'}}>
+            <Text style={styles.listName}>{listName}</Text>
+            <TouchableOpacity
+                style={[styles.button, styles.addPlantButton]}
+                onPress={() => setShowAddPlantForm(!showAddPlantForm)}>
+                <Text style={styles.addPlantButtonText}>Dodaj roślinę</Text>
+            </TouchableOpacity>
+            {showAddPlantForm && (
+                <AddPlant
+                    listId={plantsListsData.plantsLists[listIndex].id}
+                    setShowAddPlantForm={setShowAddPlantForm}
+                />
+            )}
+            <PlantsListGenerator plants={plants} listIndex={listIndex} />
+        </ScrollView>
+    );
 };
 
 const mapStateToProps = (
-  state: RootState,
-  ownProps: {listIndex: number; listName: string},
+    state: RootState,
+    ownProps: {listIndex: number; listName: string},
 ) => ({
-  plantsListsData: state.plantsListsData,
-  listIndex: ownProps.listIndex,
-  listName: ownProps.listName,
+    plantsListsData: state.plantsListsData,
+    listIndex: ownProps.listIndex,
+    listName: ownProps.listName,
 });
 
 const mapDispatch = {
-  showPlantsList: showPlantsList,
+    showPlantsList: showPlantsList,
 };
 
 const connector = connect(mapStateToProps, mapDispatch);

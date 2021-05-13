@@ -9,21 +9,21 @@ import {makeAuth} from '../../Login/helpers';
 import ConfirmGoogle from '../confirmGoogle';
 
 jest.mock('../../Login/helpers', () => {
-  const helpers = jest.requireActual('../../Login/helpers');
+    const helpers = jest.requireActual('../../Login/helpers');
 
-  return {
-    ...helpers,
-    makeAuth: jest.fn(),
-  };
+    return {
+        ...helpers,
+        makeAuth: jest.fn(),
+    };
 });
 
 jest.mock('../../Login/hooks', () => {
-  const hooks = jest.requireActual('../../Login/hooks');
+    const hooks = jest.requireActual('../../Login/hooks');
 
-  return {
-    ...hooks,
-    useHandleGoogleApi: jest.fn(),
-  };
+    return {
+        ...hooks,
+        useHandleGoogleApi: jest.fn(),
+    };
 });
 
 const mockFunc = jest.fn();
@@ -32,66 +32,66 @@ jest.mock('@react-native-community/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 const setUp = (startState: RegisterState = initialState) => {
-  const wrapper = shallow(
-    <GoogleRegister
-      registerData={startState}
-      postGoogleUser={mockFunc}
-      setError={mockFunc}
-    />,
-  );
-  return wrapper;
+    const wrapper = shallow(
+        <GoogleRegister
+            registerData={startState}
+            postGoogleUser={mockFunc}
+            setError={mockFunc}
+        />,
+    );
+    return wrapper;
 };
 
 describe('Google register component', () => {
-  let wrapper: ShallowWrapper;
+    let wrapper: ShallowWrapper;
 
-  beforeEach(() => {
-    const initialState: RegisterState = {
-      invalidData: false,
-      confirm: false,
-      googleUser: false,
-    };
+    beforeEach(() => {
+        const initialState: RegisterState = {
+            invalidData: false,
+            confirm: false,
+            googleUser: false,
+        };
 
-    wrapper = setUp(initialState);
-  });
+        wrapper = setUp(initialState);
+    });
 
-  it('Should render without error', () => {
-    const component = findByDataTestAtrr(wrapper, 'registerComponent');
-    expect(component.length).toBe(1);
-  });
+    it('Should render without error', () => {
+        const component = findByDataTestAtrr(wrapper, 'registerComponent');
+        expect(component.length).toBe(1);
+    });
 });
 
 describe('Should handle submit Google register button', () => {
-  const component = setUp(initialState);
+    const component = setUp(initialState);
 
-  it('Should emit callback on click event', async () => {
-    (makeAuth as jest.Mock).mockImplementation(() =>
-      console.log('Register user'),
-    );
+    it('Should emit callback on click event', async () => {
+        (makeAuth as jest.Mock).mockImplementation(() =>
+            console.log('Register user'),
+        );
 
-    const registerButtonFunction = component
-      .find(TouchableOpacity)
-      .at(0)
-      .prop('onPress');
+        const registerButtonFunction = component
+            .find(TouchableOpacity)
+            .at(0)
+            .prop('onPress');
 
-    if (registerButtonFunction) {
-      registerButtonFunction({} as any);
-    }
+        if (registerButtonFunction) {
+            registerButtonFunction({} as any);
+        }
 
-    expect(makeAuth).toHaveBeenCalled();
-  });
+        expect(makeAuth).toHaveBeenCalled();
+    });
 });
 
 describe('When registered', () => {
-  it('Should show confirm component', () => {
-    const initialState: RegisterState = {
-      invalidData: false,
-      confirm: true,
-      googleUser: false,
-    };
+    it('Should show confirm component', () => {
+        const initialState: RegisterState = {
+            invalidData: false,
+            confirm: true,
+            googleUser: false,
+        };
 
-    const wrapper = setUp(initialState);
+        const wrapper = setUp(initialState);
 
-    expect(wrapper.find(ConfirmGoogle).length).toBe(1);
-  });
+        expect(wrapper.find(ConfirmGoogle).length).toBe(1);
+    });
 });

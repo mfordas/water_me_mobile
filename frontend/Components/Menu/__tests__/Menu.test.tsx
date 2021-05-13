@@ -8,71 +8,71 @@ jest.mock('@react-native-community/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 describe('Menu Component', () => {
-  it('Renders menu container without buttons', () => {
-    const loginData = {
-      loginData: {
-        name: '',
-        googleId: '',
-        invalidData: false,
-      },
-      isLogged: false,
-    };
+    it('Renders menu container without buttons', () => {
+        const loginData = {
+            loginData: {
+                name: '',
+                googleId: '',
+                invalidData: false,
+            },
+            isLogged: false,
+        };
 
-    const wrapper: ShallowWrapper = shallow(
-      <Menu loginData={loginData} logout={() => Promise.resolve()} />,
-    );
+        const wrapper: ShallowWrapper = shallow(
+            <Menu loginData={loginData} logout={() => Promise.resolve()} />,
+        );
 
-    const logoutButton = findByDataTestAtrr(wrapper, 'logoutButton');
-    const myPlantsButton = findByDataTestAtrr(wrapper, 'myPlantsButton');
+        const logoutButton = findByDataTestAtrr(wrapper, 'logoutButton');
+        const myPlantsButton = findByDataTestAtrr(wrapper, 'myPlantsButton');
 
-    expect(logoutButton.length).toBe(0);
-    expect(myPlantsButton.length).toBe(0);
-  });
+        expect(logoutButton.length).toBe(0);
+        expect(myPlantsButton.length).toBe(0);
+    });
 
-  it('Renders menu container with buttons', () => {
-    const loginData = {
-      loginData: {
-        name: '',
-        googleId: '',
-        invalidData: false,
-      },
-      isLogged: true,
-    };
-    const wrapper: ShallowWrapper = shallow(
-      <Menu loginData={loginData} logout={() => Promise.resolve()} />,
-    );
+    it('Renders menu container with buttons', () => {
+        const loginData = {
+            loginData: {
+                name: '',
+                googleId: '',
+                invalidData: false,
+            },
+            isLogged: true,
+        };
+        const wrapper: ShallowWrapper = shallow(
+            <Menu loginData={loginData} logout={() => Promise.resolve()} />,
+        );
 
-    const logoutButton = findByDataTestAtrr(wrapper, 'logoutButton');
-    const myPlantsButton = findByDataTestAtrr(wrapper, 'myPlantsButton');
+        const logoutButton = findByDataTestAtrr(wrapper, 'logoutButton');
+        const myPlantsButton = findByDataTestAtrr(wrapper, 'myPlantsButton');
 
-    expect(logoutButton.length).toBe(1);
-    expect(myPlantsButton.length).toBe(1);
-  });
+        expect(logoutButton.length).toBe(1);
+        expect(myPlantsButton.length).toBe(1);
+    });
 
-  it('Triggers logout action when button is clicked', async () => {
-    const loginData = {
-      loginData: {
-        name: '',
-        googleId: '',
-        invalidData: false,
-      },
-      isLogged: true,
-    };
+    it('Triggers logout action when button is clicked', async () => {
+        const loginData = {
+            loginData: {
+                name: '',
+                googleId: '',
+                invalidData: false,
+            },
+            isLogged: true,
+        };
 
-    const mockFunc = jest.fn(() => Promise.resolve());
-    const wrapper: ShallowWrapper = shallow(
-      <Menu loginData={loginData} logout={mockFunc} />,
-    );
+        const mockFunc = jest.fn(() => Promise.resolve());
+        const wrapper: ShallowWrapper = shallow(
+            <Menu loginData={loginData} logout={mockFunc} />,
+        );
 
-    const logoutButtonFunction = wrapper
-      .find(TouchableOpacity)
-      .at(1)
-      .prop('onPress');
+        const logoutButtonFunction = wrapper
+            .find(TouchableOpacity)
+            .at(1)
+            .prop('onPress');
 
-    if (logoutButtonFunction) {
-      logoutButtonFunction({} as any);
-    }
+        if (logoutButtonFunction) {
+            logoutButtonFunction({} as any);
+        }
 
-    expect(mockFunc).toHaveBeenCalled();
-  });
+        expect(mockFunc).toHaveBeenCalled();
+    });
 });

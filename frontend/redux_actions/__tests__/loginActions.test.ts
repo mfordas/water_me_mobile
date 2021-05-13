@@ -2,8 +2,8 @@ import nock from 'nock';
 import configureStore from 'redux-mock-store';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import {loginExternal, logout} from '../../redux_actions/loginActions';
-import {logoutType, loginExternalType} from '../loginTypes';
-import {LoginState} from '../../redux_actions/loginTypes';
+import {logoutType, loginExternalType,LoginState} from '../loginTypes';
+
 import {GoogleSignin, User} from '@react-native-community/google-signin';
 import apiUrl from '../../Utils/apiUrl';
 
@@ -17,168 +17,168 @@ jest.mock('jwt-decode', () => () => ({}));
 jest.mock('@react-native-community/google-signin', () => () => ({}));
 jest.mock('../../Utils/apiUrl', () => () => 'http://localhost');
 jest.mock('../../Utils/asyncStorage', () => {
-  const asyncStorage = jest.requireActual('../../Utils/asyncStorage');
-  return {
-    ...asyncStorage,
-    removeValue: jest.fn(),
-    storeData: jest.fn(),
-    getData: jest.fn(),
-  };
+    const asyncStorage = jest.requireActual('../../Utils/asyncStorage');
+    return {
+        ...asyncStorage,
+        removeValue: jest.fn(),
+        storeData: jest.fn(),
+        getData: jest.fn(),
+    };
 });
 
 jest.mock('@react-native-community/google-signin', () => {
-  return {
-    GoogleSignin: {signOut: jest.fn()},
-  };
+    return {
+        GoogleSignin: {signOut: jest.fn()},
+    };
 });
 const getApiUrl = apiUrl();
 
 describe('Logout action', () => {
-  const store = mockStore({
-    loginData: {
-      name: 'TestName',
-      googleId: '12345',
-      invalidData: false,
-    },
-    isLogged: true,
-  });
+    const store = mockStore({
+        loginData: {
+            name: 'TestName',
+            googleId: '12345',
+            invalidData: false,
+        },
+        isLogged: true,
+    });
 
-  afterEach(() => {
-    store.clearActions();
-  });
-  it('Actions is sended with correct payload', async () => {
-    const expectedPayload = {
-      loginData: {
-        name: '',
-        googleId: '',
-        invalidData: false,
-      },
-      isLogged: false,
-    };
+    afterEach(() => {
+        store.clearActions();
+    });
+    it('Actions is sended with correct payload', async () => {
+        const expectedPayload = {
+            loginData: {
+                name: '',
+                googleId: '',
+                invalidData: false,
+            },
+            isLogged: false,
+        };
 
-    await store.dispatch(logout());
-    expect(store.getActions()[0].type).toBe(logoutType);
-    expect(store.getActions()[0].loginData).toEqual(expectedPayload.loginData);
-    expect(store.getActions()[0].isLogged).toEqual(expectedPayload.isLogged);
-  });
+        await store.dispatch(logout());
+        expect(store.getActions()[0].type).toBe(logoutType);
+        expect(store.getActions()[0].loginData).toEqual(expectedPayload.loginData);
+        expect(store.getActions()[0].isLogged).toEqual(expectedPayload.isLogged);
+    });
 });
 
 describe('Login actions', () => {
-  test('Successful login action is sended with correct payload', async () => {
-    const store = mockStore({
-      loginData: {
-        name: '',
-        googleId: '',
-        invalidData: false,
-      },
-      isLogged: false,
+    test('Successful login action is sended with correct payload', async () => {
+        const store = mockStore({
+            loginData: {
+                name: '',
+                googleId: '',
+                invalidData: false,
+            },
+            isLogged: false,
+        });
+
+        const expectedPayload = {
+            loginData: {
+                name: 'User 2',
+                googleId: '12345',
+                invalidData: false,
+            },
+            isLogged: true,
+        };
+
+        nock(`${getApiUrl}/api`)
+            .post('/authexternal')
+            .reply(
+                200,
+                {name: 'User 2', googleId: '12345'},
+                {'x-auth-token': '12345'},
+            );
+
+        const authTestObject: User = {
+            idToken: '12345',
+            user: {
+                id: '1',
+                name: 'testname',
+                email: 'mail@mail.com',
+                photo: 'testphoto',
+                familyName: 'familyName',
+                givenName: 'givenName',
+            },
+            serverAuthCode: '12345',
+        };
+        await store.dispatch(loginExternal(authTestObject));
+
+        expect(store.getActions()[0].type).toBe(loginExternalType);
+        expect(store.getActions()[0].loginData).toEqual(expectedPayload.loginData);
+        expect(store.getActions()[0].isLogged).toEqual(expectedPayload.isLogged);
     });
 
-    const expectedPayload = {
-      loginData: {
-        name: 'User 2',
-        googleId: '12345',
-        invalidData: false,
-      },
-      isLogged: true,
-    };
+    test('Action is sended with correct payload', async () => {
+        const store = mockStore({
+            loginData: {
+                name: '',
+                googleId: '',
+                invalidData: false,
+            },
+            isLogged: false,
+        });
 
-    nock(`${getApiUrl}/api`)
-      .post(`/authexternal`)
-      .reply(
-        200,
-        {name: 'User 2', googleId: '12345'},
-        {'x-auth-token': '12345'},
-      );
+        const expectedPayload = {
+            isLogged: false,
+        };
 
-    const authTestObject: User = {
-      idToken: '12345',
-      user: {
-        id: '1',
-        name: 'testname',
-        email: 'mail@mail.com',
-        photo: 'testphoto',
-        familyName: 'familyName',
-        givenName: 'givenName',
-      },
-      serverAuthCode: '12345',
-    };
-    await store.dispatch(loginExternal(authTestObject));
+        nock(`${getApiUrl}/api`).post('/authexternal').reply(202);
 
-    expect(store.getActions()[0].type).toBe(loginExternalType);
-    expect(store.getActions()[0].loginData).toEqual(expectedPayload.loginData);
-    expect(store.getActions()[0].isLogged).toEqual(expectedPayload.isLogged);
-  });
+        const authTestObject: User = {
+            idToken: '12345',
+            user: {
+                id: '1',
+                name: 'testname',
+                email: 'mail@mail.com',
+                photo: 'testphoto',
+                familyName: 'familyName',
+                givenName: 'givenName',
+            },
+            serverAuthCode: '12345',
+        };
+        await store.dispatch(loginExternal(authTestObject));
 
-  test('Action is sended with correct payload', async () => {
-    const store = mockStore({
-      loginData: {
-        name: '',
-        googleId: '',
-        invalidData: false,
-      },
-      isLogged: false,
+        expect(store.getActions()[0].type).toBe(loginExternalType);
+        expect(store.getActions()[0].isLogged).toEqual(expectedPayload.isLogged);
+        expect(store.getActions()[0].loginData).toBe(undefined);
     });
 
-    const expectedPayload = {
-      isLogged: false,
-    };
+    test('Error is sended with correct payload', async () => {
+        const store = mockStore({
+            loginData: {
+                name: '',
+                googleId: '',
+                invalidData: false,
+            },
+            isLogged: false,
+        });
 
-    nock(`${getApiUrl}/api`).post(`/authexternal`).reply(202);
+        const expectedPayload = {
+            loginData: {
+                invalidData: true,
+            },
+        };
 
-    const authTestObject: User = {
-      idToken: '12345',
-      user: {
-        id: '1',
-        name: 'testname',
-        email: 'mail@mail.com',
-        photo: 'testphoto',
-        familyName: 'familyName',
-        givenName: 'givenName',
-      },
-      serverAuthCode: '12345',
-    };
-    await store.dispatch(loginExternal(authTestObject));
+        nock(`${getApiUrl}/api`).post('/authexternal').reply(404);
 
-    expect(store.getActions()[0].type).toBe(loginExternalType);
-    expect(store.getActions()[0].isLogged).toEqual(expectedPayload.isLogged);
-    expect(store.getActions()[0].loginData).toBe(undefined);
-  });
+        const authTestObject: User = {
+            idToken: '12345',
+            user: {
+                id: '1',
+                name: 'testname',
+                email: 'mail@mail.com',
+                photo: 'testphoto',
+                familyName: 'familyName',
+                givenName: 'givenName',
+            },
+            serverAuthCode: '12345',
+        };
+        await store.dispatch(loginExternal(authTestObject));
 
-  test('Error is sended with correct payload', async () => {
-    const store = mockStore({
-      loginData: {
-        name: '',
-        googleId: '',
-        invalidData: false,
-      },
-      isLogged: false,
+        expect(store.getActions()[0].type).toBe(loginExternalType);
+        expect(store.getActions()[0].loginData).toEqual(expectedPayload.loginData);
+        expect(store.getActions()[0].isLogged).toBe(undefined);
     });
-
-    const expectedPayload = {
-      loginData: {
-        invalidData: true,
-      },
-    };
-
-    nock(`${getApiUrl}/api`).post(`/authexternal`).reply(404);
-
-    const authTestObject: User = {
-      idToken: '12345',
-      user: {
-        id: '1',
-        name: 'testname',
-        email: 'mail@mail.com',
-        photo: 'testphoto',
-        familyName: 'familyName',
-        givenName: 'givenName',
-      },
-      serverAuthCode: '12345',
-    };
-    await store.dispatch(loginExternal(authTestObject));
-
-    expect(store.getActions()[0].type).toBe(loginExternalType);
-    expect(store.getActions()[0].loginData).toEqual(expectedPayload.loginData);
-    expect(store.getActions()[0].isLogged).toBe(undefined);
-  });
 });

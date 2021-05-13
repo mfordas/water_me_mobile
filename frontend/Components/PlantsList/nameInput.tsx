@@ -11,29 +11,29 @@ type Input = {
 };
 
 export const NameInput = ({formSubmitted, name, setName}: Input) => {
-  const validateName = () => {
-    if (formSubmitted && !name) {
-      return <ErrorMessage errorText="Wpisz imię" />;
-    } else if (formSubmitted && name.length <= 3) {
-      return <ErrorMessage errorText="Imię powinno być dłuższe niż 3 znaki" />;
-    }
-  };
+    const validateName = () => {
+        if (formSubmitted && !name) {
+            return <ErrorMessage errorText='Wpisz imię' />;
+        } else if (formSubmitted && name.length <= 3) {
+            return <ErrorMessage errorText='Imię powinno być dłuższe niż 3 znaki' />;
+        }
+    };
 
-  return (
-    <>
-      <View style={styles.inputContainer} data-test="nameInput">
-        <Text>Imię</Text>
-        <TextInput
-          style={styles.input}
-          value={name}
-          onChangeText={(text) => {
-            setName(text);
-          }}
-        />
-      </View>
-      {validateName()}
-    </>
-  );
+    return (
+        <>
+            <View style={styles.inputContainer} data-test='nameInput'>
+                <Text>Imię</Text>
+                <TextInput
+                    style={styles.input}
+                    value={name}
+                    onChangeText={(text) => {
+                        setName(text);
+                    }}
+                />
+            </View>
+            {validateName()}
+        </>
+    );
 };
 
 export default NameInput;

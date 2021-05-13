@@ -2,31 +2,31 @@ import {getData, storeData, removeValue} from '../asyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 describe('Async storage module', () => {
-  it('should store data in async storage', async () => {
-    const testKey = 'TestKey';
-    const testValue = 'TestValue';
-    await storeData(testKey, testValue);
-    const readValue = await AsyncStorage.getItem(testKey);
-    expect(readValue).toBe(testValue);
-  });
-  it('should read data stored in async storage', async () => {
-    const testKey = 'TestKey';
-    const testValue = 'TestValue';
+    it('should store data in async storage', async () => {
+        const testKey = 'TestKey';
+        const testValue = 'TestValue';
+        await storeData(testKey, testValue);
+        const readValue = await AsyncStorage.getItem(testKey);
+        expect(readValue).toBe(testValue);
+    });
+    it('should read data stored in async storage', async () => {
+        const testKey = 'TestKey';
+        const testValue = 'TestValue';
 
-    await AsyncStorage.setItem(testKey, testValue);
+        await AsyncStorage.setItem(testKey, testValue);
 
-    const readValue = await getData(testKey);
-    expect(readValue).toBe(testValue);
-  });
-  it('should Delete data from async storage', async () => {
-    const testKey = 'TestKeyToDelete';
-    const testValue = 'TestValue';
+        const readValue = await getData(testKey);
+        expect(readValue).toBe(testValue);
+    });
+    it('should Delete data from async storage', async () => {
+        const testKey = 'TestKeyToDelete';
+        const testValue = 'TestValue';
 
-    await AsyncStorage.setItem(testKey, testValue);
+        await AsyncStorage.setItem(testKey, testValue);
 
-    await removeValue(testKey);
+        await removeValue(testKey);
 
-    const readValue = await AsyncStorage.getItem(testKey);
-    expect(readValue).toBe(null);
-  });
+        const readValue = await AsyncStorage.getItem(testKey);
+        expect(readValue).toBe(null);
+    });
 });

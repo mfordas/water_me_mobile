@@ -9,85 +9,85 @@ import {DeletePlant} from '../deletePlant';
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 const mockDeletePlantFunc = jest.fn(() =>
-  Promise.resolve(console.log('Deleting plant')),
+    Promise.resolve(console.log('Deleting plant')),
 );
 
 const mockShowPlantsListFunc = jest.fn(() =>
-  Promise.resolve(console.log('Updating plants list')),
+    Promise.resolve(console.log('Updating plants list')),
 );
 
 const setUp = (startState: PlantsState = initialState) => {
-  const wrapper = shallow(
-    <DeletePlant
-      plantsData={startState}
-      plantId={1}
-      listId={1}
-      deletePlant={mockDeletePlantFunc}
-      showPlantsList={mockShowPlantsListFunc}
-    />,
-  );
-  return wrapper;
+    const wrapper = shallow(
+        <DeletePlant
+            plantsData={startState}
+            plantId={1}
+            listId={1}
+            deletePlant={mockDeletePlantFunc}
+            showPlantsList={mockShowPlantsListFunc}
+        />,
+    );
+    return wrapper;
 };
 
 describe('DeletePlant component', () => {
-  let wrapper: ShallowWrapper;
+    let wrapper: ShallowWrapper;
 
-  beforeEach(() => {
-    const initialState = {
-      plantData: {
-        id: 1,
-        name: 'abc',
-        plantsListId: 1,
-        wateringCycle: 1,
-        pictureUrl: 'abc',
-        wateringCycleBeginingData: new Date(),
-        lastTimeWatered: new Date(),
-      },
-      plantDeleted: false,
-      wateringDateUpdated: false,
-      imageName: '',
-    };
+    beforeEach(() => {
+        const initialState = {
+            plantData: {
+                id: 1,
+                name: 'abc',
+                plantsListId: 1,
+                wateringCycle: 1,
+                pictureUrl: 'abc',
+                wateringCycleBeginingData: new Date(),
+                lastTimeWatered: new Date(),
+            },
+            plantDeleted: false,
+            wateringDateUpdated: false,
+            imageName: '',
+        };
 
-    wrapper = setUp(initialState);
-  });
+        wrapper = setUp(initialState);
+    });
 
-  it('Should render without error', () => {
-    const component = findByDataTestAtrr(wrapper, 'deletePlantButton');
-    expect(component.length).toBe(1);
-  });
+    it('Should render without error', () => {
+        const component = findByDataTestAtrr(wrapper, 'deletePlantButton');
+        expect(component.length).toBe(1);
+    });
 });
 
 describe('Should handle submit Google login button', () => {
-  const initialState = {
-    plantData: {
-      id: 1,
-      name: 'abc',
-      plantsListId: 1,
-      wateringCycle: 1,
-      pictureUrl: 'abc',
-      wateringCycleBeginingData: new Date(),
-      lastTimeWatered: new Date(),
-    },
-    plantDeleted: false,
-    wateringDateUpdated: false,
-    imageName: '',
-  };
+    const initialState = {
+        plantData: {
+            id: 1,
+            name: 'abc',
+            plantsListId: 1,
+            wateringCycle: 1,
+            pictureUrl: 'abc',
+            wateringCycleBeginingData: new Date(),
+            lastTimeWatered: new Date(),
+        },
+        plantDeleted: false,
+        wateringDateUpdated: false,
+        imageName: '',
+    };
 
-  const wrapper = setUp(initialState);
+    const wrapper = setUp(initialState);
 
-  it('Should emit callback on click event', async () => {
-    const deletePlantButtonFunction = wrapper
-      .find(TouchableOpacity)
-      .at(0)
-      .prop('onPress');
+    it('Should emit callback on click event', async () => {
+        const deletePlantButtonFunction = wrapper
+            .find(TouchableOpacity)
+            .at(0)
+            .prop('onPress');
 
-    if (deletePlantButtonFunction) {
-      deletePlantButtonFunction({} as any);
-    }
+        if (deletePlantButtonFunction) {
+            deletePlantButtonFunction({} as any);
+        }
 
-    await wrapper.update();
+        await wrapper.update();
 
-    expect(mockDeletePlantFunc).toHaveBeenCalledTimes(1);
-    expect(mockShowPlantsListFunc).toHaveBeenCalledTimes(1);
-  });
+        expect(mockDeletePlantFunc).toHaveBeenCalledTimes(1);
+        expect(mockShowPlantsListFunc).toHaveBeenCalledTimes(1);
+    });
 });
