@@ -1,24 +1,22 @@
-import {createStackNavigator} from '@react-navigation/stack';
-import {shallow, ShallowWrapper} from 'enzyme';
+import { createStackNavigator } from '@react-navigation/stack';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 
-import {PlantsListsComponent} from '../index';
+import { PlantsListsComponent } from '../index';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 
-const mockGetPlantsListForUser = jest.fn(() =>
-  Promise.resolve(console.log('Downloading plants lists...')),
-);
+const mockGetPlantsListForUser = jest.fn(() => Promise.resolve(console.log('Downloading plants lists...')));
 
 const Stack = createStackNavigator();
 
 const initialState = {
   plantsListName: 'TestList',
   plantsLists: [
-    {id: 1, userId: 1, name: 'List1'},
-    {id: 2, userId: 2, name: 'List2'},
-    {id: 3, userId: 3, name: 'List3'},
+    { id: 1, userId: 1, name: 'List1' },
+    { id: 2, userId: 2, name: 'List2' },
+    { id: 3, userId: 3, name: 'List3' },
   ],
   userId: '1',
   plantsListDeleted: false,
@@ -42,14 +40,8 @@ describe('PlantsLists component', () => {
     const stackScreens = wrapper.find(Stack.Screen);
 
     expect(stackScreens.length).toBe(4);
-    expect(stackScreens.at(1).prop('name')).toBe(
-      `${initialState.plantsLists[0].id}`,
-    );
-    expect(stackScreens.at(2).prop('name')).toBe(
-      `${initialState.plantsLists[1].id}`,
-    );
-    expect(stackScreens.at(3).prop('name')).toBe(
-      `${initialState.plantsLists[2].id}`,
-    );
+    expect(stackScreens.at(1).prop('name')).toBe(`${initialState.plantsLists[0].id}`);
+    expect(stackScreens.at(2).prop('name')).toBe(`${initialState.plantsLists[1].id}`);
+    expect(stackScreens.at(3).prop('name')).toBe(`${initialState.plantsLists[2].id}`);
   });
 });

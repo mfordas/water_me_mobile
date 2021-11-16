@@ -1,12 +1,9 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Text} from 'react-native';
-import {connect, ConnectedProps} from 'react-redux';
+import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { connect, ConnectedProps } from 'react-redux';
 
-import {
-  deletePlantsList,
-  getPlantsListsForUser,
-} from '../../redux_actions/plantsListsActions';
-import {RootState} from '../../redux_reducers';
+import { deletePlantsList, getPlantsListsForUser } from '../../redux_actions/plantsListsActions';
+import { RootState } from '../../redux_reducers';
 
 export const DeletePlantsList = ({
   deletePlantsList,
@@ -22,7 +19,8 @@ export const DeletePlantsList = ({
     <TouchableOpacity
       style={styles.deleteButton}
       onPress={() => handlerDeletePlantsList()}
-      data-test="deletePlantListComponent">
+      data-test="deletePlantListComponent"
+    >
       <Text style={styles.text}>Usuń</Text>
     </TouchableOpacity>
   );
@@ -44,10 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (
-  state: RootState,
-  ownProps: {plantsListId: number},
-) => ({
+const mapStateToProps = (state: RootState, ownProps: { plantsListId: number }) => ({
   plantsListsData: state.plantsListsData,
   plantsListId: ownProps.plantsListId,
 });

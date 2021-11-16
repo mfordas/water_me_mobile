@@ -1,9 +1,9 @@
-import {User} from '@react-native-google-signin/google-signin';
+import { User } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
 
 import apiUrl from '../Utils/apiUrl';
-import {AppThunk} from '../redux_store/reduxStore';
-import {registerExternal, resetRegState} from './registerTypes';
+import { AppThunk } from '../redux_store/reduxStore';
+import { registerExternal, resetRegState } from './registerTypes';
 
 const getApiUrl = apiUrl();
 
@@ -14,7 +14,7 @@ export const postGoogleUser =
       const res = await axios({
         method: 'post',
         url: `${getApiUrl}/api/users/googleUser`,
-        data: {token: authObject.idToken},
+        data: { token: authObject.idToken },
       });
 
       if (res.status === 200) {

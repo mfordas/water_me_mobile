@@ -1,4 +1,4 @@
-import {Plant} from './plantsTypes';
+import { Plant } from './plantsTypes';
 
 export const addPlantsListType = 'addPlantsList';
 export const getPlantsListsType = 'getPlantsLists';

@@ -4,7 +4,7 @@ import {
   getPlantsListsType,
   showPlantsListType,
 } from '../../redux_actions/plantsListsTypes';
-import plantsListsReducer, {initialState} from '../plantsListsReducer';
+import plantsListsReducer, { initialState } from '../plantsListsReducer';
 
 describe('Register Reducer', () => {
   it('Should return default state', () => {

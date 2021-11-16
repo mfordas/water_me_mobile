@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {getData, storeData, removeValue} from '../asyncStorage';
+import { getData, storeData, removeValue } from '../asyncStorage';
 
 describe('Async storage module', () => {
   it('should store data in async storage', async () => {

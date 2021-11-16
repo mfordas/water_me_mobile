@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
-import {connect, ConnectedProps} from 'react-redux';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { connect, ConnectedProps } from 'react-redux';
 
 import * as RootNavigation from '../../Utils/rootNavigation';
-import {logout} from '../../redux_actions/loginActions';
-import {RootState} from '../../redux_reducers';
+import { logout } from '../../redux_actions/loginActions';
+import { RootState } from '../../redux_reducers';
 
-export const Menu = ({loginData, logout}: PropsFromRedux) => {
+export const Menu = ({ loginData, logout }: PropsFromRedux) => {
   const handleLogout = async () => {
     await logout();
   };
@@ -19,13 +19,15 @@ export const Menu = ({loginData, logout}: PropsFromRedux) => {
           <TouchableOpacity
             style={style.buttonMenu}
             onPress={() => RootNavigation.navigate('PlantsLists')}
-            data-test="myPlantsButton">
+            data-test="myPlantsButton"
+          >
             <Text style={style.buttonMenuText}>Moje listy rośliny</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={style.buttonMenu}
             onPress={() => handleLogout()}
-            data-test="logoutButton">
+            data-test="logoutButton"
+          >
             <Text style={style.buttonMenuText}>Logout</Text>
           </TouchableOpacity>
         </>
@@ -71,6 +73,6 @@ const connector = connect(mapStateToProps, mapDispatch);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export {style};
+export { style };
 
 export default connector(Menu);

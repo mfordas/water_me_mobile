@@ -1,16 +1,14 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 
-import {Plant} from '../../../redux_actions/plantsTypes';
+import { Plant } from '../../../redux_actions/plantsTypes';
 import DeletePlant from '../deletePlant';
-import {PlantsListGenerator} from '../plantsListGenerator';
+import { PlantsListGenerator } from '../plantsListGenerator';
 import Watering from '../watering';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
-const mockShowPlantsList = jest.fn(() =>
-  Promise.resolve(console.log('Downloading plants lists...')),
-);
+const mockShowPlantsList = jest.fn(() => Promise.resolve(console.log('Downloading plants lists...')));
 
 const initialState = {
   plantsListName: 'TestList',
@@ -66,11 +64,7 @@ const initialState = {
 
 const setUp = (listIndex: number, plants: Plant[]) => {
   const wrapper = shallow(
-    <PlantsListGenerator
-      plantsListsData={initialState}
-      listIndex={listIndex}
-      plants={plants}
-    />,
+    <PlantsListGenerator plantsListsData={initialState} listIndex={listIndex} plants={plants} />,
   );
   return wrapper;
 };

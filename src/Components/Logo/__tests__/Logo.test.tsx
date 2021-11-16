@@ -1,7 +1,7 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
 import Logo from '../logo';
 
 const setUp = (props = {}) => {

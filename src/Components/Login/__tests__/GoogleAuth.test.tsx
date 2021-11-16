@@ -1,11 +1,11 @@
-import {shallow, mount, ShallowWrapper} from 'enzyme';
+import { shallow, mount, ShallowWrapper } from 'enzyme';
 import React from 'react';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
-import {LoginState} from '../../../redux_actions/loginTypes';
-import {initialState} from '../../../redux_reducers/loginReducer';
-import {GoogleAuth} from '../googleAuth';
-import {makeAuth} from '../helpers';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
+import { LoginState } from '../../../redux_actions/loginTypes';
+import { initialState } from '../../../redux_reducers/loginReducer';
+import { GoogleAuth } from '../googleAuth';
+import { makeAuth } from '../helpers';
 
 jest.mock('../helpers', () => {
   const helpers = jest.requireActual('../helpers');
@@ -32,11 +32,7 @@ jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 const setUp = (startState: LoginState = initialState) => {
   const wrapper = shallow(
-    <GoogleAuth
-      loginData={startState}
-      loginExternal={mockFunc}
-      setError={mockFunc}
-    />,
+    <GoogleAuth loginData={startState} loginExternal={mockFunc} setError={mockFunc} />,
   );
   return wrapper;
 };
@@ -68,9 +64,7 @@ describe('Should handle submit Google login button', () => {
   const component = setUp(initialState);
 
   it('Should emit callback on click event', async () => {
-    (makeAuth as jest.Mock).mockImplementation(() =>
-      console.log('Making auth'),
-    );
+    (makeAuth as jest.Mock).mockImplementation(() => console.log('Making auth'));
     component.props().children.props.onPress();
 
     expect(makeAuth).toHaveBeenCalled();

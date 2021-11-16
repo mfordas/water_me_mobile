@@ -1,23 +1,17 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TextInput} from 'react-native';
+import { TextInput } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
 import ErrorMessage from '../../ErrorMessage/errorMessage';
-import {NameInput} from '../nameInput';
+import { NameInput } from '../nameInput';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 const mockSetName = jest.fn(() => console.log('Changing name...'));
 
 const setUp = (formSubmitted: boolean, name: string) => {
-  const wrapper = shallow(
-    <NameInput
-      formSubmitted={formSubmitted}
-      name={name}
-      setName={mockSetName}
-    />,
-  );
+  const wrapper = shallow(<NameInput formSubmitted={formSubmitted} name={name} setName={mockSetName} />);
   return wrapper;
 };
 
@@ -41,18 +35,13 @@ describe('Should handle input change', () => {
     const component = setUp(true, 'abc');
     const inputElement = component.find(ErrorMessage);
 
-    expect(inputElement.prop('errorText')).toBe(
-      'Imię powinno być dłuższe niż 3 znaki',
-    );
+    expect(inputElement.prop('errorText')).toBe('Imię powinno być dłuższe niż 3 znaki');
   });
 
   it('Should call set name if input is changing', () => {
     const component = setUp(false, '');
 
-    const wateringTextInputFunction = component
-      .find(TextInput)
-      .at(0)
-      .prop('onChangeText');
+    const wateringTextInputFunction = component.find(TextInput).at(0).prop('onChangeText');
 
     if (wateringTextInputFunction) {
       wateringTextInputFunction('abcd');

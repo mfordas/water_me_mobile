@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
-import {launchCamera} from 'react-native-image-picker';
+import { launchCamera } from 'react-native-image-picker';
 
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import styles from './styles/plantsList';
@@ -9,16 +9,10 @@ import styles from './styles/plantsList';
 type AddPlantPicutre = {
   formSubmitted: boolean;
   singleFile: any;
-  setSingleFile: React.Dispatch<
-    React.SetStateAction<typeof DocumentPicker.types.images | null>
-  >;
+  setSingleFile: React.Dispatch<React.SetStateAction<typeof DocumentPicker.types.images | null>>;
 };
 
-export const AddPlantPicture = ({
-  formSubmitted,
-  singleFile,
-  setSingleFile,
-}: AddPlantPicutre) => {
+export const AddPlantPicture = ({ formSubmitted, singleFile, setSingleFile }: AddPlantPicutre) => {
   const selectFile = async () => {
     try {
       const res: any = await DocumentPicker.pick({
@@ -44,7 +38,7 @@ export const AddPlantPicture = ({
   };
 
   const adapterForReactNativeImagePicker = (imageObjectFromRNIP: any) => {
-    const {fileName, fileSize, uri, type} = imageObjectFromRNIP;
+    const { fileName, fileSize, uri, type } = imageObjectFromRNIP;
     const pictureObject: any = {
       fileCopyUri: uri,
       name: fileName,
@@ -67,22 +61,15 @@ export const AddPlantPicture = ({
               },
               (res) => adapterForReactNativeImagePicker(res),
             );
-          }}>
+          }}
+        >
           <Text style={styles.text}>Zrób Zdjęcie</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.addPictureButton]}
-          onPress={selectFile}>
+        <TouchableOpacity style={[styles.button, styles.addPictureButton]} onPress={selectFile}>
           <Text style={styles.text}>Dodaj zdjęcie z galerii</Text>
         </TouchableOpacity>
       </View>
-      {singleFile ? (
-        <Text style={styles.inputContainerPictureConfirmText}>
-          Zdjęcie dodane
-        </Text>
-      ) : (
-        <></>
-      )}
+      {singleFile ? <Text style={styles.inputContainerPictureConfirmText}>Zdjęcie dodane</Text> : <></>}
       {validatePicture()}
     </>
   );

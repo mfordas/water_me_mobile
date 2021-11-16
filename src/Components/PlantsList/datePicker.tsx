@@ -1,7 +1,7 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 import setCurrentDate from './setCurrentDate';
 import styles from './styles/plantsList';
@@ -10,7 +10,7 @@ type Input = {
   setStartDate: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const DatePicker = ({setStartDate}: Input) => {
+export const DatePicker = ({ setStartDate }: Input) => {
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(new Date());
 

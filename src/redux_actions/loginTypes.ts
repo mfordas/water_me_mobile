@@ -22,7 +22,4 @@ export interface LoginCheckAction extends LoginState {
   type: typeof logincheckType;
 }
 
-export type LoginActionsType =
-  | LoginExternalAction
-  | LogoutAction
-  | LoginCheckAction;
+export type LoginActionsType = LoginExternalAction | LogoutAction | LoginCheckAction;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import styles from './styles/plantsList';
@@ -10,11 +10,7 @@ type Input = {
   setWateringCycle: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const WateringCycle = ({
-  wateringCycle,
-  setWateringCycle,
-  formSubmitted,
-}: Input) => {
+export const WateringCycle = ({ wateringCycle, setWateringCycle, formSubmitted }: Input) => {
   const validateWateringCycle = () => {
     if (formSubmitted && wateringCycle === '0') {
       return <ErrorMessage errorText="Wpisz częstotliwość podlewania" />;

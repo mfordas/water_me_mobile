@@ -1,9 +1,5 @@
-import {
-  loginExternalType,
-  logoutType,
-  logincheckType,
-} from '../../redux_actions/loginTypes';
-import loginReducer, {initialState} from '../loginReducer';
+import { loginExternalType, logoutType, logincheckType } from '../../redux_actions/loginTypes';
+import loginReducer, { initialState } from '../loginReducer';
 
 describe('Login Reducer', () => {
   it('Should return default state', () => {

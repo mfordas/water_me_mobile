@@ -1,4 +1,4 @@
-import {getData} from './asyncStorage';
+import { getData } from './asyncStorage';
 
 export type Headers = {
   Accept: string;

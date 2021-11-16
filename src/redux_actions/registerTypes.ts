@@ -19,6 +19,4 @@ interface ResetRegisterStateAction extends RegisterState {
   type: typeof resetRegState;
 }
 
-export type RegisterActionsType =
-  | RegisterExternalAction
-  | ResetRegisterStateAction;
+export type RegisterActionsType = RegisterExternalAction | ResetRegisterStateAction;

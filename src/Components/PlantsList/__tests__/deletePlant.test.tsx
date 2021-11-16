@@ -1,21 +1,17 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
-import {PlantsState} from '../../../redux_actions/plantsTypes';
-import {initialState} from '../../../redux_reducers/plantsReducer';
-import {DeletePlant} from '../deletePlant';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
+import { PlantsState } from '../../../redux_actions/plantsTypes';
+import { initialState } from '../../../redux_reducers/plantsReducer';
+import { DeletePlant } from '../deletePlant';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
-const mockDeletePlantFunc = jest.fn(() =>
-  Promise.resolve(console.log('Deleting plant')),
-);
+const mockDeletePlantFunc = jest.fn(() => Promise.resolve(console.log('Deleting plant')));
 
-const mockShowPlantsListFunc = jest.fn(() =>
-  Promise.resolve(console.log('Updating plants list')),
-);
+const mockShowPlantsListFunc = jest.fn(() => Promise.resolve(console.log('Updating plants list')));
 
 const setUp = (startState: PlantsState = initialState) => {
   const wrapper = shallow(
@@ -77,10 +73,7 @@ describe('Should handle submit Google login button', () => {
   const wrapper = setUp(initialState);
 
   it('Should emit callback on click event', async () => {
-    const deletePlantButtonFunction = wrapper
-      .find(TouchableOpacity)
-      .at(0)
-      .prop('onPress');
+    const deletePlantButtonFunction = wrapper.find(TouchableOpacity).at(0).prop('onPress');
 
     if (deletePlantButtonFunction) {
       deletePlantButtonFunction({} as any);

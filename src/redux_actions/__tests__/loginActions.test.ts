@@ -1,15 +1,14 @@
-import {GoogleSignin, User} from '@react-native-google-signin/google-signin';
+import { GoogleSignin, User } from '@react-native-google-signin/google-signin';
 import nock from 'nock';
 import configureStore from 'redux-mock-store';
-import thunk, {ThunkDispatch} from 'redux-thunk';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 
 import apiUrl from '../../Utils/apiUrl';
-import {loginExternal, logout} from '../loginActions';
-import {logoutType, loginExternalType, LoginState} from '../loginTypes';
+import { loginExternal, logout } from '../loginActions';
+import { logoutType, loginExternalType, LoginState } from '../loginTypes';
 
 const middlewares = [thunk];
-const mockStore =
-  configureStore<LoginState, ThunkDispatch<LoginState, any, any>>(middlewares);
+const mockStore = configureStore<LoginState, ThunkDispatch<LoginState, any, any>>(middlewares);
 
 jest.mock('jwt-decode', () => () => ({}));
 jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
@@ -26,7 +25,7 @@ jest.mock('../../Utils/asyncStorage', () => {
 
 jest.mock('@react-native-google-signin/google-signin', () => {
   return {
-    GoogleSignin: {signOut: jest.fn()},
+    GoogleSignin: { signOut: jest.fn() },
   };
 });
 const getApiUrl = apiUrl();
@@ -83,11 +82,7 @@ describe('Login actions', () => {
 
     nock(`${getApiUrl}/api`)
       .post('/authexternal')
-      .reply(
-        200,
-        {name: 'User 2', googleId: '12345'},
-        {'x-auth-token': '12345'},
-      );
+      .reply(200, { name: 'User 2', googleId: '12345' }, { 'x-auth-token': '12345' });
 
     const authTestObject: User = {
       idToken: '12345',

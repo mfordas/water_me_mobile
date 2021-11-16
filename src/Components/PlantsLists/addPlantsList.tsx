@@ -1,23 +1,11 @@
-import React, {useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  StyleSheet,
-} from 'react-native';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
+import { connect, ConnectedProps } from 'react-redux';
 
-import {
-  addPlantsList,
-  getPlantsListsForUser,
-} from '../../redux_actions/plantsListsActions';
-import {RootState} from '../../redux_reducers';
+import { addPlantsList, getPlantsListsForUser } from '../../redux_actions/plantsListsActions';
+import { RootState } from '../../redux_reducers';
 
-export const AddPlantsList = ({
-  addPlantsList,
-  getPlantsListsForUser,
-}: PropsFromRedux) => {
+export const AddPlantsList = ({ addPlantsList, getPlantsListsForUser }: PropsFromRedux) => {
   const [plantsListName, setPlantsListName] = useState('');
   const [submitPlantsList, setSubmitPlantsList] = useState(false);
 
@@ -34,19 +22,19 @@ export const AddPlantsList = ({
   };
 
   return (
-    <View
-      style={styles.addPlantsListContainer}
-      data-test="addPlantListComponent">
+    <View style={styles.addPlantsListContainer} data-test="addPlantListComponent">
       <View style={styles.addPlantsListForm}>
         <TextInput
           style={styles.input}
           onChangeText={(text) => setPlantsListName(text)}
           value={plantsListName}
-          data-test="inputAddPlantsList"></TextInput>
+          data-test="inputAddPlantsList"
+        ></TextInput>
         <TouchableOpacity
           style={styles.button}
           onPress={() => addNewPlantsList()}
-          data-test="addPlantsListButton">
+          data-test="addPlantsListButton"
+        >
           <Text style={styles.text}>Dodaj listę roślin</Text>
         </TouchableOpacity>
       </View>

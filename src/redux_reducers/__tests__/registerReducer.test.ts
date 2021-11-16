@@ -1,8 +1,5 @@
-import {
-  registerExternal,
-  resetRegState,
-} from '../../redux_actions/registerTypes';
-import registerReducer, {initialState} from '../registerReducer';
+import { registerExternal, resetRegState } from '../../redux_actions/registerTypes';
+import registerReducer, { initialState } from '../registerReducer';
 
 describe('Register Reducer', () => {
   it('Should return default state', () => {

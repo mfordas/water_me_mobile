@@ -1,7 +1,7 @@
-import {createStore, applyMiddleware, Action} from 'redux';
-import thunk, {ThunkAction} from 'redux-thunk';
+import { createStore, applyMiddleware, Action } from 'redux';
+import thunk, { ThunkAction } from 'redux-thunk';
 
-import {rootReducer} from '../redux_reducers';
+import { rootReducer } from '../redux_reducers';
 
 export type AppThunk<ReturnType = Promise<void>> = ThunkAction<
   ReturnType,
@@ -21,8 +21,4 @@ const initialState = {};
 
 export const middleware = [thunk];
 
-export const store = createStore(
-  rootReducer,
-  initialState,
-  applyMiddleware(...middleware),
-);
+export const store = createStore(rootReducer, initialState, applyMiddleware(...middleware));

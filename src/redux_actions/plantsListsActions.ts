@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 import apiUrl from '../Utils/apiUrl';
-import {getData} from '../Utils/asyncStorage';
+import { getData } from '../Utils/asyncStorage';
 import setHeaders from '../Utils/setHeaders';
-import {AppThunk} from '../redux_store/reduxStore';
+import { AppThunk } from '../redux_store/reduxStore';
 import {
   addPlantsListType,
   getPlantsListsType,

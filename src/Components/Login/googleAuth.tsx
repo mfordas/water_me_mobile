@@ -1,15 +1,15 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity} from 'react-native';
-import {connect, ConnectedProps} from 'react-redux';
+import { Image, Text, TouchableOpacity } from 'react-native';
+import { connect, ConnectedProps } from 'react-redux';
 
 import googlelogo from '../../img/g-logo.png';
-import {loginExternal} from '../../redux_actions/loginActions';
-import {RootState} from '../../redux_reducers';
+import { loginExternal } from '../../redux_actions/loginActions';
+import { RootState } from '../../redux_reducers';
 import google from '../Register/styling/google';
-import {makeAuth} from './helpers';
-import {useSignInSilently} from './hooks';
+import { makeAuth } from './helpers';
+import { useSignInSilently } from './hooks';
 
-export const GoogleAuth = ({loginExternal, setError}: PropsFromRedux) => {
+export const GoogleAuth = ({ loginExternal, setError }: PropsFromRedux) => {
   useSignInSilently(loginExternal);
 
   return (
@@ -17,7 +17,8 @@ export const GoogleAuth = ({loginExternal, setError}: PropsFromRedux) => {
       <TouchableOpacity
         style={google.googleButton}
         onPress={() => makeAuth(loginExternal, setError)}
-        data-test="googleAuthComponent">
+        data-test="googleAuthComponent"
+      >
         <Image style={google.googleButtonLogo} source={googlelogo} />
         <Text style={google.googleButtonText}>Zaloguj przez Google</Text>
       </TouchableOpacity>

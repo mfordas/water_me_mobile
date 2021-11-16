@@ -1,11 +1,11 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
 import ErrorMessage from '../../ErrorMessage/errorMessage';
-import {AddPlantPicture} from '../addPlantPicture';
-import {handleUploadingFile} from '../helpers';
+import { AddPlantPicture } from '../addPlantPicture';
+import { handleUploadingFile } from '../helpers';
 
 jest.mock('react-native-document-picker', () => () => ({}));
 jest.mock('react-native-image-picker', () => () => ({}));
@@ -23,11 +23,7 @@ const mockUploadPlantImage = jest.fn(() => Promise.resolve('Uploading image'));
 
 const setUp = (formSubmitted: boolean, picture: string) => {
   const wrapper = shallow(
-    <AddPlantPicture
-      formSubmitted={formSubmitted}
-      singleFile={picture}
-      setSingleFile={mockSetPicture}
-    />,
+    <AddPlantPicture formSubmitted={formSubmitted} singleFile={picture} setSingleFile={mockSetPicture} />,
   );
   return wrapper;
 };
@@ -58,10 +54,7 @@ describe('Should handle input change', () => {
       mockUploadPlantImage();
     });
 
-    const imageInputFunction = component
-      .find(TouchableOpacity)
-      .at(1)
-      .prop('onPress');
+    const imageInputFunction = component.find(TouchableOpacity).at(1).prop('onPress');
 
     if (imageInputFunction) {
       imageInputFunction({} as any);
@@ -76,10 +69,7 @@ describe('Should handle input change', () => {
       mockUploadPlantImage();
     });
 
-    const imageInputFunction = component
-      .find(TouchableOpacity)
-      .at(0)
-      .prop('onPress');
+    const imageInputFunction = component.find(TouchableOpacity).at(0).prop('onPress');
 
     if (imageInputFunction) {
       imageInputFunction({} as any);

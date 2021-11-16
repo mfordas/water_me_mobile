@@ -1,15 +1,10 @@
 import nock from 'nock';
 import configureStore from 'redux-mock-store';
-import thunk, {ThunkDispatch} from 'redux-thunk';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 
 import apiUrl from '../../Utils/apiUrl';
-import {getData} from '../../Utils/asyncStorage';
-import {
-  addPlantToList,
-  deletePlant,
-  updateLastWateringDate,
-  uploadPlantImage,
-} from '../plantsActions';
+import { getData } from '../../Utils/asyncStorage';
+import { addPlantToList, deletePlant, updateLastWateringDate, uploadPlantImage } from '../plantsActions';
 import {
   addPlantType,
   deletePlantType,
@@ -19,10 +14,7 @@ import {
 } from '../plantsTypes';
 
 const middlewares = [thunk];
-const mockStore =
-  configureStore<PlantsState, ThunkDispatch<PlantsState, any, any>>(
-    middlewares,
-  );
+const mockStore = configureStore<PlantsState, ThunkDispatch<PlantsState, any, any>>(middlewares);
 
 jest.mock('jwt-decode', () => () => ({}));
 jest.mock('../../Utils/apiUrl', () => () => 'http://localhost');
@@ -117,18 +109,14 @@ describe('Delete plant action', () => {
       plantDeleted: true,
     };
 
-    nock(`${getApiUrl}/api`)
-      .delete(`/plants/${testUserId}/${testPlantId}`)
-      .reply(200, {
-        test: 'testData',
-      });
+    nock(`${getApiUrl}/api`).delete(`/plants/${testUserId}/${testPlantId}`).reply(200, {
+      test: 'testData',
+    });
 
     await store.dispatch(deletePlant(testPlantId));
 
     expect(store.getActions()[0].type).toBe(deletePlantType);
-    expect(store.getActions()[0].plantDeleted).toEqual(
-      expectedPayload.plantDeleted,
-    );
+    expect(store.getActions()[0].plantDeleted).toEqual(expectedPayload.plantDeleted);
   });
 
   it('Action is sended with correct payload when error occures', async () => {
@@ -136,16 +124,12 @@ describe('Delete plant action', () => {
       plantDeleted: false,
     };
 
-    nock(`${getApiUrl}/api`)
-      .delete(`/plants/${testUserId}/${testPlantId}`)
-      .reply(400);
+    nock(`${getApiUrl}/api`).delete(`/plants/${testUserId}/${testPlantId}`).reply(400);
 
     await store.dispatch(deletePlant(testPlantId));
 
     expect(store.getActions()[0].type).toBe(deletePlantType);
-    expect(store.getActions()[0].plantDeleted).toEqual(
-      expectedPayload.plantDeleted,
-    );
+    expect(store.getActions()[0].plantDeleted).toEqual(expectedPayload.plantDeleted);
   });
 });
 
@@ -171,18 +155,12 @@ describe('Update watering action', () => {
       wateringDateUpdated: true,
     };
 
-    nock(`${getApiUrl}/api`)
-      .patch(`/plants/${testUserId}/${testPlantId}`)
-      .reply(200);
+    nock(`${getApiUrl}/api`).patch(`/plants/${testUserId}/${testPlantId}`).reply(200);
 
-    await store.dispatch(
-      updateLastWateringDate(testPlantId, testLastWateringDate),
-    );
+    await store.dispatch(updateLastWateringDate(testPlantId, testLastWateringDate));
 
     expect(store.getActions()[0].type).toBe(updateLastWateringDateType);
-    expect(store.getActions()[0].wateringDateUpdated).toEqual(
-      expectedPayload.wateringDateUpdated,
-    );
+    expect(store.getActions()[0].wateringDateUpdated).toEqual(expectedPayload.wateringDateUpdated);
   });
 
   it('Action is sended with correct payload when error occures', async () => {
@@ -190,20 +168,14 @@ describe('Update watering action', () => {
       wateringDateUpdated: false,
     };
 
-    nock(`${getApiUrl}/api`)
-      .patch(`/plants/${testUserId}/${testPlantId}`)
-      .reply(400);
+    nock(`${getApiUrl}/api`).patch(`/plants/${testUserId}/${testPlantId}`).reply(400);
 
-    await store.dispatch(
-      updateLastWateringDate(testPlantId, testLastWateringDate),
-    );
+    await store.dispatch(updateLastWateringDate(testPlantId, testLastWateringDate));
 
     console.log(store.getActions());
 
     expect(store.getActions()[0].type).toBe(updateLastWateringDateType);
-    expect(store.getActions()[0].wateringDateUpdated).toEqual(
-      expectedPayload.wateringDateUpdated,
-    );
+    expect(store.getActions()[0].wateringDateUpdated).toEqual(expectedPayload.wateringDateUpdated);
   });
 });
 

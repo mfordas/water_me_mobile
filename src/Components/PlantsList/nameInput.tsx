@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 
 import ErrorMessage from '../ErrorMessage/errorMessage';
 import styles from './styles/plantsList';
@@ -10,7 +10,7 @@ type Input = {
   setName: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const NameInput = ({formSubmitted, name, setName}: Input) => {
+export const NameInput = ({ formSubmitted, name, setName }: Input) => {
   const validateName = () => {
     if (formSubmitted && !name) {
       return <ErrorMessage errorText="Wpisz imię" />;

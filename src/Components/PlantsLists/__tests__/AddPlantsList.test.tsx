@@ -1,20 +1,16 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity, TextInput} from 'react-native';
+import { TouchableOpacity, TextInput } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
-import {PlantsListsState} from '../../../redux_actions/plantsListsTypes';
-import {AddPlantsList} from '../addPlantsList';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
+import { PlantsListsState } from '../../../redux_actions/plantsListsTypes';
+import { AddPlantsList } from '../addPlantsList';
 
 jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
-const addPlantsListMockFunc = jest.fn(() =>
-  Promise.resolve(console.log('AddPlantListTest')),
-);
-const getPlantsListsForUserMockFunc = jest.fn(() =>
-  Promise.resolve(console.log('GetPlantListTest')),
-);
+const addPlantsListMockFunc = jest.fn(() => Promise.resolve(console.log('AddPlantListTest')));
+const getPlantsListsForUserMockFunc = jest.fn(() => Promise.resolve(console.log('GetPlantListTest')));
 
 const setUp = (initialState: PlantsListsState) => {
   const wrapper = shallow(

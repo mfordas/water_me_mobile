@@ -1,4 +1,4 @@
-import {ShallowWrapper, ReactWrapper} from 'enzyme';
+import { ShallowWrapper, ReactWrapper } from 'enzyme';
 
 export const findByDataTestAtrr = (
   component: ShallowWrapper | ReactWrapper,

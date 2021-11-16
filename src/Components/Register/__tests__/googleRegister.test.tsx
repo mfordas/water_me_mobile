@@ -1,13 +1,13 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
-import {RegisterState} from '../../../redux_actions/registerTypes';
-import {initialState} from '../../../redux_reducers/registerReducer';
-import {makeAuth} from '../../Login/helpers';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
+import { RegisterState } from '../../../redux_actions/registerTypes';
+import { initialState } from '../../../redux_reducers/registerReducer';
+import { makeAuth } from '../../Login/helpers';
 import ConfirmGoogle from '../confirmGoogle';
-import {GoogleRegister} from '../googleRegister';
+import { GoogleRegister } from '../googleRegister';
 
 jest.mock('../../Login/helpers', () => {
   const helpers = jest.requireActual('../../Login/helpers');
@@ -34,11 +34,7 @@ jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
 const setUp = (startState: RegisterState = initialState) => {
   const wrapper = shallow(
-    <GoogleRegister
-      registerData={startState}
-      postGoogleUser={mockFunc}
-      setError={mockFunc}
-    />,
+    <GoogleRegister registerData={startState} postGoogleUser={mockFunc} setError={mockFunc} />,
   );
   return wrapper;
 };
@@ -66,14 +62,9 @@ describe('Should handle submit Google register button', () => {
   const component = setUp(initialState);
 
   it('Should emit callback on click event', async () => {
-    (makeAuth as jest.Mock).mockImplementation(() =>
-      console.log('Register user'),
-    );
+    (makeAuth as jest.Mock).mockImplementation(() => console.log('Register user'));
 
-    const registerButtonFunction = component
-      .find(TouchableOpacity)
-      .at(0)
-      .prop('onPress');
+    const registerButtonFunction = component.find(TouchableOpacity).at(0).prop('onPress');
 
     if (registerButtonFunction) {
       registerButtonFunction({} as any);

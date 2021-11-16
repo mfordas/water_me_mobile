@@ -1,8 +1,8 @@
-import {shallow, mount, ShallowWrapper} from 'enzyme';
+import { shallow, mount, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
 import ErrorMessage from '../../ErrorMessage/errorMessage';
 import GoogleAuth from '../../Login/googleAuth';
 import GoogleRegister from '../../Register/googleRegister';

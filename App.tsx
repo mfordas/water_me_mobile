@@ -1,20 +1,20 @@
-import {REACT_APP_GOOGLE_AUTH_API_CLIENTID} from '@env';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { REACT_APP_GOOGLE_AUTH_API_CLIENTID } from '@env';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
-import {SafeAreaView} from 'react-native';
-import {connect, Provider} from 'react-redux';
+import React, { useEffect } from 'react';
+import { SafeAreaView } from 'react-native';
+import { connect, Provider } from 'react-redux';
 
 import Footer from './src/Components/Footer/footer';
 import HomePage from './src/Components/HomePage';
 import Logo from './src/Components/Logo/logo';
 import Menu from './src/Components/Menu';
 import PlantsListsComponent from './src/Components/PlantsLists';
-import {navigationRef} from './src/Utils/rootNavigation';
-import {loginCheck} from './src/redux_actions/loginActions';
-import {store} from './src/redux_store/reduxStore';
+import { navigationRef } from './src/Utils/rootNavigation';
+import { loginCheck } from './src/redux_actions/loginActions';
+import { store } from './src/redux_store/reduxStore';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +26,7 @@ const MyTheme = {
   },
 };
 
-const App: () => React$Node = ({loginData, loginCheck}) => {
+const App: () => React$Node = ({ loginData, loginCheck }) => {
   console.log(REACT_APP_GOOGLE_AUTH_API_CLIENTID);
   useEffect(() => {
     GoogleSignin.configure({
@@ -40,17 +40,13 @@ const App: () => React$Node = ({loginData, loginCheck}) => {
 
   return (
     <NavigationContainer ref={navigationRef} theme={MyTheme}>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Logo />
         <Menu />
         <Stack.Navigator>
           {!loginData.isLogged && (
             <>
-              <Stack.Screen
-                name="HomePage"
-                component={HomePage}
-                options={{headerShown: false}}
-              />
+              <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
             </>
           )}
           {loginData.isLogged && (
@@ -58,7 +54,7 @@ const App: () => React$Node = ({loginData, loginCheck}) => {
               <Stack.Screen
                 name="PlantsList"
                 component={PlantsListsComponent}
-                options={{headerShown: false}}
+                options={{ headerShown: false }}
               />
             </>
           )}
@@ -77,7 +73,7 @@ Menu.propTypes = {
   loginData: PropTypes.object,
 };
 
-const AppConnected = connect(mapStateToProps, {loginCheck})(App);
+const AppConnected = connect(mapStateToProps, { loginCheck })(App);
 
 const AppContext = () => {
   return (

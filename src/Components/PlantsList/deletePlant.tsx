@@ -1,19 +1,14 @@
 import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
-import {connect, ConnectedProps} from 'react-redux';
+import { View, TouchableOpacity, Text } from 'react-native';
+import { connect, ConnectedProps } from 'react-redux';
 
-import {deletePlant} from '../../redux_actions/plantsActions';
-import {showPlantsList} from '../../redux_actions/plantsListsActions';
-import {RootState} from '../../redux_reducers';
-import {DeletePlantProps} from './plantsList';
+import { deletePlant } from '../../redux_actions/plantsActions';
+import { showPlantsList } from '../../redux_actions/plantsListsActions';
+import { RootState } from '../../redux_reducers';
+import { DeletePlantProps } from './plantsList';
 import styles from './styles/plantsList';
 
-export const DeletePlant = ({
-  deletePlant,
-  showPlantsList,
-  plantId,
-  listId,
-}: PropsFromRedux) => {
+export const DeletePlant = ({ deletePlant, showPlantsList, plantId, listId }: PropsFromRedux) => {
   const handleDeletePlant = async () => {
     await deletePlant(plantId);
     await showPlantsList(listId);
@@ -24,7 +19,8 @@ export const DeletePlant = ({
       <TouchableOpacity
         style={[styles.button, styles.deletePlantButton]}
         onPress={handleDeletePlant}
-        data-test="deletePlantButton">
+        data-test="deletePlantButton"
+      >
         <Text style={styles.deletePlantButtonText}>Usuń</Text>
       </TouchableOpacity>
     </View>

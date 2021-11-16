@@ -1,16 +1,14 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import AddPlant from '../addPlant';
-import {PlantsList} from '../plantsList';
+import { PlantsList } from '../plantsList';
 import PlantsListGenerator from '../plantsListGenerator';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
-const mockShowPlantsList = jest.fn(() =>
-  Promise.resolve(console.log('Downloading plants lists...')),
-);
+const mockShowPlantsList = jest.fn(() => Promise.resolve(console.log('Downloading plants lists...')));
 
 const initialState = {
   plantsListName: 'TestList',
@@ -87,10 +85,7 @@ describe('PlantsList component', () => {
   it('Should not render if plants list array is empty', async () => {
     const wrapper: ShallowWrapper = setUp(1);
 
-    const showAddPlantButtonFunction = wrapper
-      .find(TouchableOpacity)
-      .at(0)
-      .prop('onPress');
+    const showAddPlantButtonFunction = wrapper.find(TouchableOpacity).at(0).prop('onPress');
 
     if (showAddPlantButtonFunction) {
       showAddPlantButtonFunction({} as any);

@@ -1,10 +1,10 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
-import {DatePicker} from '../datePicker';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
+import { DatePicker } from '../datePicker';
 
 jest.mock('react-native-document-picker', () => () => ({}));
 jest.mock('react-native-image-picker', () => () => ({}));
@@ -36,10 +36,7 @@ describe('Should handle input change', () => {
   const component = setUp();
 
   it('Should emit callback on date change', async () => {
-    const datePickerShowFunction = component
-      .find(TouchableOpacity)
-      .at(0)
-      .prop('onPress');
+    const datePickerShowFunction = component.find(TouchableOpacity).at(0).prop('onPress');
 
     if (datePickerShowFunction) {
       datePickerShowFunction({} as any);

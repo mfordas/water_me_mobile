@@ -14,10 +14,7 @@ export const initialState: PlantsState = {
   imageName: '',
 };
 
-const plantsReducer = function (
-  state = initialState,
-  action: PlantsActionsType,
-): PlantsState {
+const plantsReducer = function (state = initialState, action: PlantsActionsType): PlantsState {
   switch (action.type) {
     case addPlantType:
       return {

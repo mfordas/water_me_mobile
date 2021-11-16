@@ -15,10 +15,7 @@ export const initialState: LoginState = {
   isLogged: false,
 };
 
-const loginReducer = function (
-  state = initialState,
-  action: LoginActionsType,
-): LoginState {
+const loginReducer = function (state = initialState, action: LoginActionsType): LoginState {
   switch (action.type) {
     case loginExternalType:
       return {

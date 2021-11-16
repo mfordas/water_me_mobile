@@ -1,9 +1,9 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
-import {Menu} from '../index';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
+import { Menu } from '../index';
 
 jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
@@ -61,14 +61,9 @@ describe('Menu Component', () => {
     };
 
     const mockFunc = jest.fn(() => Promise.resolve());
-    const wrapper: ShallowWrapper = shallow(
-      <Menu loginData={loginData} logout={mockFunc} />,
-    );
+    const wrapper: ShallowWrapper = shallow(<Menu loginData={loginData} logout={mockFunc} />);
 
-    const logoutButtonFunction = wrapper
-      .find(TouchableOpacity)
-      .at(1)
-      .prop('onPress');
+    const logoutButtonFunction = wrapper.find(TouchableOpacity).at(1).prop('onPress');
 
     if (logoutButtonFunction) {
       logoutButtonFunction({} as any);

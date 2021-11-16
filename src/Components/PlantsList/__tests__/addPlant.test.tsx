@@ -1,14 +1,14 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
-import {PlantsState} from '../../../redux_actions/plantsTypes';
-import {AddPlant} from '../addPlant';
-import {AddPlantPicture} from '../addPlantPicture';
-import {DatePicker} from '../datePicker';
-import {NameInput} from '../nameInput';
-import {WateringCycle} from '../wateringCycle';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
+import { PlantsState } from '../../../redux_actions/plantsTypes';
+import { AddPlant } from '../addPlant';
+import { AddPlantPicture } from '../addPlantPicture';
+import { DatePicker } from '../datePicker';
+import { NameInput } from '../nameInput';
+import { WateringCycle } from '../wateringCycle';
 
 jest.mock('@react-native-google-signin/google-signin', () => () => ({}));
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
@@ -22,9 +22,7 @@ jest.mock('../helpers', () => {
   };
 });
 
-const mockShowPlantsList = jest.fn(() =>
-  Promise.resolve(console.log('Showing plants list')),
-);
+const mockShowPlantsList = jest.fn(() => Promise.resolve(console.log('Showing plants list')));
 const mockShowAddPlantForm = jest.fn();
 const mockAddPlantToList = jest.fn();
 const mockUploadingFile = jest.fn();
@@ -87,9 +85,7 @@ describe('Add plants list component', () => {
     await wrapper.update();
 
     expect(wrapper.find(NameInput).prop('name')).toBe(testName);
-    expect(wrapper.find(WateringCycle).prop('wateringCycle')).toBe(
-      testWatering,
-    );
+    expect(wrapper.find(WateringCycle).prop('wateringCycle')).toBe(testWatering);
 
     const button = wrapper.find(TouchableOpacity).at(0);
 

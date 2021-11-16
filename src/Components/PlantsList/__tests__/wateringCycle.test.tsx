@@ -1,10 +1,10 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TextInput, Text} from 'react-native';
+import { TextInput, Text } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
 import ErrorMessage from '../../ErrorMessage/errorMessage';
-import {WateringCycle} from '../wateringCycle';
+import { WateringCycle } from '../wateringCycle';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
@@ -53,18 +53,13 @@ describe('Should handle input change', () => {
 
     const errorMessage = component.find(ErrorMessage);
 
-    expect(errorMessage.prop('errorText')).toBe(
-      'Wpisz częstotliwość podlewania',
-    );
+    expect(errorMessage.prop('errorText')).toBe('Wpisz częstotliwość podlewania');
   });
 
   it('Should emit callback on change event', () => {
     const component = setUp(true, '0');
 
-    const wateringTextInputFunction = component
-      .find(TextInput)
-      .at(0)
-      .prop('onChangeText');
+    const wateringTextInputFunction = component.find(TextInput).at(0).prop('onChangeText');
 
     if (wateringTextInputFunction) {
       wateringTextInputFunction('2');

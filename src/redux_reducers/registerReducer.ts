@@ -11,10 +11,7 @@ export const initialState: RegisterState = {
   googleUser: false,
 };
 
-const registerReducer = function (
-  state = initialState,
-  action: RegisterActionsType,
-): RegisterState {
+const registerReducer = function (state = initialState, action: RegisterActionsType): RegisterState {
   switch (action.type) {
     case registerExternal:
       return {

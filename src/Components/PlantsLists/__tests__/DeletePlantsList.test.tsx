@@ -1,19 +1,15 @@
-import {shallow, ShallowWrapper} from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
-import {findByDataTestAtrr} from '../../../Utils/findByDataTestAtrr';
-import {PlantsListsState} from '../../../redux_actions/plantsListsTypes';
-import {DeletePlantsList} from '../deletePlantsList';
+import { findByDataTestAtrr } from '../../../Utils/findByDataTestAtrr';
+import { PlantsListsState } from '../../../redux_actions/plantsListsTypes';
+import { DeletePlantsList } from '../deletePlantsList';
 
 jest.mock('../../../Utils/apiUrl', () => jest.fn());
 
-const deletePlantsListMockFunc = jest.fn(() =>
-  Promise.resolve(console.log('DeletePlantListTest')),
-);
-const getPlantsListsForUserMockFunc = jest.fn(() =>
-  Promise.resolve(console.log('GetPlantListTest')),
-);
+const deletePlantsListMockFunc = jest.fn(() => Promise.resolve(console.log('DeletePlantListTest')));
+const getPlantsListsForUserMockFunc = jest.fn(() => Promise.resolve(console.log('GetPlantListTest')));
 
 const setUp = (initialState: PlantsListsState) => {
   const wrapper = shallow(

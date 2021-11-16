@@ -15,10 +15,7 @@ export const initialState: PlantsListsState = {
   plants: [],
 };
 
-const plantsListReducer = function (
-  state = initialState,
-  action: PlantsListsActionType,
-): PlantsListsState {
+const plantsListReducer = function (state = initialState, action: PlantsListsActionType): PlantsListsState {
   switch (action.type) {
     case addPlantsListType:
       return {

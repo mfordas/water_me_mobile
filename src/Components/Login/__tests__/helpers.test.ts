@@ -1,6 +1,6 @@
-import {User} from '@react-native-google-signin/google-signin';
+import { User } from '@react-native-google-signin/google-signin';
 
-import {makeAuth} from '../helpers';
+import { makeAuth } from '../helpers';
 
 const loginExternalMockSuccess = jest.fn(() => Promise.resolve());
 const loginExternalMockReject = jest.fn(() => Promise.reject());
