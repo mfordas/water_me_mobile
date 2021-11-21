@@ -4,6 +4,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
+import type { Node } from 'react';
 import { SafeAreaView } from 'react-native';
 import { connect, Provider } from 'react-redux';
 
@@ -26,7 +27,7 @@ const MyTheme = {
   },
 };
 
-const App: () => React$Node = ({ loginData, loginCheck }) => {
+const App: () => Node = ({ loginData, loginCheck }) => {
   console.log(REACT_APP_GOOGLE_AUTH_API_CLIENTID);
   useEffect(() => {
     GoogleSignin.configure({
